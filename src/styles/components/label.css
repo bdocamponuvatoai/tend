@@ -1,0 +1,20 @@
+.eyebrow,
+.section-label {
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  font-weight: 650;
+  text-transform: uppercase;
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.line {
+  width: 25px;
+  height: 1px;
+  background: var(--ink);
+}
+.section-label {
+  color: #876520;
+}

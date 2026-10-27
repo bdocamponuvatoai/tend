@@ -1,0 +1,34 @@
+.faq {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+}
+.faq h2 {
+  margin-top: 25px;
+}
+.faq-list details {
+  border-bottom: 1px solid var(--border);
+}
+.faq-list details:first-child {
+  border-top: 1px solid var(--border);
+}
+.faq h2 {
+  font-size: 46px;
+}
+@media (max-width: 1000px) {
+  .faq {
+    gap: 40px;
+  }
+}
+@media (max-width: 700px) {
+  .faq {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+@media (max-width: 700px) {
+  .faq h2 {
+    font-size: 43px;
+  }
+}

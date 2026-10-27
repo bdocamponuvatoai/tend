@@ -1,0 +1,102 @@
+/* "What the research shows": sourced industry figures behind the estimator. */
+.research {
+  background: #eae3d3;
+}
+.research-heading {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 70px;
+  align-items: end;
+  margin-bottom: 48px;
+}
+.research-heading h2 {
+  margin-top: 22px;
+}
+.research-heading h2 em {
+  color: #896822;
+}
+.research-heading > p {
+  color: var(--muted);
+  max-width: 450px;
+  font-size: 17px;
+}
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 44px 45px;
+}
+.research-grid article {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #baa36c;
+  padding-top: 24px;
+}
+.research-grid .research-value {
+  font-family: var(--font-serif);
+  font-size: 58px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #8b6722;
+  font-variant-numeric: lining-nums;
+}
+.research-grid h3 {
+  font-size: 27px;
+  line-height: 1.15;
+  margin: 16px 0 12px;
+}
+.research-grid p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.75;
+}
+.research-grid .research-source {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: #74591d;
+}
+.research-source cite {
+  font-style: normal;
+  font-weight: 600;
+}
+.research-note {
+  margin-top: 44px;
+  padding-top: 25px;
+  border-top: 1px solid #c9bda4;
+  max-width: 800px;
+  font-size: 13px;
+  color: #645d4e;
+}
+@media (max-width: 1000px) {
+  .research-heading {
+    gap: 35px;
+  }
+  .research-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px 32px;
+  }
+}
+@media (max-width: 700px) {
+  .research {
+    padding-top: 65px;
+    padding-bottom: 65px;
+  }
+  .research-heading {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-bottom: 35px;
+  }
+  .research-heading h2 {
+    font-size: 43px;
+  }
+  .research-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .research-grid .research-value {
+    font-size: 50px;
+  }
+}

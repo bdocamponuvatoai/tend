@@ -1,0 +1,13 @@
+.text-link:hover {
+  opacity: 0.65;
+}
+.text-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+.text-link span {
+  padding-left: 12px;
+}

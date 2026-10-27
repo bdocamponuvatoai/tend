@@ -1,0 +1,24 @@
+/*
+ * Global stylesheet. Partials are imported in the order their rules first
+ * appeared in the original stylesheet. The order matters: later partials rely
+ * on overriding earlier ones at equal specificity.
+ */
+@import "./base/tokens.css";
+@import "./base/base.css";
+@import "./layout/header.css";
+@import "./components/text-link.css";
+@import "./sections/hero.css";
+@import "./components/label.css";
+@import "./sections/section.css";
+@import "./sections/intro.css";
+@import "./sections/restaurants.css";
+@import "./sections/manifesto.css";
+@import "./sections/faq.css";
+@import "./sections/closing.css";
+@import "./layout/footer.css";
+@import "./sections/benefits.css";
+@import "./sections/features.css";
+@import "./sections/directory.css";
+/* Added after the migration; self-contained, so order-independent. */
+@import "./sections/research.css";
+@import "./sections/estimator.css";

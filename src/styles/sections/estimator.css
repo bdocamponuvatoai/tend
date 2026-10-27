@@ -1,0 +1,254 @@
+/* Industry-data estimator: light input card, dark results panel. */
+.estimator {
+  border-top: 1px solid var(--border);
+}
+.estimator-heading {
+  max-width: 800px;
+  margin-bottom: 48px;
+}
+.estimator-heading h2 {
+  margin: 24px 0;
+}
+.estimator-heading h2 em {
+  color: #8b6722;
+}
+.estimator-heading > p {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 640px;
+}
+.estimator-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: stretch;
+}
+
+/* Inputs */
+.estimator-inputs {
+  margin: 0;
+  padding: 34px 36px;
+  background: #f9f6ed;
+  border: 1px solid #c7b794;
+  border-radius: 10px;
+  box-shadow: 0 22px 48px #3b2c1414;
+}
+.estimator-inputs fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.estimator-inputs fieldset + fieldset {
+  margin-top: 4px;
+  padding-top: 24px;
+  border-top: 1px solid #ded3bd;
+}
+/* Float the legend so it sits in normal flow instead of on the border. */
+.estimator-inputs legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 22px;
+  font-size: 12px;
+  letter-spacing: 1.7px;
+  font-weight: 600;
+  color: #876520;
+}
+.estimator-field {
+  clear: both;
+  margin-bottom: 26px;
+}
+/* Cormorant defaults to old-style figures, where "1" reads as "I". */
+.estimator output,
+.estimator-total,
+.estimator-split dd {
+  font-variant-numeric: lining-nums;
+}
+.estimator-field-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.estimator-field-top label {
+  font-size: 15px;
+  font-weight: 600;
+}
+.estimator-field-top output {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  line-height: 1;
+  color: #8b6722;
+}
+.estimator-field input[type="range"] {
+  display: block;
+  width: 100%;
+  margin: 0;
+  accent-color: #94712b;
+  cursor: pointer;
+}
+.estimator-field input[type="range"]:focus-visible {
+  outline: 3px solid #bc702a;
+  outline-offset: 5px;
+}
+.estimator-range {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #716653;
+}
+.estimator-revenue {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--paper);
+  border: 1px solid #e3d8c2;
+  border-radius: 6px;
+}
+.estimator-revenue span {
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  color: var(--muted);
+}
+.estimator-revenue output {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  line-height: 1;
+}
+
+/* Results */
+.estimator-results {
+  position: relative;
+  overflow: hidden;
+  padding: 38px 38px 34px;
+  border: 1px solid #51442a;
+  border-radius: 10px;
+  color: #f7f1df;
+  background:
+    radial-gradient(circle at 100% 0, #b6903f3a, transparent 42%), var(--black);
+}
+.estimator-kicker {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: #cfb678;
+  margin-bottom: 18px;
+}
+.estimator-caption {
+  font-size: 13px;
+  color: #b8ad96;
+}
+.estimator-total {
+  margin: 8px 0;
+  font-family: var(--font-serif);
+  font-size: clamp(58px, 5.6vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #d5bc79;
+}
+.estimator-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 26px 0 0;
+  padding-top: 22px;
+  border-top: 1px solid #3e3b2f;
+}
+.estimator-split dt,
+.estimator-breakdown > span {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #b8ad96;
+}
+.estimator-split dd {
+  margin: 6px 0 0;
+  font-family: var(--font-serif);
+  font-size: 32px;
+  line-height: 1.1;
+}
+.estimator-breakdown {
+  margin-top: 26px;
+  padding: 18px 20px 12px;
+  border: 1px solid #ffffff14;
+  border-radius: 6px;
+  background: #ffffff08;
+}
+.estimator-breakdown dl {
+  margin: 10px 0 0;
+}
+.estimator-breakdown dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 7px 0;
+  font-size: 14px;
+}
+.estimator-breakdown dt {
+  color: #d6cebb;
+}
+.estimator-breakdown dd {
+  margin: 0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.estimator-breakdown [data-tone="lift"] dd {
+  color: #d5bc79;
+}
+.estimator-breakdown [data-tone="savings"] dd {
+  color: #e5d6ad;
+}
+.estimator-breakdown [data-tone="cost"] dd {
+  color: #b8ad96;
+}
+
+.estimator-method {
+  max-width: 880px;
+  margin-top: 36px;
+  padding-top: 25px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.estimator-method strong {
+  color: var(--ink);
+}
+
+@media (max-width: 1000px) {
+  .estimator-grid {
+    gap: 24px;
+  }
+  .estimator-inputs,
+  .estimator-results {
+    padding: 28px;
+  }
+}
+@media (max-width: 700px) {
+  .estimator {
+    padding-top: 65px;
+    padding-bottom: 65px;
+  }
+  .estimator-heading h2 {
+    font-size: 43px;
+  }
+  .estimator-grid {
+    grid-template-columns: 1fr;
+  }
+  .estimator-inputs,
+  .estimator-results {
+    padding: 26px 22px;
+  }
+  .estimator-split dd {
+    font-size: 28px;
+  }
+  .estimator-revenue {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

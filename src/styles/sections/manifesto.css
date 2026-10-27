@@ -1,0 +1,35 @@
+.manifesto {
+  text-align: center;
+  padding: 110px 10%;
+}
+.manifesto h2 {
+  margin: 32px 0 25px;
+}
+.manifesto p {
+  max-width: 520px;
+  margin: 0 auto 25px;
+}
+.manifesto {
+  background: #e9e1cf;
+}
+.manifesto h2 {
+  font-size: clamp(42px, 4.9vw, 76px);
+}
+.manifesto em {
+  color: #8b6722;
+}
+@media (max-width: 1000px) {
+  .manifesto {
+    padding: 75px 5%;
+  }
+}
+@media (max-width: 700px) {
+  .manifesto {
+    padding: 70px 6%;
+  }
+}
+@media (max-width: 700px) {
+  .manifesto h2 {
+    font-size: 45px;
+  }
+}
