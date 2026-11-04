@@ -4,6 +4,7 @@ import { Check, CreditCard, LockKeyhole, Users } from "lucide-react";
 import caesarSalad from "@/assets/images/benefits/ui/caesar-salad.webp";
 import citrusSpritz from "@/assets/images/benefits/ui/citrus-spritz.webp";
 import truffleGnocchi from "@/assets/images/benefits/ui/truffle-gnocchi.webp";
+import truffleGnocchiDetail from "@/assets/images/benefits/ui/truffle-gnocchi-detail.webp";
 
 function FoodImage({ src }: { src: StaticImageData }) {
   return (
@@ -56,7 +57,7 @@ function MenuVisual() {
 function DetailVisual() {
   return (
     <div className="benefit-visual benefit-visual--detail">
-      <FoodImage src={truffleGnocchi} />
+      <FoodImage src={truffleGnocchiDetail} />
       <div className="benefit-detail-card">
         <span>HOUSE FAVORITE</span>
         <div className="benefit-detail-title">
