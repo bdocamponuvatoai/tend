@@ -393,3 +393,25 @@ Re-verified on the final build:
 
 Not changed: the footer © year is set at build time (static export), so it
 updates on the next deploy after New Year.
+
+## 14. Why Tend tiles redesigned (2026-11-04)
+
+Reported: the section did not look good. At 1518px the illustration panels
+were glued to the tiles' right and bottom edges with one rounded corner,
+their content stopped early (blank strips under the lists), their text was
+7–9px, every tile had a large empty area above its title, and the four
+panels were styled four different ways.
+
+Now every tile reads top to bottom (icon and number, title and copy, then
+the illustration), and each illustration is a finished cream card with
+rounded corners at a legible scale (labels 10px, item names 17px, amounts up
+to 44px). Phones and tablets stack each card; desktops (1281px and up) give
+every card two columns. Cards that share a row now end up close in height:
+the largest text-to-card gap is 96px at any width from 320 to 1920px, down
+from 189px.
+
+Re-verified: rendered page text identical to the section 13 build; axe 0
+violations (1440px, 390px, 404); 19/19 cross-browser checks in Chrome, Edge,
+Firefox and WebKit with no errors, no overflow and layout within tolerance;
+13 resize and rotation paths match a fresh load in Chrome and WebKit;
+`npm run check` passes.

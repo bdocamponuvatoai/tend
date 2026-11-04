@@ -59,7 +59,7 @@ function DetailVisual() {
       <FoodImage src={truffleGnocchi} />
       <div className="benefit-detail-card">
         <span>HOUSE FAVORITE</span>
-        <div>
+        <div className="benefit-detail-title">
           <strong>Truffle gnocchi</strong>
           <b>$29</b>
         </div>
@@ -150,27 +150,29 @@ function PayVisual() {
           <FoodImage src={caesarSalad} />
         </div>
       </div>
-      <div className="benefit-tip-row">
-        <span>15%</span>
-        <span className="is-selected">18%</span>
-        <span>20%</span>
-        <span>Other</span>
-      </div>
-      <div className="benefit-pay-option">
-        <Users size={16} />
-        <span>
-          <strong>Split the bill</strong>
-          <small>Evenly or by item</small>
-        </span>
-        <b>›</b>
-      </div>
-      <div className="benefit-pay-option">
-        <CreditCard size={16} />
-        <span>
-          <strong>Visa ···· 4821</strong>
-          <small>Ready to pay</small>
-        </span>
-        <Check size={15} />
+      <div className="benefit-pay-controls">
+        <div className="benefit-tip-row">
+          <span>15%</span>
+          <span className="is-selected">18%</span>
+          <span>20%</span>
+          <span>Other</span>
+        </div>
+        <div className="benefit-pay-option">
+          <Users size={16} />
+          <span>
+            <strong>Split the bill</strong>
+            <small>Evenly or by item</small>
+          </span>
+          <b>›</b>
+        </div>
+        <div className="benefit-pay-option">
+          <CreditCard size={16} />
+          <span>
+            <strong>Visa ···· 4821</strong>
+            <small>Ready to pay</small>
+          </span>
+          <Check size={15} />
+        </div>
       </div>
     </div>
   );
