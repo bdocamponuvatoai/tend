@@ -415,3 +415,59 @@ violations (1440px, 390px, 404); 19/19 cross-browser checks in Chrome, Edge,
 Firefox and WebKit with no errors, no overflow and layout within tolerance;
 13 resize and rotation paths match a fresh load in Chrome and WebKit;
 `npm run check` passes.
+
+## 15. Estimator redesigned (2026-11-04)
+
+Before: the heading and intro sat in the left half with the right half
+empty; the calculator was one boxed form; the dark readout had a dead band
+between the monthly figures and the breakdown; the method notes were one
+dense paragraph.
+
+Now: heading beside its intro on desktop; the inputs and the readout are two
+bento tiles (28px corners); sliders have a 6px rail and a 24px handle; the
+ticket-lift assumption sits on its own champagne panel; the readout keeps
+the headline figure at the top and shares any spare height evenly above the
+monthly figures and above the breakdown ledger; the method notes are two
+paragraphs, the caveat set apart. Wording unchanged (rendered text identical
+apart from the note's paragraph break).
+
+Fixed on the way: with every slider at its maximum the annual gain is
+$120,948,240, which overflowed the readout on phones (the old fixed font
+size). The figure now sizes to its panel: up to 128px on desktop and 80px on
+smaller screens, shrinking only for long numbers. Checked at default,
+maximum and minimum (negative) inputs at 320, 390, 820, 1518 and 1920px in
+Chrome and WebKit: fits every time.
+
+Re-verified: axe 0 violations (1440px, 390px, 404, menu open) after
+darkening the "YOUR ASSUMPTION" label (was 4.48:1 on its panel); 19/19
+cross-browser checks in Chrome, Edge, Firefox and WebKit (the estimator
+frame check now tests the two tiles' corners); `npm run check` passes.
+
+## 16. Estimator interactions (2026-11-04)
+
+- **Figures ease to new values** (`src/lib/use-tweened.ts`, about 0.45s,
+  ease-out) instead of jumping: the headline, the monthly figures, the
+  breakdown and current monthly revenue. The visible headline is
+  `aria-hidden`; a visually hidden live region (`.sr-only`) holds the final
+  figure, so screen readers hear one value per change, never the in-between
+  frames. Instant with reduced motion.
+- **The research range on the slider:** the ticket-lift slider shades
+  15–30% of its travel (`RESEARCH_TICKET_LIFT_RANGE` in `lib/estimator.ts`,
+  the range cited in `content/research.ts`) and labels it "15–30%" in its
+  scale (decorative, `aria-hidden`).
+- **Phone result bar:** on phones the readout sits below the sliders, so
+  while the sliders are on screen and the headline figure is not, a bar at
+  the foot of the screen shows the live annual gain; a tap scrolls to the
+  readout. Decorative (`aria-hidden`, out of the tab order); hidden from
+  701px up; leaves room for back-to-top.
+- **Slider handles** show a halo on hover and swell slightly while held.
+
+Verified in Chrome and WebKit: during easing the live region already holds
+the final value and the visible figure passes through intermediate values
+and settles on it; reduced motion shows the final value at once; the band's
+edges sit exactly at 15% and 30% of the travel; the bar is hidden at the
+page top, shows over every slider, updates with the sliders, hides once the
+figure is on screen and scrolls the readout into view; no console errors.
+axe 0 violations (1440px, 390px, 404, menu open); `npm run check` passes.
+Rendered text adds only the reused "15–30%" label and the hidden copy of the
+total.

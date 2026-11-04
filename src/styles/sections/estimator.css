@@ -1,59 +1,72 @@
-/* Industry-data estimator: light input card, dark results panel. */
+/*
+ * Industry-data estimator: the heading beside its intro, then two bento
+ * tiles (the inputs on cream, with the assumption set apart, and the dark
+ * readout), then the method notes in two columns. Mobile-first.
+ */
 .estimator {
   border-top: 1px solid var(--border);
 }
+
+/* Heading */
 .estimator-heading {
-  max-width: 800px;
-  margin-bottom: 48px;
+  display: grid;
+  gap: 22px;
+  margin-bottom: 40px;
 }
 .estimator-heading h2 {
-  margin: 24px 0;
+  margin: 0;
 }
 .estimator-heading h2 em {
   color: #8b6722;
 }
 .estimator-heading > p {
-  font-size: 17px;
+  max-width: 560px;
   color: var(--muted);
-  max-width: 640px;
+  font-size: 17px;
 }
+
+/* Two tiles: inputs, then the readout. */
 .estimator-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 32px;
-  align-items: stretch;
+  gap: 16px;
 }
 
 /* Inputs */
 .estimator-inputs {
   margin: 0;
-  padding: 34px 36px;
-  border: 1px solid #c7b794;
-  box-shadow: 0 22px 48px #3b2c1414;
+  padding: 28px 22px 24px;
+  border: 1px solid #e2d5b6;
+  border-radius: 28px;
+  background: var(--card);
 }
 .estimator-inputs fieldset {
+  min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
-  min-width: 0;
-}
-.estimator-inputs fieldset + fieldset {
-  margin-top: 4px;
-  padding-top: 24px;
-  border-top: 1px solid #ded3bd;
 }
 /* Float the legend so it sits in normal flow instead of on the border. */
 .estimator-inputs legend {
   float: left;
   width: 100%;
-  padding: 0;
   margin-bottom: 22px;
-  font-size: 12px;
-  letter-spacing: 1.7px;
-  font-weight: 600;
-  color: #876520;
+  padding: 0;
+  /* Dark enough for 11px text on the champagne assumption panel too. */
+  color: #7a5b1c;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+/* The assumption is the lever people play with: set apart on champagne. */
+.estimator-inputs fieldset + fieldset {
+  --ring: #f4ead2;
+  margin-top: 6px;
+  padding: 22px 20px 2px;
+  border-radius: 20px;
+  background: #f4ead2;
 }
 .estimator-field {
+  --thumb: 24px;
   clear: both;
   margin-bottom: 26px;
 }
@@ -65,20 +78,20 @@
 }
 .estimator-field-top {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
+  justify-content: space-between;
   gap: 16px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .estimator-field-top label {
   font-size: 15px;
   font-weight: 600;
 }
 .estimator-field-top output {
-  font-family: var(--font-serif);
-  font-size: 34px;
-  line-height: 1;
   color: #8b6722;
+  font-family: var(--font-serif);
+  font-size: 38px;
+  line-height: 1;
 }
 /*
  * Sliders are drawn explicitly so they match in every engine (accent-color
@@ -88,20 +101,40 @@
  * Each engine's pseudo-elements stay in separate rules: an unknown selector
  * in a list would invalidate the whole rule.
  */
+.estimator-track {
+  position: relative;
+}
+/* The range the research reports (15–30% ticket lift), shaded behind the
+   rail and named in the scale below it. */
+.estimator-band {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--thumb) / 2 + (100% - var(--thumb)) * var(--from));
+  width: calc((100% - var(--thumb)) * (var(--to) - var(--from)));
+  height: 14px;
+  border-radius: 999px;
+  background: #8b672224;
+  transform: translateY(-50%);
+}
 .estimator-field input[type="range"] {
-  --fill: #94712b;
-  --track: #ded3bd;
-  --thumb: 20px;
+  --fill: #8b6722;
+  --track: #e5dac2;
+  --rail: 6px;
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   -webkit-appearance: none;
   appearance: none;
   background: transparent;
-  accent-color: #94712b;
+  accent-color: #8b6722;
   cursor: pointer;
 }
+.estimator-inputs fieldset + fieldset input[type="range"] {
+  --track: #e2d3ad;
+}
 .estimator-field input[type="range"]::-webkit-slider-runnable-track {
-  height: 4px;
+  height: var(--rail);
   border-radius: 999px;
   background: linear-gradient(
     to right,
@@ -115,19 +148,21 @@
   box-sizing: border-box;
   width: var(--thumb);
   height: var(--thumb);
-  margin-top: calc((4px - var(--thumb)) / 2);
-  border: 3px solid var(--card);
+  margin-top: calc((var(--rail) - var(--thumb)) / 2);
+  border: 5px solid var(--ring, var(--card));
   border-radius: 50%;
   background: var(--fill);
-  box-shadow: 0 0 0 1px var(--fill);
+  box-shadow:
+    0 0 0 1px var(--fill),
+    0 3px 8px #3b2c1430;
 }
 .estimator-field input[type="range"]::-moz-range-track {
-  height: 4px;
+  height: var(--rail);
   border-radius: 999px;
   background: var(--track);
 }
 .estimator-field input[type="range"]::-moz-range-progress {
-  height: 4px;
+  height: var(--rail);
   border-radius: 999px;
   background: var(--fill);
 }
@@ -135,149 +170,306 @@
   box-sizing: border-box;
   width: var(--thumb);
   height: var(--thumb);
-  border: 3px solid var(--card);
+  border: 5px solid var(--ring, var(--card));
   border-radius: 50%;
   background: var(--fill);
-  box-shadow: 0 0 0 1px var(--fill);
+  box-shadow:
+    0 0 0 1px var(--fill),
+    0 3px 8px #3b2c1430;
 }
 .estimator-field input[type="range"]:focus-visible {
   outline: 3px solid #bc702a;
   outline-offset: 5px;
 }
+/* The handle answers the pointer: a soft halo on hover, a slight swell
+   while held. */
+.estimator-field input[type="range"]::-webkit-slider-thumb {
+  transition:
+    transform 0.15s var(--ease-out),
+    box-shadow 0.2s;
+}
+.estimator-field input[type="range"]::-moz-range-thumb {
+  transition:
+    transform 0.15s var(--ease-out),
+    box-shadow 0.2s;
+}
+@media (hover: hover) {
+  .estimator-field input[type="range"]:hover::-webkit-slider-thumb {
+    box-shadow:
+      0 0 0 1px var(--fill),
+      0 0 0 8px #8b672224,
+      0 3px 8px #3b2c1430;
+  }
+  .estimator-field input[type="range"]:hover::-moz-range-thumb {
+    box-shadow:
+      0 0 0 1px var(--fill),
+      0 0 0 8px #8b672224,
+      0 3px 8px #3b2c1430;
+  }
+}
+.estimator-field input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+.estimator-field input[type="range"]:active::-moz-range-thumb {
+  transform: scale(1.12);
+}
 .estimator-range {
+  position: relative;
   display: flex;
   justify-content: space-between;
-  margin-top: 6px;
+  margin-top: 8px;
+  color: #6b604d;
   font-size: 12px;
-  color: #716653;
 }
+.estimator-range-band {
+  position: absolute;
+  left: calc(var(--thumb) / 2 + (100% - var(--thumb)) * var(--mid));
+  color: #7a5b1c;
+  font-weight: 600;
+  transform: translateX(-50%);
+}
+/* The equation's result: locations × covers × ticket, per month. */
 .estimator-revenue {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 16px;
-  padding: 18px 20px;
-  background: var(--paper);
-  border: 1px solid #e3d8c2;
-  border-radius: 6px;
+  justify-content: space-between;
+  gap: 6px 16px;
+  margin-top: 24px;
+  padding: 20px 2px 0;
+  border-top: 1px solid #e6dcc6;
 }
 .estimator-revenue span {
-  font-size: 12px;
-  letter-spacing: 1.4px;
   color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
 }
 .estimator-revenue output {
   font-family: var(--font-serif);
-  font-size: 36px;
+  font-size: 38px;
   line-height: 1;
 }
 
-/* Results */
+/* Readout */
 .estimator-results {
+  --total-max: 80px;
+  container-type: inline-size;
   position: relative;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  padding: 38px 38px 34px;
-  border: 1px solid #51442a;
+  padding: 30px 22px 24px;
+  border-radius: 28px;
+  background: var(--black);
   color: #f7f1df;
-  background:
-    radial-gradient(circle at 100% 0, #b6903f3a, transparent 42%), var(--black);
 }
 .estimator-kicker {
   display: block;
-  font-size: 12px;
-  letter-spacing: 3px;
-  color: #cfb678;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
+  color: #d5bc79;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
 }
 .estimator-caption {
+  color: #bdb29b;
   font-size: 13px;
-  color: #b8ad96;
 }
+/* As large as --total-max allows, but never wider than the panel: --chars
+   (set by the component) shrinks a long figure such as $120,924,240. */
 .estimator-total {
-  margin: 8px 0;
+  position: relative;
+  margin: 16px 0 12px;
+  color: #e3cb8d;
   font-family: var(--font-serif);
-  font-size: clamp(58px, 5.6vw, 88px);
-  line-height: 1;
+  font-size: min(var(--total-max), 100cqi / (var(--chars, 8) * 0.5));
+  line-height: 0.95;
   letter-spacing: -0.03em;
-  color: #d5bc79;
+  white-space: nowrap;
+  transition: font-size 0.3s var(--ease-out);
 }
+/* When the inputs tile is taller, the spare height is shared equally above
+   the monthly figures and above the ledger (both auto margins), so the
+   readout keeps an even rhythm and the ledger ends level with the inputs. */
 .estimator-split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin: 26px 0 0;
-  padding-top: 22px;
-  border-top: 1px solid #3e3b2f;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: auto 0 0;
+  padding-top: 28px;
+}
+.estimator-split > div {
+  padding: 16px 18px 18px;
+  border-radius: 18px;
+  background: #ffffff0f;
 }
 .estimator-split dt,
 .estimator-breakdown > span {
+  color: #bdb29b;
   font-size: 11px;
-  letter-spacing: 1.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #b8ad96;
 }
 .estimator-split dd {
-  margin: 6px 0 0;
+  margin: 10px 0 0;
   font-family: var(--font-serif);
   font-size: 32px;
-  line-height: 1.1;
+  line-height: 1;
 }
+/* A ruled ledger closes the readout. */
 .estimator-breakdown {
-  padding: 18px 20px 12px;
-  border: 1px solid #ffffff14;
-  border-radius: 6px;
-  background: #ffffff08;
+  margin-top: auto;
+  padding-top: 28px;
 }
 .estimator-breakdown dl {
-  margin: 10px 0 0;
+  margin: 12px 0 0;
 }
 .estimator-breakdown dl > div {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 7px 0;
+  padding: 13px 0;
+  border-top: 1px solid #ffffff1c;
   font-size: 14px;
 }
+.estimator-breakdown dl > div:last-child {
+  padding-bottom: 0;
+}
 .estimator-breakdown dt {
-  color: #d6cebb;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ddd5c3;
+}
+.estimator-breakdown dt::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tone);
 }
 .estimator-breakdown dd {
   margin: 0;
+  color: var(--tone);
   font-weight: 600;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
-.estimator-breakdown [data-tone="lift"] dd {
-  color: #d5bc79;
+.estimator-breakdown [data-tone="lift"] {
+  --tone: #e3cb8d;
 }
-.estimator-breakdown [data-tone="savings"] dd {
-  color: #e5d6ad;
+.estimator-breakdown [data-tone="savings"] {
+  --tone: #cdbf9c;
 }
-.estimator-breakdown [data-tone="cost"] dd {
-  color: #b8ad96;
+.estimator-breakdown [data-tone="cost"] {
+  --tone: #a59c88;
 }
 
+/* Method notes: the calculation, then the caveat set apart. */
 .estimator-method {
-  max-width: 880px;
-  margin-top: 36px;
-  padding-top: 25px;
+  display: grid;
+  gap: 18px;
+  margin-top: 40px;
+  padding-top: 28px;
   border-top: 1px solid var(--border);
-  font-size: 14px;
-  line-height: 1.75;
   color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.75;
 }
 .estimator-method strong {
   color: var(--ink);
 }
+.estimator-method p + p {
+  padding: 20px 22px;
+  border-radius: 20px;
+  background: #efe3c4;
+  color: #4d4535;
+}
 
-@media (max-width: 1000px) {
-  .estimator-grid {
-    gap: 24px;
+/*
+ * Phones: while the sliders are on screen and the readout is not, a bar at
+ * the foot of the screen keeps the annual gain in view; a tap scrolls to the
+ * readout (estimator-form.tsx). It leaves room for the back-to-top button.
+ */
+.estimator-dock {
+  position: fixed;
+  right: calc(max(16px, env(safe-area-inset-right)) + 64px);
+  bottom: max(16px, env(safe-area-inset-bottom));
+  left: max(16px, env(safe-area-inset-left));
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 7px 18px 7px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--black);
+  color: #d5bc79;
+  font-family: var(--font-sans);
+  text-align: left;
+  /* The hairline keeps it distinct where it passes over the dark readout. */
+  box-shadow:
+    0 0 0 1px #ffffff1f,
+    0 10px 28px -10px #14150f8c;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition:
+    opacity 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out),
+    visibility 0s linear 0.3s;
+}
+.estimator-dock[data-visible] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out),
+    visibility 0s;
+}
+.estimator-dock > span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.estimator-dock-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+.estimator-dock strong {
+  color: #e3cb8d;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.05;
+  font-variant-numeric: lining-nums;
+}
+.estimator-dock svg {
+  flex: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .estimator-total,
+  .estimator-dock,
+  .estimator-dock[data-visible] {
+    transition: none;
   }
-  .estimator-inputs,
-  .estimator-results {
-    padding: 28px;
+  .estimator-field input[type="range"]::-webkit-slider-thumb {
+    transition: none;
+  }
+  .estimator-field input[type="range"]::-moz-range-thumb {
+    transition: none;
   }
 }
+
 @media (max-width: 700px) {
   .estimator {
     padding-top: 65px;
@@ -286,18 +478,61 @@
   .estimator-heading h2 {
     font-size: 43px;
   }
+}
+
+@media (min-width: 701px) {
+  /* Wider screens show the readout beside the sliders. */
+  .estimator-dock {
+    display: none;
+  }
+  .estimator-heading {
+    margin-bottom: 48px;
+  }
   .estimator-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
   }
   .estimator-inputs,
   .estimator-results {
-    padding: 26px 22px;
+    padding: 32px 28px;
+  }
+}
+
+@media (min-width: 1001px) {
+  /* Heading left, intro right, on a shared baseline. */
+  .estimator-heading {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-areas: "label ." "title intro";
+    column-gap: 80px;
+    align-items: end;
+    margin-bottom: 56px;
+  }
+  .estimator-heading .section-label {
+    grid-area: label;
+  }
+  .estimator-heading h2 {
+    grid-area: title;
+  }
+  .estimator-heading > p {
+    grid-area: intro;
+    padding-bottom: 6px;
+  }
+  .estimator-grid {
+    gap: 18px;
+  }
+  .estimator-inputs {
+    padding: 40px 40px 36px;
+  }
+  .estimator-results {
+    --total-max: 128px;
+    padding: 40px 40px 36px;
   }
   .estimator-split dd {
-    font-size: 28px;
+    font-size: 40px;
   }
-  .estimator-revenue {
-    flex-direction: column;
-    gap: 8px;
+  .estimator-method {
+    grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
   }
 }

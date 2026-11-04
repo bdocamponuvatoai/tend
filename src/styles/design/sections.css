@@ -4,9 +4,9 @@
  * One editorial system, borrowed from a printed fine-dining menu: content sits
  * directly on the page under hairline rules, hierarchy comes from type (serif
  * numerals and titles, small tracked labels) and one gold accent. Flat
- * surfaces only: no glows, drop shadows, glass or hover lifts. The one framed
- * object is the estimator, because it is an instrument, and the app previews,
- * because they depict a screen.
+ * surfaces only: no glows, drop shadows, glass or hover lifts. Why Tend, the
+ * feature tabs, Research and the estimator (sections/estimator.css) use the
+ * rounded tiles of design/bento.css instead.
  *
  * Mobile-first: base rules are for phones; min-width queries adjust tablets
  * (701px+) and desktops (1001px+).
@@ -196,59 +196,6 @@
 /* Full-width CTA on phones; natural width from tablet up. */
 .partner-note .btn {
   width: 100%;
-}
-
-/* Estimator: one framed instrument, inputs on cream beside the dark readout.
-   Inside it, groups are divided by rules instead of nested boxes. */
-.estimator-grid {
-  gap: 0;
-  border: 1px solid #c7b794;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-.estimator-inputs,
-.estimator-results {
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-.estimator-inputs {
-  background: var(--card);
-}
-.estimator-results {
-  display: flex;
-  flex-direction: column;
-  background: var(--black);
-}
-.estimator-revenue {
-  padding: 20px 0 0;
-  border: 0;
-  border-top: 1px solid #ded3bd;
-  border-radius: 0;
-  background: none;
-}
-.estimator-split {
-  margin-top: 32px;
-  margin-bottom: 32px;
-  padding-top: 28px;
-}
-@media (min-width: 1001px) {
-  /* A larger readout fills the panel beside the four sliders. */
-  .estimator-total {
-    font-size: clamp(72px, 6.6vw, 104px);
-  }
-  .estimator-split dd {
-    font-size: 40px;
-  }
-}
-/* The breakdown sits at the foot of the readout, level with the inputs. */
-.estimator-breakdown {
-  margin-top: auto;
-  padding: 20px 0 0;
-  border: 0;
-  border-top: 1px solid #3e3b2f;
-  border-radius: 0;
-  background: none;
 }
 
 /* Manifesto: a flat sand band. */

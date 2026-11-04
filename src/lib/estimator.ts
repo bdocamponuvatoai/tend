@@ -34,6 +34,10 @@ export const TEND_PRICING = {
   scalePerLocation: 299,
 } as const;
 
+/** Ticket-lift range reported by the industry research the page cites
+    (content/research.ts: "+15–30%"), in percent. */
+export const RESEARCH_TICKET_LIFT_RANGE = [15, 30] as const;
+
 export const ESTIMATOR_DEFAULTS: EstimatorInput = {
   locations: 1,
   coversPerNight: 120,

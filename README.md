@@ -121,8 +121,8 @@ docs/
   reveal), `header.css` (sticky header, CTA pill, dark mobile menu),
   `sections.css` (per-section refinements) and `bento.css` (rounded tiles in
   champagne, sand, ink and gold, the folder-tab corner, round arrow buttons
-  and the Why Tend illustrations). Why Tend, the feature tabs, Research and
-  the product walkthrough use bento tiles; the rest is editorial, like a
+  and the Why Tend illustrations). Why Tend, the feature tabs, Research, the
+  estimator and the product walkthrough use bento tiles; the rest is editorial, like a
   printed fine-dining menu: hairline rules, hierarchy from type and one gold
   accent, no glows or drop shadows. "Why Tend" and "Everything around your
   meal" live in `sections/benefits.css` and `sections/directory.css`. The Why
