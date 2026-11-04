@@ -49,7 +49,7 @@ These are industry-wide findings, not Tend customer results.
 
 ## How the estimator works
 
-Monthly revenue = locations × covers per night × average ticket × ${SERVICE_NIGHTS_PER_MONTH} service nights. Revenue lift applies a ticket-lift assumption (default 15%; research range 15–30%). Vendor consolidation is estimated at $${VENDOR_SAVINGS_PER_LOCATION}/mo per location. Tend cost uses list pricing: $${TEND_PRICING.singleLocation}/mo for one location, $${TEND_PRICING.growthPerLocation}/mo per location for 2–14 locations, $${TEND_PRICING.scalePerLocation}/mo per location for 15 or more. Card-processing fees are not included. It is an estimate, not a promise.
+Monthly revenue = locations × covers per night × average ticket × ${SERVICE_NIGHTS_PER_MONTH} service nights. Revenue lift applies a ticket-lift assumption (default 15%; research range 15–30%). Vendor consolidation is estimated at $${VENDOR_SAVINGS_PER_LOCATION}/mo per location. Tend cost uses list pricing per location: $${TEND_PRICING.starterPerLocation}/mo for 1–4 locations, $${TEND_PRICING.growthPerLocation}/mo for 5–14, $${TEND_PRICING.scalePerLocation}/mo for 15–24; ${TEND_PRICING.quoteFromLocations} or more locations are quoted separately. Card-processing fees are not included. It is an estimate, not a promise.
 
 ## FAQ
 

@@ -216,9 +216,12 @@ Set these at **build time** (see `.env.example`):
 - [ ] Owner confirms all copy, including the six research figures and their
       sources in `src/content/research.ts`. Answer engines will quote them, so
       each citation should be checked against the original publication.
-- [ ] Owner confirms the estimator's prices and assumptions in
-      `src/lib/estimator.ts`. The Growth rate ($399) is applied from 2
-      locations, while the original pricing labels Growth as 5–14 locations.
+- [x] Estimator prices set by the owner (2026-11-04) in `src/lib/estimator.ts`:
+      $499 per location for 1–4 locations, $449 for 5–14, $399 for 15–24;
+      25 or more locations are quoted separately.
+- [ ] Owner confirms the estimator's other assumptions in the same file:
+      28 service nights a month and $250 a month vendor consolidation per
+      location.
 - [ ] Owner confirms the Why Tend tile illustrations
       (`components/home/benefit-visual.tsx`). They show "Maple & Ash", the
       name of a real Chicago steakhouse, as live page text, and their dishes,

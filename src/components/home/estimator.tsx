@@ -77,10 +77,12 @@ export function Estimator() {
               Vendor consolidation is estimated at $
               {VENDOR_SAVINGS_PER_LOCATION}/mo per location, reflecting typical
               pricing for a separate POS + reservations + loyalty + SMS stack.
-              Tend cost uses list pricing: ${TEND_PRICING.singleLocation}/mo for
-              one location, ${TEND_PRICING.growthPerLocation}/mo per location
-              for 2–14 locations, and ${TEND_PRICING.scalePerLocation}/mo per
-              location for 15 or more. Card-processing fees are not included.
+              Tend cost uses list pricing per location: $
+              {TEND_PRICING.starterPerLocation}/mo for 1–4 locations, $
+              {TEND_PRICING.growthPerLocation}/mo for 5–14, and $
+              {TEND_PRICING.scalePerLocation}/mo for 15–24;{" "}
+              {TEND_PRICING.quoteFromLocations} or more locations are quoted
+              separately. Card-processing fees are not included.
             </p>
           </div>
         </div>

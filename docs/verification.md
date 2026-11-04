@@ -614,3 +614,25 @@ request template, and a documentation map at the top of the README.
 
 Re-verified: `npm run check` and `npm run build` pass; axe 0 violations;
 19/19 cross-browser checks in Chrome, Edge, Firefox and WebKit.
+
+## 22. Estimator pricing updated (2026-11-04)
+
+The owner set new list prices per location per month: **$499 for 1–4
+locations, $449 for 5–14, $399 for 15–24; 25 or more are quoted
+separately** (previously $499 for one location, $399 for 2–14 and $299 for
+15 or more). This also settles the earlier question about the 2–4 location
+rate.
+
+- `lib/estimator.ts`: `TEND_PRICING` (`starterPerLocation`,
+  `growthPerLocation`, `scalePerLocation`, `quoteFromLocations`) and
+  `tendMonthlyCost`, which refuses 25+ locations (`RangeError`) rather than
+  inventing a price. `MAX_ESTIMATOR_LOCATIONS` (20) drives the slider, and
+  a test keeps it below the quote threshold.
+- The method notes and `llms.txt` state the new prices from the same
+  constants.
+- Tests: tier values at 1, 4, 5, 14, 15, 20 and 24 locations, and 25 throws.
+
+Verified in Chrome: Tend cost per month is $499 (1), $1,996 (4), $2,245
+(5), $6,286 (14), $5,985 (15) and $7,980 (20). The default estimate is
+unchanged ($287,316). axe 0 violations; 19/19 cross-browser checks;
+`npm run check` (5 tests) passes.

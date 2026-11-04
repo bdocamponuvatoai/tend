@@ -25,14 +25,24 @@ export const SERVICE_NIGHTS_PER_MONTH = 28;
 /** Estimated monthly saving per location from replacing a separate POS, reservations, loyalty and SMS stack. */
 export const VENDOR_SAVINGS_PER_LOCATION = 250;
 
-/** Monthly list prices used by the estimate, in USD. */
+/**
+ * Monthly list prices in USD, per location, set by the owner (2026-11-04).
+ * From 25 locations pricing is quoted separately, so the estimator stops
+ * below that (MAX_ESTIMATOR_LOCATIONS).
+ */
 export const TEND_PRICING = {
-  singleLocation: 499,
-  /** Per location, for 2–14 locations. */
-  growthPerLocation: 399,
-  /** Per location, for 15 or more locations. */
-  scalePerLocation: 299,
+  /** Per location, for 1–4 locations. */
+  starterPerLocation: 499,
+  /** Per location, for 5–14 locations. */
+  growthPerLocation: 449,
+  /** Per location, for 15–24 locations. */
+  scalePerLocation: 399,
+  /** From this many locations, pricing is quoted separately. */
+  quoteFromLocations: 25,
 } as const;
+
+/** The estimator's largest location count (its slider maximum). */
+export const MAX_ESTIMATOR_LOCATIONS = 20;
 
 /** Ticket-lift range reported by the industry research the page cites
     (content/research.ts: "+15–30%"), in percent. */
@@ -45,8 +55,14 @@ export const ESTIMATOR_DEFAULTS: EstimatorInput = {
   ticketLiftPercent: 15,
 };
 
+/** Tend's monthly list price for a number of locations (all at one tier). */
 export function tendMonthlyCost(locations: number): number {
-  if (locations === 1) return TEND_PRICING.singleLocation;
+  if (locations >= TEND_PRICING.quoteFromLocations) {
+    throw new RangeError(
+      `${TEND_PRICING.quoteFromLocations} or more locations are quoted separately`,
+    );
+  }
+  if (locations <= 4) return locations * TEND_PRICING.starterPerLocation;
   if (locations <= 14) return locations * TEND_PRICING.growthPerLocation;
   return locations * TEND_PRICING.scalePerLocation;
 }

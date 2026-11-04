@@ -4,6 +4,7 @@ import { ArrowDown } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
   ESTIMATOR_DEFAULTS,
+  MAX_ESTIMATOR_LOCATIONS,
   RESEARCH_TICKET_LIFT_RANGE,
   estimate,
   formatCurrency,
@@ -167,7 +168,7 @@ export function EstimatorForm() {
             id="estimator-locations"
             label="Locations"
             min={1}
-            max={20}
+            max={MAX_ESTIMATOR_LOCATIONS}
             step={1}
             value={input.locations}
             onChange={update("locations")}

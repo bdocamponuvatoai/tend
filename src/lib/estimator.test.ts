@@ -5,6 +5,8 @@ import {
   estimate,
   formatCurrency,
   formatSignedCompact,
+  MAX_ESTIMATOR_LOCATIONS,
+  TEND_PRICING,
   tendMonthlyCost,
 } from "./estimator.ts";
 
@@ -20,11 +22,20 @@ test("defaults match the original estimator", () => {
 });
 
 test("Tend cost tiers by location count", () => {
+  // 1–4: $499, 5–14: $449, 15–24: $399 per location per month.
   assert.equal(tendMonthlyCost(1), 499);
-  assert.equal(tendMonthlyCost(2), 798);
-  assert.equal(tendMonthlyCost(14), 5_586);
-  assert.equal(tendMonthlyCost(15), 4_485);
-  assert.equal(tendMonthlyCost(20), 5_980);
+  assert.equal(tendMonthlyCost(4), 1_996);
+  assert.equal(tendMonthlyCost(5), 2_245);
+  assert.equal(tendMonthlyCost(14), 6_286);
+  assert.equal(tendMonthlyCost(15), 5_985);
+  assert.equal(tendMonthlyCost(20), 7_980);
+  assert.equal(tendMonthlyCost(24), 9_576);
+});
+
+test("25 or more locations are quoted, not priced", () => {
+  assert.throws(() => tendMonthlyCost(25), RangeError);
+  // The estimator never asks for a quoted size.
+  assert.ok(MAX_ESTIMATOR_LOCATIONS < TEND_PRICING.quoteFromLocations);
 });
 
 test("net can be negative at the low end", () => {

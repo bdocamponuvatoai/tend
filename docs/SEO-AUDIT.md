@@ -201,17 +201,17 @@ text, and an entity they can identify. Current state:
 Search volume is a qualitative estimate (not measured). Content needs owner
 facts.
 
-| Missing topic                                                                         | Potential | Competition | Content type                             | Priority |
-| ------------------------------------------------------------------------------------- | --------- | ----------- | ---------------------------------------- | -------- |
-| Contact / "Bring Tend to your restaurant" enquiry                                     | High      | n/a         | Form or email (a conversion path)        | 1        |
-| For restaurants (benefits, estimator, pricing)                                        | High      | High        | Dedicated page `/restaurants/`           | 2        |
-| Pricing ($499 / $399 / $299 list prices are already published in the estimator notes) | Med       | Med         | `/pricing/`                              | 2        |
-| Send drinks to another table (social ordering)                                        | Med       | Low         | Feature page                             | 3        |
-| Order for someone remotely                                                            | Med       | Low         | Feature page                             | 3        |
-| Happy-hour offers for restaurants                                                     | Med       | Med         | Feature page                             | 3        |
-| About Tend and the team                                                               | Low       | n/a         | `/about/` (E-E-A-T)                      | 3        |
-| Privacy policy and terms                                                              | Low       | n/a         | Legal pages (trust; needed for any form) | 2        |
-| Research explainers (ticket size, turnover, labour)                                   | Med       | Med         | Articles that cite the six sources       | 4        |
+| Missing topic                                                                                   | Potential | Competition | Content type                             | Priority |
+| ----------------------------------------------------------------------------------------------- | --------- | ----------- | ---------------------------------------- | -------- |
+| Contact / "Bring Tend to your restaurant" enquiry                                               | High      | n/a         | Form or email (a conversion path)        | 1        |
+| For restaurants (benefits, estimator, pricing)                                                  | High      | High        | Dedicated page `/restaurants/`           | 2        |
+| Pricing ($499 / $449 / $399 per location, 25+ quoted: already published in the estimator notes) | Med       | Med         | `/pricing/`                              | 2        |
+| Send drinks to another table (social ordering)                                                  | Med       | Low         | Feature page                             | 3        |
+| Order for someone remotely                                                                      | Med       | Low         | Feature page                             | 3        |
+| Happy-hour offers for restaurants                                                               | Med       | Med         | Feature page                             | 3        |
+| About Tend and the team                                                                         | Low       | n/a         | `/about/` (E-E-A-T)                      | 3        |
+| Privacy policy and terms                                                                        | Low       | n/a         | Legal pages (trust; needed for any form) | 2        |
+| Research explainers (ticket size, turnover, labour)                                             | Med       | Med         | Articles that cite the six sources       | 4        |
 
 Adding pages: add the route under `src/app/`, list it in
 `src/content/routes.ts` (sitemap) and give it `pageMetadata()` (canonical,
