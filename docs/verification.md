@@ -574,3 +574,43 @@ page text; the footer © is in the site font, and the mobile menu's CSS →
 
 Verified: every icon renders at 16px in Chrome and WebKit at 390px; axe 0
 violations; 19/19 cross-browser checks in all four engines; `npm run check`.
+
+## 21. SEO / AEO / GEO, security hardening and handover docs (2026-11-04)
+
+**SEO, AEO and GEO** (full audit in `docs/SEO-AUDIT.md`, scored 76/100
+pre-launch):
+
+- Title "Restaurant Table Ordering, Gifting & Payments App | Tend" (56
+  characters) and description (156) rewritten from page facts, keeping the
+  pre-launch status.
+- Organization schema: `description` and a 180px `logo`; WebPage:
+  `primaryImageOfPage` (the 1200x630 share image).
+- Sitemap `lastmod` (the build date); web manifest (`/manifest.webmanifest`);
+  `llms.txt` gains the four "For restaurants" benefits.
+- Confirmed: all copy, FAQ answers, research figures and the estimator's
+  default result are in the raw HTML (no JavaScript needed); one H1; 10
+  FAQ items on the page and in `FAQPage`; no image without alt.
+- The biggest gap is commercial: there is no contact path (no email, phone
+  or form). It is the first item in README, Before launch.
+
+**Security:**
+
+- `vercel.json`: CSP adds `frame-src 'none'`; Permissions-Policy also denies
+  payment, USB, serial, HID, Bluetooth, motion sensors and screen capture;
+  added `X-Permitted-Cross-Domain-Policies: none`.
+- CI: actions pinned to commit SHAs (checkout v7.0.1, setup-node v7.1.0,
+  upload-artifact v7.0.2), `persist-credentials: false`, read-only token.
+- `SECURITY.md` (private vulnerability reporting; the security model).
+- Checked by serving `out/` with the exact `vercel.json` headers (CSP
+  without `upgrade-insecure-requests` on the plain-http test server) and
+  loading the home page at 1440px and 390px (walkthrough and estimator
+  exercised) and the 404: all 8 headers sent, no CSP violations,
+  Permissions-Policy warnings, console errors or failed requests.
+
+**Handover documentation:** `docs/ARCHITECTURE.md` (rendering model,
+section map, content layer, styling cascade, interactions, SEO pipeline,
+security model, decisions, common changes), `CONTRIBUTING.md`, a pull
+request template, and a documentation map at the top of the README.
+
+Re-verified: `npm run check` and `npm run build` pass; axe 0 violations;
+19/19 cross-browser checks in Chrome, Edge, Firefox and WebKit.

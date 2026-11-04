@@ -8,6 +8,17 @@ Built with Next.js 16 (App Router) and React 19 as a fully **static export**:
 `npm run build` writes plain HTML, CSS and JS to `out/`, which any static host
 can serve.
 
+## Documentation
+
+| Read                                         | For                                                                    |
+| -------------------------------------------- | ---------------------------------------------------------------------- |
+| This README                                  | Setup, scripts, structure, configuration, launch checklist             |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | How the code fits together: rendering, sections, styles, SEO, security |
+| [CONTRIBUTING.md](CONTRIBUTING.md)           | Workflow, rules, accessibility and pull-request checklists             |
+| [SECURITY.md](SECURITY.md)                   | Reporting a vulnerability; the security model                          |
+| [docs/SEO-AUDIT.md](docs/SEO-AUDIT.md)       | SEO, AEO and GEO audit with prioritised recommendations                |
+| [docs/verification.md](docs/verification.md) | Every significant change and how it was verified                       |
+
 ## Getting started
 
 Requires Node.js 22.18 or newer (the unit tests use Node's built-in TypeScript
@@ -46,6 +57,7 @@ src/
     robots.ts           robots.txt (blocks everything until indexing is enabled)
     sitemap.ts          sitemap.xml, built from content/routes.ts
     llms.txt/route.ts   llms.txt summary for answer engines, built from content/
+    manifest.ts         web app manifest (name, colours, icons)
   components/
     layout/             site-header (client: mobile menu), site-footer,
                         back-to-top and scroll-reveal (client)
@@ -53,7 +65,8 @@ src/
                         (the Why Tend tile illustrations); story-tabs,
                         estimator-form and products-root are the only other
                         client components
-    ui/                 Brand (wordmark), Icon, SmartLink, SectionLink
+    ui/                 Brand (wordmark), Icon (badge icons), glyph (drawn
+                        link arrows and ornaments), SmartLink, SectionLink
     seo/                JsonLd
   config/
     site.ts             name, tagline, title, description, navigation (client-safe)
@@ -81,7 +94,11 @@ scripts/
   fix-export-segments.mjs
   optimize-images.mjs   hero AVIF/WebP + share image (`npm run images`)
 docs/
+  ARCHITECTURE.md       how the code fits together (start here)
+  SEO-AUDIT.md          SEO / AEO / GEO audit and recommendations
   verification.md       how the migration and later changes were verified
+CONTRIBUTING.md         workflow and rules
+SECURITY.md             vulnerability reporting and security model
 ```
 
 ## Conventions
@@ -173,16 +190,17 @@ so confirm typography on a real Mac or iPhone before launch.
 
 ## Routes
 
-| Path           | Contents                                                                        |
-| -------------- | ------------------------------------------------------------------------------- |
-| `/`            | Home: hero, benefits, features, restaurants, research, estimator, FAQ, products |
-| `/robots.txt`  | Disallow-all until `SITE_INDEXABLE=true`                                        |
-| `/sitemap.xml` | Every route in `src/content/routes.ts`                                          |
-| `/llms.txt`    | Plain-text summary for AI answer engines                                        |
-| `/404.html`    | Styled not-found page                                                           |
+| Path                    | Contents                                                                        |
+| ----------------------- | ------------------------------------------------------------------------------- |
+| `/`                     | Home: hero, benefits, features, restaurants, research, estimator, FAQ, products |
+| `/robots.txt`           | Disallow-all until `SITE_INDEXABLE=true`                                        |
+| `/sitemap.xml`          | Every route in `src/content/routes.ts`                                          |
+| `/llms.txt`             | Plain-text summary for AI answer engines                                        |
+| `/manifest.webmanifest` | Web app manifest                                                                |
+| `/404.html`             | Styled not-found page                                                           |
 
 In-page anchors: `#benefits`, `#experience`, `#features`, `#restaurants`,
-`#research`, `#estimator`, `#questions`, `#products`.
+`#research`, `#estimator`, `#manifesto`, `#questions`, `#products`.
 
 ## Configuration
 
@@ -207,24 +225,38 @@ Set these at **build time** (see `.env.example`):
       prices, card number and totals differ from the Tend app screens they
       depict. The order totals $63.72, but the payment panel shows $71.37 with
       an 18% tip, which only matches the app screen's $60.48 order.
+- [ ] **Give restaurants a way to get in touch** (owner: a sales email or a
+      form endpoint). Today every "Bring Tend to your restaurant" button
+      scrolls to the restaurants section, and there is no email, phone or
+      form on the site. Then add a `contactPoint` to the Organization
+      schema (`lib/structured-data.ts`) and, if a form collects details, a
+      privacy policy.
 - [ ] Connect the real domain and set `SITE_URL` for production.
 - [ ] Only then set `SITE_INDEXABLE=true` and redeploy.
-- [ ] Run Lighthouse on the live URL and submit `sitemap.xml` in Google Search
-      Console.
+- [ ] Submit `sitemap.xml` in Google Search Console and Bing Webmaster Tools;
+      check the structured data with Google's Rich Results Test; run
+      PageSpeed Insights on the live URL.
+- [ ] Enable GitHub private vulnerability reporting (SECURITY.md); publish
+      `/.well-known/security.txt` once there is a security contact.
+- [ ] Decide on analytics (for example cookieless Vercel Web Analytics) and
+      add its origin to the CSP. See docs/SEO-AUDIT.md for the full list.
 
 ## Continuous integration
 
 `.github/workflows/ci.yml` runs on every push to `main` and on pull requests:
 `npm ci` → `npm run check` → `npm run build`, then uploads `out/` as an
-artifact. Dependabot (`.github/dependabot.yml`) proposes npm updates weekly
-(Next/React grouped) and GitHub Actions updates monthly.
+artifact. Actions are pinned to commit SHAs, the token is read-only and not
+persisted. Dependabot (`.github/dependabot.yml`) proposes npm updates weekly
+(Next/React grouped) and GitHub Actions updates (including the pins) monthly.
 
 ## Hosting
 
 Designed for Vercel: import the repository and Vercel detects Next.js and the
 static export automatically. `vercel.json` adds security headers
 (`Content-Security-Policy`, `X-Content-Type-Options`, `Referrer-Policy`,
-`X-Frame-Options`, `Permissions-Policy`, `Strict-Transport-Security`).
+`X-Frame-Options`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`,
+`X-Permitted-Cross-Domain-Policies`, `Strict-Transport-Security`); see
+docs/ARCHITECTURE.md section 8.
 
 The CSP allows only this site plus ImageKit images. `script-src` needs
 `'unsafe-inline'` because a static export bootstraps Next.js with inline
