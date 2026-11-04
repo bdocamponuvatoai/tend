@@ -491,11 +491,11 @@
 
 /* The product walkthrough's dark panel joins the bento as a large tile. */
 .products .product {
-  border-radius: 32px;
+  border-radius: 24px;
 }
-@media (max-width: 700px) {
+@media (min-width: 701px) {
   .products .product {
-    border-radius: 24px;
+    border-radius: 32px;
   }
 }
 

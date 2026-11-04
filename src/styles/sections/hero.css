@@ -1,10 +1,48 @@
+/*
+ * Hero, mobile-first: on phones the copy sits above the photo; from 701px
+ * they share a two-column grid, with desktop sizes from 1001px. The design
+ * layer (design/sections.css) refines it further.
+ */
 .hero {
-  display: grid;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-width: none;
   margin: auto;
+  padding: 0;
+  color: #f7f1df;
+}
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  padding: 45px 7% 37px;
 }
 .hero-copy > p {
-  font-size: 17px;
+  max-width: 445px;
+  color: #d6cebb;
+  font-size: 16px;
   line-height: 1.8;
+}
+.hero h1 {
+  margin: 26px 0;
+  font-size: clamp(51px, 12vw, 78px);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+.hero h1 em {
+  color: #d5bc79;
+  font-size: 1em;
+  letter-spacing: -0.04em;
+}
+.hero .eyebrow {
+  color: #cfb678;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+.hero .line {
+  background: #b6903f;
 }
 .actions {
   display: flex;
@@ -18,98 +56,42 @@
   color: var(--muted);
   margin-top: 32px;
 }
-.hero-photo {
-  position: relative;
-  overflow: hidden;
-}
-.hero-photo img {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  object-fit: cover;
-}
-.hero-photo:after {
-  content: "";
-  position: absolute;
-}
-.photo-caption {
-  position: absolute;
-  z-index: 1;
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  line-height: 1.5;
-}
-.hero-bottom {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  letter-spacing: 1px;
-}
-.hero-bottom > span:last-child {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-.asterisk {
-  font-size: 29px;
-}
-.hero {
-  position: relative;
-  color: #f7f1df;
-  max-width: none;
-  padding: 0 0 0 7%;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-}
-.hero-copy {
-  padding: 78px 40px 67px 0;
-  position: relative;
-  z-index: 1;
-}
-.hero h1 {
-  line-height: 0.98;
-  letter-spacing: -0.04em;
-  margin: 30px 0;
-}
-.hero h1 em {
-  color: #d5bc79;
-  font-size: 1em;
-  letter-spacing: -0.04em;
-}
-.hero .eyebrow {
-  color: #cfb678;
-  font-size: 12px;
-  letter-spacing: 3px;
-}
-.hero .line {
-  background: #b6903f;
-}
-.hero-copy > p {
-  color: #d6cebb;
-  max-width: 445px;
-}
 .hero .launch-note {
   color: #b8ad96;
 }
 .hero-photo {
+  position: relative;
+  overflow: hidden;
+  min-height: 380px;
+  margin: 0;
   border-radius: 0;
-  min-height: 740px;
 }
 .hero-photo img {
-  filter: brightness(0.72);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   object-position: 48% center;
+  filter: brightness(0.72);
 }
 .hero-photo:after {
+  content: "";
+  position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, #14150f, transparent 32%),
-    linear-gradient(0deg, #14150fa6, transparent 50%);
+    linear-gradient(180deg, #14150f, transparent 25%),
+    linear-gradient(0deg, #14150f99, transparent 60%);
 }
 .photo-caption {
-  bottom: 40px;
-  color: #e5d6ad;
+  position: absolute;
+  bottom: 25px;
+  z-index: 1;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  color: #e5d6ad;
+  font-size: 12px;
+  line-height: 1.5;
   letter-spacing: 2px;
 }
 .caption-mark {
@@ -122,102 +104,81 @@
   font-weight: 400;
 }
 .hero-bottom {
+  display: flex;
   grid-column: 1/-1;
-  padding: 24px 7% 24px 0;
-  color: #c7b991;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 7%;
   border-top: 1px solid #3e3b2f;
   background: var(--black);
+  color: #c7b991;
+  font-size: 10px;
+  letter-spacing: 0;
+}
+.hero-bottom > span:last-child {
+  display: none;
+  align-items: center;
+  gap: 7px;
 }
 .asterisk {
   color: #b6903f;
+  font-size: 21px;
 }
-.hero h1 {
-  font-size: clamp(60px, 5.8vw, 94px);
-}
-@media (max-width: 1000px) {
-  .hero-copy .eyebrow {
-    font-size: 10px;
-  }
-  .hero-copy > p {
-    font-size: 16px;
-  }
-}
-@media (max-width: 700px) {
+
+@media (min-width: 701px) {
   .hero {
-    flex-direction: column;
+    display: grid;
+    flex-direction: row;
+    padding: 0 0 0 7%;
   }
-  .hero-copy .eyebrow {
-    font-size: 9px;
-    letter-spacing: 1px;
-  }
-  .hero-bottom {
-    gap: 16px;
-    font-size: 10px;
-    letter-spacing: 0;
-  }
-  .hero-bottom > span:last-child {
-    gap: 7px;
-  }
-  .asterisk {
-    font-size: 21px;
-  }
-}
-@media (max-width: 1000px) {
   .hero-copy {
-    padding-top: 55px;
+    padding: 55px 40px 67px 0;
+  }
+  .hero h1 {
+    margin: 30px 0;
+    font-size: 65px;
   }
   .hero-photo {
     min-height: 720px;
   }
-  .hero .eyebrow {
-    font-size: 10px;
-    letter-spacing: 2px;
-  }
-}
-@media (max-width: 700px) {
-  .hero {
-    padding: 0;
-    display: flex;
-  }
-  .hero-copy {
-    padding: 45px 7% 37px;
-  }
-  .hero h1 {
-    margin: 26px 0;
-  }
-  .hero .eyebrow {
-    font-size: 10px;
-    letter-spacing: 2px;
-  }
-  .hero-copy > p {
-    font-size: 16px;
-  }
-  .hero-photo {
-    min-height: 380px;
-    margin: 0;
-  }
   .hero-photo:after {
     background:
-      linear-gradient(180deg, #14150f, transparent 25%),
-      linear-gradient(0deg, #14150f99, transparent 60%);
+      linear-gradient(90deg, #14150f, transparent 32%),
+      linear-gradient(0deg, #14150fa6, transparent 50%);
   }
   .photo-caption {
-    bottom: 25px;
+    bottom: 40px;
   }
   .hero-bottom {
-    padding: 22px 7%;
+    gap: normal;
+    padding: 24px 7% 24px 0;
+    font-size: 12px;
+    letter-spacing: 1px;
   }
   .hero-bottom > span:last-child {
-    display: none;
+    display: flex;
+    gap: 25px;
+  }
+  .asterisk {
+    font-size: 29px;
   }
 }
-@media (max-width: 1000px) {
-  .hero h1 {
-    font-size: 65px;
+
+@media (min-width: 1001px) {
+  .hero-copy {
+    padding-top: 78px;
   }
-}
-@media (max-width: 700px) {
+  .hero-copy > p {
+    font-size: 17px;
+  }
   .hero h1 {
-    font-size: clamp(51px, 12vw, 78px);
+    font-size: clamp(60px, 5.8vw, 94px);
+  }
+  .hero .eyebrow {
+    font-size: 12px;
+    letter-spacing: 3px;
+  }
+  .hero-photo {
+    min-height: 740px;
   }
 }

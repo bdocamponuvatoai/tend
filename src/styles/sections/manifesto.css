@@ -27,7 +27,7 @@
   min-width: 0;
   max-width: 900px;
   margin: 0;
-  font-size: clamp(43px, 11.5vw, 60px);
+  font-size: clamp(41px, 11.5vw, 49px);
   line-height: 1.02;
   letter-spacing: -0.04em;
   text-wrap: balance;
@@ -48,7 +48,17 @@
   line-height: 1.7;
 }
 .manifesto.section .manifesto-link {
+  width: 100%;
   margin-top: 24px;
+}
+
+@media (min-width: 431px) {
+  .manifesto h2 {
+    font-size: clamp(43px, 11.5vw, 60px);
+  }
+  .manifesto.section .manifesto-link {
+    width: auto;
+  }
 }
 
 @media (min-width: 701px) {
@@ -87,14 +97,5 @@
     justify-self: stretch;
     width: auto;
     padding-bottom: 4px;
-  }
-}
-
-@media (max-width: 430px) {
-  .manifesto h2 {
-    font-size: clamp(41px, 11.5vw, 49px);
-  }
-  .manifesto.section .manifesto-link {
-    width: 100%;
   }
 }

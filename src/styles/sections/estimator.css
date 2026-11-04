@@ -15,6 +15,7 @@
 }
 .estimator-heading h2 {
   margin: 0;
+  font-size: 43px;
 }
 .estimator-heading h2 em {
   color: #8b6722;
@@ -408,7 +409,7 @@
   min-width: 0;
 }
 .estimator-method-main {
-  padding: 26px 22px 28px;
+  padding: 26px 18px 28px;
   border-radius: 28px 28px 12px 12px;
   background:
     radial-gradient(circle at 12% 0%, #ffffff 0, transparent 36%),
@@ -461,9 +462,9 @@
 .estimator-equation {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
+  gap: 4px;
   margin-top: 8px;
-  padding: 6px;
+  padding: 4px;
   border: 1px solid #ddd0b2;
   border-radius: 20px;
   background: #e9dfca;
@@ -477,7 +478,7 @@
   align-content: center;
   min-width: 0;
   min-height: 68px;
-  padding: 10px 7px;
+  padding: 10px 4px;
   border-radius: 14px;
   background: #fffcf5;
   text-align: center;
@@ -670,28 +671,19 @@
   }
 }
 
-@media (max-width: 700px) {
-  .estimator {
-    padding-top: 65px;
-    padding-bottom: 65px;
-  }
-  .estimator-heading h2 {
-    font-size: 43px;
-  }
-}
-
-@media (max-width: 430px) {
+/* Small phones keep the equation rail tight; 431px+ relaxes it. */
+@media (min-width: 431px) {
   .estimator-method-main {
-    padding-right: 18px;
-    padding-left: 18px;
+    padding-right: 22px;
+    padding-left: 22px;
   }
   .estimator-equation {
-    gap: 4px;
-    padding: 4px;
+    gap: 6px;
+    padding: 6px;
   }
   .estimator-equation > span {
-    padding-right: 4px;
-    padding-left: 4px;
+    padding-right: 7px;
+    padding-left: 7px;
   }
 }
 
@@ -702,6 +694,9 @@
   }
   .estimator-heading {
     margin-bottom: 48px;
+  }
+  .estimator-heading h2 {
+    font-size: clamp(39px, 4vw, 64px);
   }
   .estimator-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

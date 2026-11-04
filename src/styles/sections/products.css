@@ -25,8 +25,8 @@
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   /* Side padding comes from the page grid (layout/page-grid.css). */
-  padding-top: 96px;
-  padding-bottom: 104px;
+  padding-top: 60px;
+  padding-bottom: 66px;
 }
 .products .ts-section-label span:first-child {
   color: #76581c;
@@ -72,7 +72,7 @@
   font-family: var(--serif);
   font-weight: 400;
   letter-spacing: -0.045em;
-  font-size: clamp(38px, 4.2vw, 66px);
+  font-size: 42px;
   line-height: 1.08;
   margin-bottom: 28px;
 }
@@ -86,11 +86,11 @@
   justify-content: space-between;
   gap: 20px;
   border-bottom: 1px solid var(--line);
-  padding-bottom: 22px;
-  margin-bottom: 60px;
-  font-size: 12px;
+  padding-bottom: 18px;
+  margin-bottom: 38px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: 1.6px;
+  letter-spacing: 1px;
   line-height: 1.7;
 }
 .products .ts-section-label span:first-child {
@@ -105,11 +105,12 @@
   background: var(--gold);
 }
 .products .ts-section-label span:last-child {
+  display: none;
   font-weight: 400;
   color: var(--muted);
 }
 .products .section-heading {
-  display: flex;
+  display: block;
   align-items: flex-end;
   justify-content: space-between;
   gap: 40px;
@@ -121,13 +122,17 @@
 .products .section-heading > p {
   color: var(--muted);
   font-size: 16px;
-  margin: 0;
-  max-width: 390px;
+  margin: 23px 0 0;
+  max-width: none;
 }
-/* Element-level specificity so the tablet gap (18px) below can win. */
+/* A desktop-only line break in the intro. */
+.products .desktop {
+  display: none;
+}
+/* Element-level specificity so the desktop gap (28px) below can win. */
 :where(.products) .product-list {
   display: grid;
-  gap: 28px;
+  gap: 18px;
 }
 
 :where(.products) summary {
@@ -173,37 +178,37 @@
   transform: none;
 }
 
-@media (max-width: 1100px) {
-  .products .desktop {
-    display: none;
+@media (min-width: 761px) {
+  :where(.products) h2 {
+    font-size: clamp(38px, 4.2vw, 66px);
+  }
+  .products {
+    padding-top: 96px;
+    padding-bottom: 104px;
+  }
+  .products .ts-section-label {
+    margin-bottom: 60px;
+    padding-bottom: 22px;
+    font-size: 12px;
+    letter-spacing: 1.6px;
+  }
+  .products .ts-section-label span:last-child {
+    display: revert;
+  }
+  .products .section-heading {
+    display: flex;
   }
   .products .section-heading > p {
+    margin-top: 0;
     max-width: 310px;
   }
 }
-@media (max-width: 760px) {
-  :where(.products) h2 {
-    font-size: 42px;
-  }
-  .products {
-    padding-top: 60px;
-    padding-bottom: 66px;
-  }
-  .products .ts-section-label {
-    margin-bottom: 38px;
-    padding-bottom: 18px;
-    font-size: 10px;
-    letter-spacing: 1px;
-  }
-  .products .ts-section-label span:last-child {
-    display: none;
-  }
-  .products .section-heading {
-    display: block;
+@media (min-width: 1101px) {
+  .products .desktop {
+    display: revert;
   }
   .products .section-heading > p {
-    margin-top: 23px;
-    max-width: none;
+    max-width: 390px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -226,7 +231,7 @@
 .product {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-columns: 1fr;
   align-items: center;
   overflow: hidden;
   isolation: isolate;
@@ -237,9 +242,9 @@
   content: "";
   position: absolute;
   z-index: 0;
-  left: -12%;
-  top: 50%;
-  width: 48%;
+  left: -30%;
+  top: 62%;
+  width: 110%;
   aspect-ratio: 1;
   translate: 0 -50%;
   border-radius: 50%;
@@ -260,14 +265,14 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  padding: 68px 32px 64px 64px;
-  max-width: 560px;
+  padding: 0 24px 32px;
+  max-width: 640px;
 }
 .product-top {
   display: flex;
   align-items: center;
   gap: 18px;
-  margin-bottom: 38px;
+  margin-bottom: 26px;
 }
 .product-index {
   display: inline-flex;
@@ -320,11 +325,11 @@
   color: var(--accent);
 }
 .tend .product-name {
-  font: 48px/1 var(--serif);
+  font: 38px/1 var(--serif);
   letter-spacing: -1px;
 }
 .product h3 {
-  font: clamp(30px, 2.9vw, 42px)/1.12 var(--serif);
+  font: 30px/1.12 var(--serif);
   letter-spacing: -0.02em;
   margin-bottom: 20px;
 }
@@ -389,14 +394,6 @@
   color: var(--muted);
   margin: 22px 0 0;
 }
-@media (max-width: 1100px) {
-  .product-copy {
-    padding: 52px 22px 50px 40px;
-  }
-  .tend .product-name {
-    font-size: 42px;
-  }
-}
 
 /* Panels match each app's welcome screen, with a lift of light behind the phone. */
 .product.tend {
@@ -406,15 +403,17 @@
 }
 
 .app-demo {
-  --pw: clamp(230px, 21vw, 290px);
+  --pw: min(240px, 64vw);
   --ios: cubic-bezier(0.32, 0.72, 0, 1);
   position: relative;
   z-index: 1;
+  order: -1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(28px, 4vw, 56px);
-  padding: 64px 40px 64px 24px;
+  gap: 22px;
+  padding: 44px 20px 30px;
 }
 
 /* Phone: titanium bezel, side buttons, soft gold glow. */
@@ -636,24 +635,30 @@
   }
 }
 
-/* Step guide beside the phone. */
+/* Step guide: a segmented progress bar under the phone; a list of steps
+   beside it from 1024px. */
 .demo-steps {
-  width: min(100%, 250px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 300px);
 }
 .demo-steps ol {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 4px;
+  grid-template-columns: repeat(var(--count, 5), 1fr);
+  gap: 6px;
+  width: 100%;
 }
 .demo-steps li button {
-  display: grid;
+  display: block;
   grid-template-columns: 30px 1fr;
   align-items: center;
   gap: 2px 10px;
   width: 100%;
-  padding: 10px 0;
+  padding: 12px 0;
   border: 0;
   background: none;
   color: var(--copy);
@@ -666,6 +671,10 @@
 .demo-steps li button:hover {
   color: #fff;
 }
+.demo-steps .n,
+.demo-steps .t {
+  display: none;
+}
 .demo-steps .n {
   font: 13px var(--serif);
   letter-spacing: 1px;
@@ -675,9 +684,9 @@
 .demo-steps .bar {
   display: block;
   grid-column: 2;
-  height: 2px;
-  margin-top: 8px;
-  background: #ffffff1a;
+  height: 3px;
+  margin: 0;
+  background: #ffffff2e;
   border-radius: 2px;
   overflow: hidden;
 }
@@ -699,7 +708,7 @@
 }
 .demo-steps .is-done .bar i {
   width: 100%;
-  opacity: 0.55;
+  opacity: 0.8;
 }
 .app-demo.is-paused .demo-steps .bar i {
   animation-play-state: paused;
@@ -715,8 +724,8 @@
 }
 
 .demo-caption {
-  display: none;
-  margin: 0;
+  display: block;
+  margin: 4px 0 0;
   font-size: 14px;
   color: #fff;
   text-align: center;
@@ -735,7 +744,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 18px;
+  margin-top: 14px;
   padding: 7px 12px 7px 10px;
   border: 1px solid #ffffff2e;
   border-radius: 999px;
@@ -773,80 +782,90 @@
   outline-offset: 4px;
 }
 
-/* Tablet and phone: spotlights stack with the demo above the copy; steps become a segmented progress bar. */
-@media (max-width: 1023px) {
-  .product-list {
-    gap: 18px;
-  }
-  .product {
-    grid-template-columns: 1fr;
-  }
-  .product::before {
-    left: -30%;
-    top: 62%;
-    width: 110%;
-  }
+/* Phones and tablets stack each spotlight with the demo above the copy and
+   the steps as a segmented progress bar (base styles above). From 1024px the
+   copy and the demo sit side by side with a list of steps. */
+@media (min-width: 761px) {
   .product-copy {
-    max-width: 640px;
     padding: 0 44px 48px;
   }
+  .product-top {
+    margin-bottom: 38px;
+  }
+  .tend .product-name {
+    font-size: 42px;
+  }
+  .product h3 {
+    font-size: clamp(30px, 2.9vw, 42px);
+  }
   .app-demo {
-    order: -1;
-    flex-direction: column;
-    gap: 22px;
+    --pw: clamp(230px, 21vw, 290px);
     padding: 52px 24px 36px;
   }
+}
+@media (min-width: 1024px) {
+  .product-list {
+    gap: 28px;
+  }
+  .product {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .product::before {
+    left: -12%;
+    top: 50%;
+    width: 48%;
+  }
+  .product-copy {
+    max-width: 560px;
+    padding: 52px 22px 50px 40px;
+  }
+  .app-demo {
+    order: 0;
+    flex-direction: row;
+    gap: clamp(28px, 4vw, 56px);
+    padding: 64px 40px 64px 24px;
+  }
   .demo-steps {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: min(100%, 300px);
+    display: block;
+    flex-direction: row;
+    align-items: normal;
+    width: min(100%, 250px);
   }
   .demo-steps ol {
-    grid-template-columns: repeat(var(--count, 5), 1fr);
-    gap: 6px;
-    width: 100%;
+    grid-template-columns: none;
+    gap: 4px;
+    width: auto;
   }
   .demo-steps li button {
-    display: block;
-    padding: 12px 0;
+    display: grid;
+    padding: 10px 0;
   }
   .demo-steps .n,
   .demo-steps .t {
-    display: none;
+    display: revert;
   }
   .demo-steps .bar {
-    height: 3px;
-    margin: 0;
-    background: #ffffff2e;
+    height: 2px;
+    margin: 8px 0 0;
+    background: #ffffff1a;
   }
   .demo-steps .is-done .bar i {
-    opacity: 0.8;
+    opacity: 0.55;
   }
   .demo-caption {
-    display: block;
-    margin-top: 4px;
+    display: none;
+    margin-top: 0;
   }
   .demo-toggle {
-    margin-top: 14px;
+    margin-top: 18px;
   }
 }
-@media (max-width: 760px) {
+@media (min-width: 1101px) {
   .product-copy {
-    padding: 0 24px 32px;
-  }
-  .product-top {
-    margin-bottom: 26px;
+    padding: 68px 32px 64px 64px;
   }
   .tend .product-name {
-    font-size: 38px;
-  }
-  .product h3 {
-    font-size: 30px;
-  }
-  .app-demo {
-    --pw: min(240px, 64vw);
-    padding: 44px 20px 30px;
+    font-size: 48px;
   }
 }
 

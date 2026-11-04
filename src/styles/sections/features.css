@@ -4,8 +4,8 @@
 }
 .showcase-heading {
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  gap: 70px;
+  grid-template-columns: 1fr;
+  gap: 30px;
   align-items: end;
   margin-bottom: 48px;
 }
@@ -14,6 +14,7 @@
 }
 .showcase-heading h2 {
   margin-top: 17px;
+  font-size: 46px;
   line-height: 1.02;
 }
 .showcase-intro {
@@ -40,7 +41,7 @@
 }
 .feature-showcase .story-tabs {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 7px;
   margin-bottom: 30px;
   padding: 7px;
@@ -57,7 +58,7 @@
   display: flex;
   gap: 12px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 50px;
   padding: 13px 16px;
   border: 1px solid transparent;
@@ -65,7 +66,7 @@
   text-align: left;
   background: transparent;
   color: #665c4b;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   transition:
     background-color 0.25s,
@@ -100,10 +101,10 @@
 }
 .feature-showcase .story-panel {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 70px;
+  grid-template-columns: 1fr;
+  gap: 30px;
   align-items: center;
-  min-height: 535px;
+  min-height: 0;
   border: 1px solid #fffaf0;
   background:
     radial-gradient(circle at 10% 0%, #ffffff 0, transparent 38%),
@@ -146,7 +147,7 @@
   font-weight: 600;
 }
 .story-copy h3 {
-  font-size: clamp(38px, 3.5vw, 57px);
+  font-size: 44px;
   line-height: 1.05;
   margin: 24px 0;
 }
@@ -191,7 +192,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 22px 28px;
+  padding: 22px 22px;
   border-bottom: 1px solid #e3d8c2;
   gap: 20px;
 }
@@ -221,7 +222,7 @@
 }
 .offer-heading h4,
 .remote-heading h4 {
-  font: 400 42px/1.07 var(--font-serif);
+  font: 400 39px/1.07 var(--font-serif);
   margin: 17px 0;
 }
 .offer-heading p {
@@ -229,7 +230,7 @@
   font-size: 14px;
 }
 .offer-menu {
-  padding: 10px 28px;
+  padding: 10px 22px;
 }
 .offer-menu > div {
   display: flex;
@@ -260,7 +261,7 @@
 .preview-caption {
   font-size: 12px;
   color: #786e59;
-  padding: 15px 28px;
+  padding: 15px 22px;
   border-top: 1px solid #e3d8c2;
 }
 .feature-availability {
@@ -328,7 +329,7 @@
   color: #7a6029;
 }
 .gift-message blockquote {
-  font: italic 34px/1.15 var(--font-serif);
+  font: italic 33px/1.15 var(--font-serif);
   margin: 25px 0;
 }
 .gift-message p {
@@ -369,56 +370,51 @@
 .remote-preview .preview-foot {
   color: #7a6029;
 }
-@media (max-width: 1000px) {
+@media (min-width: 701px) {
   .showcase-heading,
   .feature-showcase .story-panel {
     gap: 35px;
   }
-  .story-tabs button {
-    font-size: 14px;
+  .showcase-heading {
+    grid-template-columns: 1.25fr 1fr;
+  }
+  .feature-showcase .story-panel {
+    grid-template-columns: 1fr 1fr;
+    min-height: 535px;
+  }
+  .showcase-heading h2 {
+    font-size: clamp(39px, 4vw, 64px);
+  }
+  .feature-showcase .story-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .feature-showcase .story-tabs button {
+    justify-content: center;
+    font-size: 15px;
   }
   .story-copy h3 {
     font-size: 43px;
   }
-}
-@media (max-width: 700px) {
-  .showcase-heading,
-  .feature-showcase .story-panel {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  .showcase-heading h2 {
-    font-size: 46px;
-  }
-  .feature-showcase .story-tabs {
-    grid-template-columns: 1fr;
-    margin-bottom: 30px;
-  }
-  .feature-showcase .story-tabs button {
-    justify-content: flex-start;
-    font-size: 16px;
-  }
-  .story-copy h3 {
-    font-size: 44px;
-  }
-  .feature-showcase .story-panel {
-    min-height: 0;
-  }
   .offer-heading h4,
   .remote-heading h4 {
-    font-size: 39px;
+    font-size: 42px;
   }
   .gift-message blockquote {
-    font-size: 33px;
+    font-size: 34px;
   }
   .offer-menu,
   .preview-top,
   .preview-caption {
-    padding-left: 22px;
-    padding-right: 22px;
+    padding-right: 28px;
+    padding-left: 28px;
   }
-  .feature-showcase {
-    padding-top: 65px;
-    padding-bottom: 65px;
+}
+@media (min-width: 1001px) {
+  .showcase-heading,
+  .feature-showcase .story-panel {
+    gap: 70px;
+  }
+  .story-copy h3 {
+    font-size: clamp(38px, 3.5vw, 57px);
   }
 }

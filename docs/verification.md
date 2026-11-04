@@ -520,3 +520,39 @@ Verified: `npm run check` and `npm run build` pass; axe 0 violations
 Firefox and WebKit with no errors or overflow; the method prices render
 intact ("$250/mo", "$499/mo"); the outcome-note card is complete at 390,
 820 and 1518px.
+
+## 19. Mobile-first CSS, responsive sweep and browser parity (2026-11-04)
+
+**Mobile-first conversion.** 43 desktop-first `max-width` queries in 17
+stylesheets (mostly the original partials and the ported product section)
+were rewritten so the base rules are the phone styles and every width
+breakpoint is a `min-width` query. Overrides that never applied (a more
+specific or later rule always won, e.g. the hero's 9px eyebrow and the
+tablet tab size) were dropped. The 65px phone padding repeated in four
+sections now lives once in `sections/section.css`. Height queries for the
+menu on short screens (`max-height`) are unchanged.
+
+Proof of no visual change: every computed style of every element (including
+`::before`/`::after`) and every element's box were compared with the
+previous build in Chrome at 31 widths (320 to 2560px, both sides of every
+breakpoint) on the home page with the walkthrough built, and at 5 widths on
+the 404 page. Every box is identical. The only differing values are the
+menu button's border and font size at 701px and up, where the button is
+`display: none`.
+
+**Responsive sweep** (Chrome, Edge, Firefox, WebKit; 320x640, 360x780,
+375x812, 390x844, 430x932, phones in landscape 844x390 and 932x430, tablets
+768x1024, 820x1180, 1024x768, 1180x820, and 1366x768, 1440x900,
+1920x1080): no horizontal overflow, no element beyond the viewport, no
+clipped text, no errors. The header links measure 22px tall but their touch
+area extends to 40px (`layout/page-grid.css`), and they are spaced well
+apart.
+
+**1:1 parity:** of 168 section heights in Edge, Firefox and WebKit, 167 are
+within 2px of Chrome. The exception is Firefox at 375px, where the hero
+intro wraps to 4 lines instead of 5 because Firefox measures the text a
+fraction of a pixel narrower (normal font-measurement variance between
+engines).
+
+Also re-verified: 19/19 interaction checks in all four engines; axe 0
+violations; estimator features, 404 links and skip link; `npm run check`.

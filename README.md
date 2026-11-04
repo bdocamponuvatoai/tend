@@ -115,7 +115,10 @@ docs/
   phones, 5% on tablets, 7% on desktops, with content capped at 1548px and
   backgrounds full width. `layout/page-grid.css` applies it and must stay the
   last import. New sections get it automatically by using the `section` class.
-  Write new CSS mobile-first (base styles for phones, `min-width` queries up).
+  All CSS is mobile-first: base styles are for phones and every width
+  breakpoint is a `min-width` query (701px tablet, 1001px desktop; a few
+  sections also use 431, 761, 1024, 1101 and 1281px). Only the menu uses
+  `max-height`, for short screens. Keep new CSS the same way.
 - **Design layer.** `styles/design/` holds the shared look: `system.css`
   (flat buttons `.btn-gold` / `.btn-ink`, icon badges, back-to-top, scroll
   reveal), `header.css` (sticky header, CTA pill, dark mobile menu),

@@ -1,28 +1,24 @@
+/* Good to know, mobile-first: one column on phones, two from 701px. */
 .faq {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 70px;
+  grid-template-columns: 1fr;
+  gap: 28px;
 }
 .faq h2 {
   margin-top: 25px;
+  font-size: 43px;
 }
-.faq h2 {
-  font-size: 46px;
-}
-@media (max-width: 1000px) {
+@media (min-width: 701px) {
   .faq {
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
   }
-}
-@media (max-width: 700px) {
-  .faq {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 28px;
+  .faq h2 {
+    font-size: 46px;
   }
 }
-@media (max-width: 700px) {
-  .faq h2 {
-    font-size: 43px;
+@media (min-width: 1001px) {
+  .faq {
+    gap: 70px;
   }
 }

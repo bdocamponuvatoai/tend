@@ -1,14 +1,23 @@
+/* Section rhythm, mobile-first. Side padding comes from layout/page-grid.css. */
 .section {
-  padding: 100px 7%;
+  padding: 60px 6%;
   margin: auto;
 }
-@media (max-width: 1000px) {
+/* A little more air on phones for the content-heavy bands. */
+.feature-showcase,
+.feature-directory,
+.research,
+.estimator {
+  padding-top: 65px;
+  padding-bottom: 65px;
+}
+@media (min-width: 701px) {
   .section {
     padding: 75px 5%;
   }
 }
-@media (max-width: 700px) {
+@media (min-width: 1001px) {
   .section {
-    padding: 60px 6%;
+    padding: 100px 7%;
   }
 }

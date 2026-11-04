@@ -2,13 +2,6 @@
  * Everything around your meal: an open, borderless index. Each feature sits
  * under a hairline that draws in gold on hover; no cards. Mobile-first.
  */
-/* Phones get a tighter band; wider screens keep the shared .section spacing. */
-@media (max-width: 700px) {
-  .feature-directory {
-    padding-top: 65px;
-    padding-bottom: 65px;
-  }
-}
 .directory-heading {
   max-width: 800px;
   margin-bottom: 40px;

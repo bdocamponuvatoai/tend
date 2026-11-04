@@ -49,13 +49,13 @@ p {
   margin: 0;
 }
 h1 {
-  font-size: clamp(48px, 4.5vw, 80px);
+  font-size: clamp(43px, 10.7vw, 66px);
   line-height: 1.09;
   margin: 28px 0;
 }
 h1 em {
   font-size: 1.03em;
-  letter-spacing: -3px;
+  letter-spacing: -2px;
 }
 h2 {
   line-height: 1.18;
@@ -131,17 +131,17 @@ h3 {
 [hidden] {
   display: none !important;
 }
-@media (max-width: 1000px) {
+@media (min-width: 701px) {
   h1 {
     font-size: 50px;
   }
-}
-@media (max-width: 700px) {
-  h1 {
-    font-size: clamp(43px, 10.7vw, 66px);
-  }
   h1 em {
-    letter-spacing: -2px;
+    letter-spacing: -3px;
+  }
+}
+@media (min-width: 1001px) {
+  h1 {
+    font-size: clamp(48px, 4.5vw, 80px);
   }
 }
 @media (prefers-reduced-motion: reduce) {

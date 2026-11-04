@@ -220,6 +220,7 @@ header[data-scrolled] + #mobile-nav:not([hidden]) {
  * with the menu open, becomes a gold-ringed ×.
  */
 #menu-toggle {
+  display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
@@ -289,13 +290,11 @@ header[data-scrolled] + #mobile-nav:not([hidden]) {
 #menu-toggle[aria-expanded="true"] .menu-icon::after {
   transform: rotate(-45deg);
 }
-@media (max-width: 700px) {
-  #menu-toggle {
-    display: grid;
-  }
-}
 
 @media (min-width: 701px) {
+  #menu-toggle {
+    display: none;
+  }
   header nav {
     align-items: center;
   }
