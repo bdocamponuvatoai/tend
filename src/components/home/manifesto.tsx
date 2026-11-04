@@ -1,3 +1,5 @@
+import { LinkArrow } from "@/components/ui/glyph";
+
 export function Manifesto() {
   return (
     <section
@@ -24,7 +26,7 @@ export function Manifesto() {
           </p>
           <a href="#experience" className="btn btn-ink manifesto-link">
             Discover the Tend experience
-            <span aria-hidden="true">↗</span>
+            <LinkArrow />
           </a>
         </div>
       </div>

@@ -556,3 +556,21 @@ engines).
 
 Also re-verified: 19/19 interaction checks in all four engines; axe 0
 violations; estimator features, 404 links and skip link; `npm run check`.
+
+## 20. Arrow and asterisk icons drawn as SVG (2026-11-04)
+
+Reported on a phone: the "Bring Tend to your restaurant ↗" button showed the
+arrow as a blue colour-emoji tile. The site's fonts have no glyph for ↗
+(U+2197) or ✳ (U+2733), so phones fill them from the colour emoji font.
+
+All five ↗ (hero, closing, mobile-menu and manifesto buttons; 404 "Back to
+Tend"), the ↓ on "Estimate the impact for your venue" and the hero's ✳ are
+now drawn SVG line icons (`components/ui/glyph.tsx`: lucide ArrowUpRight /
+ArrowDown at 1.75 stroke, and an eight-spoke asterisk), sized to the text
+and `aria-hidden`. The hover nudge keeps its direction (up-right, or down
+for ↓). A scan of the source finds no other emoji-capable character in the
+page text; the footer © is in the site font, and the mobile menu's CSS →
+(U+2192) has no emoji form.
+
+Verified: every icon renders at 16px in Chrome and WebKit at 390px; axe 0
+violations; 19/19 cross-browser checks in all four engines; `npm run check`.

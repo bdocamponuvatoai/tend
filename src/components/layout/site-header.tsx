@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Brand } from "@/components/ui/brand";
+import { LinkArrow } from "@/components/ui/glyph";
 import { SectionLink } from "@/components/ui/section-link";
 import { site, type NavLink } from "@/config/site";
 
@@ -106,7 +107,7 @@ export function SiteHeader() {
             href="#restaurants"
             onClick={close}
           >
-            Bring Tend to your restaurant <span aria-hidden="true">↗</span>
+            Bring Tend to your restaurant <LinkArrow />
           </SectionLink>
         </div>
         {/* Large decorative wordmark closing the menu. */}

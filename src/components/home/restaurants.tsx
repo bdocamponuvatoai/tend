@@ -1,4 +1,5 @@
 import { restaurantBenefits } from "@/content/home";
+import { LinkArrow } from "@/components/ui/glyph";
 
 export function Restaurants() {
   return (
@@ -33,7 +34,7 @@ export function Restaurants() {
           Restaurant participation and launch details will be announced here.
         </span>
         <a className="btn btn-gold" href="#estimator">
-          Estimate the impact for your venue <span aria-hidden="true">↓</span>
+          Estimate the impact for your venue <LinkArrow down />
         </a>
       </div>
     </section>

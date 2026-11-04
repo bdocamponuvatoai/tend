@@ -1,3 +1,5 @@
+import { LinkArrow } from "@/components/ui/glyph";
+
 export function Closing() {
   return (
     <section className="closing">
@@ -16,7 +18,7 @@ export function Closing() {
           Make more of every meal with Tend.
         </p>
         <a className="btn btn-gold" href="#restaurants">
-          Bring Tend to your restaurant <span aria-hidden="true">↗</span>
+          Bring Tend to your restaurant <LinkArrow />
         </a>
       </div>
     </section>

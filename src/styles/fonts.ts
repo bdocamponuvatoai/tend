@@ -6,8 +6,10 @@ import localFont from "next/font/local";
 // DM Sans 100–1000, Cormorant 300–700), as CSS Fonts 4 recommends, instead
 // of repeating the same file once per fixed weight. Text metrics are
 // identical either way in Chromium, Gecko and WebKit (measured).
-// `adjustFontFallback` is off so glyphs the files lack (→, ↗, ✳) fall through
-// to the same system fonts as before.
+// `adjustFontFallback` is off so glyphs the files lack (the mobile menu's →)
+// fall through to the same system fonts as before. Arrows and ornaments in
+// the page are SVG (components/ui/glyph.tsx): as characters, phones drew
+// them from the colour emoji font.
 
 export const dmSans = localFont({
   src: "../assets/fonts/dm-sans-latin.woff2",

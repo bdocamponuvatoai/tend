@@ -28,6 +28,25 @@
   line-height: 1;
   transition: transform 0.25s var(--ease-out);
 }
+/* Drawn arrows and the hero asterisk (components/ui/glyph.tsx), sized to
+   the text: SVG, so phones can't swap them for colour emoji. */
+.link-arrow {
+  display: inline-flex;
+  vertical-align: -0.125em;
+}
+.link-arrow svg {
+  display: block;
+  width: 1em;
+  height: 1em;
+}
+.text-link .link-arrow {
+  margin-left: 2px;
+}
+.asterisk svg {
+  display: block;
+  width: 0.8em;
+  height: 0.8em;
+}
 /* Flat fills: champagne on the dark bands, ink on the light ones. */
 .btn-gold {
   background: #d5bc79;
@@ -55,6 +74,9 @@
   }
   .btn:hover span {
     transform: translate(2px, -2px);
+  }
+  .btn:hover .link-arrow--down {
+    transform: translateY(2px);
   }
 }
 

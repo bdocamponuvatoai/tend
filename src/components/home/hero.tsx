@@ -1,4 +1,5 @@
 import { HeroPicture } from "@/components/home/hero-picture";
+import { AsteriskMark, LinkArrow } from "@/components/ui/glyph";
 import { site } from "@/config/site";
 
 export function Hero() {
@@ -22,7 +23,7 @@ export function Hero() {
         </p>
         <div className="actions">
           <a className="btn btn-gold" href="#restaurants">
-            Bring Tend to your restaurant <span aria-hidden="true">↗</span>
+            Bring Tend to your restaurant <LinkArrow />
           </a>
         </div>
         <div className="launch-note">
@@ -39,7 +40,7 @@ export function Hero() {
       <div className="hero-bottom">
         <span>{site.tagline}</span>
         <span>
-          MADE FOR THE TABLE <span className="asterisk">✳</span>
+          MADE FOR THE TABLE <AsteriskMark />
         </span>
       </div>
     </section>

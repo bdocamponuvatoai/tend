@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LinkArrow } from "@/components/ui/glyph";
 import { SmartLink } from "@/components/ui/smart-link";
 
 export const metadata: Metadata = {
@@ -18,7 +19,7 @@ export default function NotFound() {
         </h1>
         <p>The page you’re looking for doesn’t exist or has moved.</p>
         <SmartLink href="/" className="text-link">
-          Back to Tend <span aria-hidden="true">↗</span>
+          Back to Tend <LinkArrow />
         </SmartLink>
       </section>
     </main>
