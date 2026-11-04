@@ -13,11 +13,14 @@ export type NavLink = {
 export const site = {
   name: "Tend",
   tagline: "Your table. Their table. Wherever you are.",
-  // Search-facing title and description: name what Tend does, in the page's
-  // own terms. The tagline stays in the hero, footer and structured data.
-  title: "Tend — Order, gift drinks & treat someone at restaurants",
+  // Search-facing title and description, in the page's own terms. The title
+  // leads with what restaurant buyers search for and ends with the brand
+  // (50-60 characters); the description (150-160) keeps the pre-launch
+  // status and closes on the estimator. The tagline stays in the hero,
+  // footer and structured data.
+  title: "Restaurant Table Ordering, Gifting & Payments App | Tend",
   description:
-    "Tend is a dining app preparing to launch: order and pay at your table, send drinks to another table, treat someone remotely, and estimate restaurant gains.",
+    "Tend is preparing to launch: order and pay at the table, send drinks to another table, treat someone remotely, and see what it could add to your restaurant.",
   themeColor: "#171810",
   locale: "en_US",
   parent: {

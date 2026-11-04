@@ -1,7 +1,7 @@
 import { siteUrl } from "@/config/deployment";
 import { site } from "@/config/site";
 import { faq } from "@/content/faq";
-import { featureDirectory } from "@/content/home";
+import { featureDirectory, restaurantBenefits } from "@/content/home";
 import { researchStats } from "@/content/research";
 import {
   SERVICE_NIGHTS_PER_MONTH,
@@ -36,6 +36,10 @@ ${site.name} is part of ${site.parent.name} (${site.parent.url}). Status: prepar
 ## Features
 
 ${featureDirectory.map((f) => `- ${f.title} ${f.body}`).join("\n")}
+
+## For restaurants
+
+${restaurantBenefits.map((b) => `- ${b.title} ${b.body}`).join("\n")}
 
 ## Industry research cited by Tend
 

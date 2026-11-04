@@ -1,3 +1,4 @@
+import shareImage from "@/assets/images/og-image.jpg";
 import type { FaqItem } from "@/content/faq";
 import { site } from "@/config/site";
 
@@ -14,6 +15,12 @@ export function homeStructuredData({
 }) {
   const home = `${siteUrl}/`;
   const orgId = `${home}#organization`;
+  const image = {
+    "@type": "ImageObject",
+    url: `${siteUrl}${shareImage.src}`,
+    width: shareImage.width,
+    height: shareImage.height,
+  };
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -22,7 +29,15 @@ export function homeStructuredData({
         "@id": orgId,
         name: site.name,
         url: home,
+        description: site.description,
         slogan: site.tagline,
+        // 180px app icon (app/apple-icon.png); Google needs at least 112px.
+        logo: {
+          "@type": "ImageObject",
+          url: `${siteUrl}/apple-icon.png`,
+          width: 180,
+          height: 180,
+        },
         parentOrganization: {
           "@type": "Organization",
           name: site.parent.name,
@@ -47,6 +62,7 @@ export function homeStructuredData({
         inLanguage: "en",
         isPartOf: { "@id": `${home}#website` },
         about: { "@id": orgId },
+        primaryImageOfPage: image,
       },
       {
         "@type": "WebApplication",
