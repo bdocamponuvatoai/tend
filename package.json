@@ -5,21 +5,29 @@
   "type": "module",
   "description": "Tend marketing site: a static Next.js export.",
   "engines": {
-    "node": ">=20.9"
+    "node": ">=22.18"
   },
+  "browserslist": [
+    "chrome 111",
+    "edge 111",
+    "firefox 111",
+    "safari 16.4"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "postbuild": "node scripts/fix-export-segments.mjs",
     "preview": "npx serve@14 out",
-    "lint": "eslint",
+    "lint": "eslint --max-warnings=0",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "node --test \"src/**/*.test.ts\"",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "npm run typecheck && npm run lint && npm run format:check && npm run test"
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm run test",
+    "images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
+    "lucide-react": "^1.67.0",
     "next": "16.4.3",
     "react": "19.3.1",
     "react-dom": "19.3.1",
@@ -29,9 +37,10 @@
     "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^10.13.0",
+    "eslint": "^9.39.5",
     "eslint-config-next": "16.4.3",
     "prettier": "^3.9.10",
+    "sharp": "^0.35.5",
     "typescript": "^5"
   }
 }

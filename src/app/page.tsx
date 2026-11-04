@@ -7,6 +7,7 @@ import { FeatureDirectory } from "@/components/home/feature-directory";
 import { FeatureShowcase } from "@/components/home/feature-showcase";
 import { Hero } from "@/components/home/hero";
 import { Manifesto } from "@/components/home/manifesto";
+import { ProductsSection } from "@/components/home/products-section";
 import { Research } from "@/components/home/research";
 import { Restaurants } from "@/components/home/restaurants";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -33,6 +34,7 @@ export default function HomePage() {
         <Estimator />
         <Manifesto />
         <FaqSection />
+        <ProductsSection />
         <Closing />
       </main>
     </>

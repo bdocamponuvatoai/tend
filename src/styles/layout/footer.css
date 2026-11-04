@@ -11,8 +11,7 @@ footer {
 .footer-top {
   padding: 15px 0 40px;
 }
-.footer-top > span,
-.footer-top > a:last-child {
+.footer-top > span {
   font-size: 14px;
 }
 .footer-bottom {

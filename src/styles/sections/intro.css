@@ -26,13 +26,6 @@
 }
 .steps article {
   border-top: 1px solid #c9bda4;
-  padding-top: 22px;
-}
-.step-number {
-  font-size: 13px;
-}
-.steps h3 {
-  margin: 27px 0 12px;
 }
 .steps p {
   color: var(--muted);
@@ -41,9 +34,6 @@
 .intro-grid .large-copy {
   font-family: var(--font-serif);
   font-size: 29px;
-}
-.step-number {
-  color: #96722d;
 }
 .steps p {
   font-size: 16px;
@@ -70,12 +60,8 @@
     gap: 25px;
   }
   .steps article {
-    display: grid;
     grid-template-columns: 35px 1fr;
     gap: 9px 15px;
-  }
-  .steps h3 {
-    margin: 0;
   }
   .steps p {
     grid-column: 2;

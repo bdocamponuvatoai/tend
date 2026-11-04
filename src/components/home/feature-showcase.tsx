@@ -29,55 +29,62 @@ const stories: Story[] = [
             conversation.
           </div>
         </div>
-        <div
-          className="feature-preview happy-preview"
-          role="figure"
-          aria-label="Illustrative happy hour menu"
-        >
-          <div className="preview-top">
-            <span className="preview-wordmark">Tend</span>
-            <span>HAPPY HOUR</span>
+        <div className="preview-stage">
+          <div
+            className="feature-preview happy-preview"
+            role="figure"
+            aria-label="Illustrative happy hour menu"
+          >
+            <div className="preview-top">
+              <span className="preview-wordmark">Tend</span>
+              <span>HAPPY HOUR</span>
+            </div>
+            <div className="offer-heading">
+              <span>THE GOLDEN HOUR</span>
+              <h4>
+                A good time
+                <br />
+                for great company.
+              </h4>
+              <p>4–6 PM · Selected drinks</p>
+            </div>
+            <div className="offer-menu">
+              {[
+                [
+                  "Citrus spritz",
+                  "Bright citrus · sparkling finish",
+                  "$12",
+                  "$9",
+                ],
+                [
+                  "House white",
+                  "Crisp · refreshing · by the glass",
+                  "$10",
+                  "$7",
+                ],
+                [
+                  "Garden zero-proof",
+                  "Cucumber · lime · fresh herbs",
+                  "$9",
+                  "$6",
+                ],
+              ].map(([name, notes, was, now]) => (
+                <div key={name}>
+                  <span>
+                    {name}
+                    <small>{notes}</small>
+                  </span>
+                  <span>
+                    <del>{was}</del>
+                    {` ${now}`}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="preview-caption">
+              Illustrative menu, schedule, and prices.
+            </p>
           </div>
-          <div className="offer-heading">
-            <span>THE GOLDEN HOUR</span>
-            <h4>
-              A good time
-              <br />
-              for great company.
-            </h4>
-            <p>4–6 PM · Selected drinks</p>
-          </div>
-          <div className="offer-menu">
-            {[
-              [
-                "Citrus spritz",
-                "Bright citrus · sparkling finish",
-                "$12",
-                "$9",
-              ],
-              ["House white", "Crisp · refreshing · by the glass", "$10", "$7"],
-              [
-                "Garden zero-proof",
-                "Cucumber · lime · fresh herbs",
-                "$9",
-                "$6",
-              ],
-            ].map(([name, notes, was, now]) => (
-              <div key={name}>
-                <span>
-                  {name}
-                  <small>{notes}</small>
-                </span>
-                <span>
-                  <del>{was}</del>
-                  {` ${now}`}
-                </span>
-              </div>
-            ))}
-          </div>
-          <p className="preview-caption">
-            Illustrative menu, schedule, and prices.
-          </p>
         </div>
       </>
     ),
@@ -109,39 +116,41 @@ const stories: Story[] = [
             Turn a simple order into a moment someone remembers.
           </div>
         </div>
-        <div
-          className="feature-preview gift-preview"
-          role="figure"
-          aria-label="Illustrative drink gift"
-        >
-          <div className="preview-top">
-            <span className="preview-wordmark">Tend</span>
-            <span>SOCIAL ORDERING</span>
+        <div className="preview-stage">
+          <div
+            className="feature-preview gift-preview"
+            role="figure"
+            aria-label="Illustrative drink gift"
+          >
+            <div className="preview-top">
+              <span className="preview-wordmark">Tend</span>
+              <span>SOCIAL ORDERING</span>
+            </div>
+            <div className="gift-route">
+              <span>
+                FROM TABLE <b>04</b>
+              </span>
+              <span aria-hidden="true">→</span>
+              <span>
+                TO TABLE <b>12</b>
+              </span>
+            </div>
+            <div className="gift-message">
+              <span>A LITTLE SOMETHING FOR YOUR TABLE</span>
+              <blockquote>
+                “Congratulations!
+                <br />
+                Here’s to your next chapter.”
+              </blockquote>
+              <p>2 × Citrus spritz</p>
+            </div>
+            <div className="preview-foot">
+              <span>A personal note. A shared celebration.</span>
+            </div>
+            <p className="preview-caption">
+              Illustrative gift example. Nothing is sent.
+            </p>
           </div>
-          <div className="gift-route">
-            <span>
-              FROM TABLE <b>04</b>
-            </span>
-            <span aria-hidden="true">→</span>
-            <span>
-              TO TABLE <b>12</b>
-            </span>
-          </div>
-          <div className="gift-message">
-            <span>A LITTLE SOMETHING FOR YOUR TABLE</span>
-            <blockquote>
-              “Congratulations!
-              <br />
-              Here’s to your next chapter.”
-            </blockquote>
-            <p>2 × Citrus spritz</p>
-          </div>
-          <div className="preview-foot">
-            <span>A personal note. A shared celebration.</span>
-          </div>
-          <p className="preview-caption">
-            Illustrative gift example. Nothing is sent.
-          </p>
         </div>
       </>
     ),
@@ -174,41 +183,43 @@ const stories: Story[] = [
             reach.
           </div>
         </div>
-        <div
-          className="feature-preview remote-preview"
-          role="figure"
-          aria-label="Illustrative remote meal order"
-        >
-          <div className="preview-top">
-            <span className="preview-wordmark">Tend</span>
-            <span>REMOTE ORDERING</span>
+        <div className="preview-stage">
+          <div
+            className="feature-preview remote-preview"
+            role="figure"
+            aria-label="Illustrative remote meal order"
+          >
+            <div className="preview-top">
+              <span className="preview-wordmark">Tend</span>
+              <span>REMOTE ORDERING</span>
+            </div>
+            <div className="remote-heading">
+              <span>YOU PAY. THEY EAT.</span>
+              <h4>
+                A little care,
+                <br />
+                from wherever you are.
+              </h4>
+            </div>
+            <dl className="remote-details">
+              {[
+                ["For", "The kids, dining with family"],
+                ["Where", "Their restaurant · Table 08"],
+                ["On the menu", "Pasta, lemonade & dessert"],
+              ].map(([term, detail]) => (
+                <div key={term}>
+                  <dt>{term}</dt>
+                  <dd>{detail}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="preview-foot">
+              <span>Your treat. Their table.</span>
+            </div>
+            <p className="preview-caption">
+              Illustrative order. No order or payment is made.
+            </p>
           </div>
-          <div className="remote-heading">
-            <span>YOU PAY. THEY EAT.</span>
-            <h4>
-              A little care,
-              <br />
-              from wherever you are.
-            </h4>
-          </div>
-          <dl className="remote-details">
-            {[
-              ["For", "The kids, dining with family"],
-              ["Where", "Their restaurant · Table 08"],
-              ["On the menu", "Pasta, lemonade & dessert"],
-            ].map(([term, detail]) => (
-              <div key={term}>
-                <dt>{term}</dt>
-                <dd>{detail}</dd>
-              </div>
-            ))}
-          </dl>
-          <div className="preview-foot">
-            <span>Your treat. Their table.</span>
-          </div>
-          <p className="preview-caption">
-            Illustrative order. No order or payment is made.
-          </p>
         </div>
       </>
     ),

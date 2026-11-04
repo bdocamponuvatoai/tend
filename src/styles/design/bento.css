@@ -1,0 +1,486 @@
+/*
+ * Bento tiles: rounded tiles of different sizes and fills, some with a
+ * folder-tab corner, used by Why Tend, App features and Research.
+ * Fills come from Tend's palette: champagne, sand, cream and ink.
+ */
+.tile {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 28px;
+}
+.tile--champagne {
+  --muted: #5c5547;
+  background: #efe3c4;
+}
+.tile--sand {
+  --muted: #5f584b;
+  background: #e9e0cc;
+}
+.tile--cream {
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px #e6dcc6;
+}
+.tile--ink {
+  --muted: #c9bfa9;
+  background: var(--black);
+  color: #f7f1df;
+}
+.tile--gold {
+  --muted: #3f3524;
+  background: #d4b673;
+}
+
+/*
+ * Folder tab: a notch cut from the tile's top-right corner, filled with the
+ * colour of the surface behind the tile (--tab-bg). The two pseudo-elements
+ * are the concave curves where the notch meets the tile's top and right
+ * edges, so the outline reads as one continuous S-curve.
+ */
+/* The tab covers the tile's top-right corner; rounding it too would leave a
+   faint anti-aliased arc of the tile colour around the tab. */
+.tile--tabbed {
+  border-top-right-radius: 0;
+}
+.tile-tab {
+  --r: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 18px 4px 20px;
+  border-bottom-left-radius: var(--r);
+  background: var(--tab-bg, var(--paper));
+}
+.tile-tab::before,
+.tile-tab::after {
+  content: "";
+  position: absolute;
+  width: var(--r);
+  height: var(--r);
+  background: radial-gradient(
+    circle at 0 100%,
+    transparent calc(var(--r) - 0.5px),
+    var(--tab-bg, var(--paper)) var(--r)
+  );
+  pointer-events: none;
+}
+.tile-tab::before {
+  top: 0;
+  right: 100%;
+}
+.tile-tab::after {
+  top: 100%;
+  right: 0;
+}
+
+/* Integrated benefit artwork. Unlike the old phone previews, these surfaces
+   belong to the bento tile: a menu canvas, dish editorial, order ledger and
+   payment panel, each using the same underlying meal. */
+.benefit-visual-wrap,
+.benefit-visual {
+  width: 100%;
+  height: 100%;
+}
+.benefit-visual {
+  position: relative;
+  overflow: hidden;
+  color: #211f18;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  line-height: 1.3;
+  transform-origin: center;
+}
+.benefit-visual span,
+.benefit-visual strong,
+.benefit-visual small,
+.benefit-visual b {
+  line-height: inherit;
+}
+.benefit-visual b,
+.benefit-pay-total > strong,
+.benefit-order-total > b {
+  font-variant-numeric: tabular-nums;
+}
+.benefit-visual p {
+  color: #6c6455;
+  font-size: 10px;
+  line-height: 1.45;
+}
+.benefit-food {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: #e5dac1;
+}
+.benefit-food img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 01 â€” an open menu canvas. */
+.benefit-visual--menu {
+  padding: 18px 16px 0;
+  border-radius: 24px 0 0;
+  background: #fffaf0;
+  box-shadow: inset 0 0 0 1px #d9c99e;
+}
+.benefit-menu-heading,
+.benefit-order-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+}
+.benefit-menu-heading > div,
+.benefit-order-heading > div {
+  display: grid;
+  gap: 2px;
+}
+.benefit-menu-heading span,
+.benefit-order-heading span,
+.benefit-detail-card > span {
+  color: #8a6826;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+.benefit-menu-heading strong,
+.benefit-order-heading strong {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.benefit-menu-heading > b {
+  color: #776e5d;
+  font-size: 8px;
+  font-weight: 500;
+}
+.benefit-menu-feature {
+  position: relative;
+  height: 132px;
+  overflow: hidden;
+  border-radius: 17px;
+  color: #fffaf0;
+}
+.benefit-menu-feature::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #15160fe6, transparent 76%);
+}
+.benefit-menu-feature > .benefit-food {
+  width: 100%;
+  height: 100%;
+}
+.benefit-menu-feature > div {
+  position: absolute;
+  right: 13px;
+  bottom: 12px;
+  left: 13px;
+  z-index: 1;
+  display: grid;
+  gap: 2px;
+}
+.benefit-menu-feature div > span {
+  color: #e0c477;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.benefit-menu-feature div > strong {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+}
+.benefit-menu-feature div > small {
+  color: #e9e1d1;
+  font-size: 8px;
+}
+.benefit-menu-list {
+  padding-top: 6px;
+}
+.benefit-menu-list > div,
+.benefit-order-row {
+  display: grid;
+  align-items: center;
+  border-bottom: 1px solid #ded3bc;
+}
+.benefit-menu-list > div {
+  grid-template-columns: 36px 1fr auto;
+  gap: 9px;
+  padding: 7px 0;
+}
+.benefit-menu-list .benefit-food {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+.benefit-menu-list span,
+.benefit-order-row > span {
+  display: grid;
+  gap: 2px;
+}
+.benefit-menu-list strong,
+.benefit-order-row strong {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  font-weight: 600;
+}
+.benefit-menu-list small,
+.benefit-order-row small {
+  color: #746b5c;
+  font-size: 7px;
+}
+.benefit-menu-list b,
+.benefit-order-row > b {
+  font-size: 9px;
+}
+
+/* 02 â€” photography and information share one uninterrupted surface. */
+.benefit-visual--detail {
+  background: #1b1c16;
+}
+.benefit-visual--detail > .benefit-food {
+  width: 100%;
+  height: 100%;
+}
+.benefit-visual--detail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 35%, #11120de0 100%);
+  pointer-events: none;
+}
+.benefit-detail-card {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  z-index: 1;
+  padding: 15px;
+  border: 1px solid #ffffff2e;
+  border-radius: 18px;
+  background: #fffaf0f5;
+}
+.benefit-detail-card > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 3px;
+}
+.benefit-detail-card div > strong {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.benefit-detail-card div > b {
+  font-size: 10px;
+}
+.benefit-detail-card > p {
+  margin-top: 4px;
+}
+.benefit-detail-tags {
+  justify-content: flex-start !important;
+  margin-top: 9px !important;
+}
+.benefit-detail-tags span {
+  padding: 4px 7px;
+  border: 1px solid #d6c9af;
+  border-radius: 999px;
+  color: #685a3d;
+  font-size: 7px;
+}
+
+/* 03 â€” a paper-like order ledger. */
+.benefit-visual--order {
+  padding: 19px 17px 0;
+  border-radius: 24px 0 0;
+  background: #fffaf0;
+  box-shadow: inset 0 0 0 1px #d9cdb4;
+}
+.benefit-order-heading > b {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #eee2c6;
+  color: #795b1e;
+  font-size: 7px;
+  letter-spacing: 0.08em;
+}
+.benefit-order-list {
+  border-top: 1px solid #d8ccb4;
+}
+.benefit-order-row {
+  grid-template-columns: 42px 1fr auto;
+  gap: 10px;
+  padding: 9px 0;
+}
+.benefit-order-row .benefit-food {
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
+}
+.benefit-order-total {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3px 14px;
+  align-items: baseline;
+  padding-top: 12px;
+}
+.benefit-order-total > span {
+  grid-column: 1 / -1;
+  color: #7a7162;
+  font-size: 8px;
+}
+.benefit-order-total > strong {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 600;
+}
+.benefit-order-total > b {
+  font-size: 12px;
+}
+
+/* 04 â€” payment controls presented as a composed panel, not an app screen. */
+.benefit-visual--pay {
+  padding: 16px;
+  border-radius: 24px 0 0;
+  background: #f5ead0;
+  box-shadow: inset 0 0 0 1px #b6964f;
+}
+.benefit-pay-total {
+  position: relative;
+  padding: 18px;
+  border-radius: 19px;
+  background: #1c1e17;
+  color: #fffaf0;
+}
+.benefit-pay-total > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #d8bc72;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+.benefit-pay-total > strong {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+.benefit-pay-total > small {
+  color: #c9bfaa;
+  font-size: 8px;
+}
+.benefit-pay-thumbs {
+  display: flex;
+  margin-top: 11px;
+}
+.benefit-pay-thumbs .benefit-food {
+  width: 31px;
+  height: 31px;
+  margin-right: -6px;
+  border: 2px solid #1c1e17;
+  border-radius: 50%;
+}
+.benefit-tip-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+.benefit-tip-row span {
+  display: grid;
+  place-items: center;
+  min-height: 28px;
+  border: 1px solid #d4c294;
+  border-radius: 999px;
+  background: #fffaf0;
+  color: #615948;
+  font-size: 8px;
+}
+.benefit-tip-row .is-selected {
+  border-color: #1c1e17;
+  background: #1c1e17;
+  color: #fffaf0;
+}
+.benefit-pay-option {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 9px;
+  align-items: center;
+  padding: 11px 2px;
+  border-bottom: 1px solid #d8c89f;
+}
+.benefit-pay-option > span {
+  display: grid;
+  gap: 1px;
+}
+.benefit-pay-option strong {
+  font-size: 9px;
+}
+.benefit-pay-option small {
+  color: #716957;
+  font-size: 7px;
+}
+
+/* The product walkthrough's dark panel joins the bento as a large tile. */
+.products .product {
+  border-radius: 32px;
+}
+@media (max-width: 700px) {
+  .products .product {
+    border-radius: 24px;
+  }
+}
+
+/* Round arrow buttons (previous / next). */
+.tile-arrow {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid #d8cbaa;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  transition:
+    background-color 0.25s,
+    color 0.25s,
+    border-color 0.25s;
+}
+.tile-arrow--solid {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+.tile-arrow:focus-visible {
+  outline: 3px solid #bc702a;
+  outline-offset: 3px;
+}
+@media (hover: hover) {
+  .tile-arrow:hover {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .tile-arrow--solid:hover {
+    background: #3a3427;
+  }
+}

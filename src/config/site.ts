@@ -3,7 +3,12 @@
  * here depends on the environment.
  */
 
-export type NavLink = { href: string; label: string };
+export type NavLink = {
+  href: string;
+  label: string;
+  /** Shown as the header's call-to-action pill. */
+  cta?: boolean;
+};
 
 export const site = {
   name: "Tend",
@@ -23,7 +28,7 @@ export const site = {
     { href: "#benefits", label: "Why Tend" },
     { href: "#features", label: "App features" },
     { href: "#restaurants", label: "For restaurants" },
-    { href: "#estimator", label: "Estimator" },
+    { href: "#estimator", label: "Estimator", cta: true },
     { href: "#questions", label: "Good to know" },
   ] satisfies NavLink[],
 } as const;

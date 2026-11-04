@@ -6,12 +6,6 @@
 .faq h2 {
   margin-top: 25px;
 }
-.faq-list details {
-  border-bottom: 1px solid var(--border);
-}
-.faq-list details:first-child {
-  border-top: 1px solid var(--border);
-}
 .faq h2 {
   font-size: 46px;
 }

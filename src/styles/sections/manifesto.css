@@ -9,9 +9,6 @@
   max-width: 520px;
   margin: 0 auto 25px;
 }
-.manifesto {
-  background: #e9e1cf;
-}
 .manifesto h2 {
   font-size: clamp(42px, 4.9vw, 76px);
 }

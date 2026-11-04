@@ -10,8 +10,14 @@ export function SiteFooter() {
       <div className="footer-top">
         <Brand />
         <span>{site.tagline}</span>
-        <a href="#main">Back to top ↑</a>
       </div>
+      <nav className="footer-nav" aria-label="Footer navigation">
+        {site.nav.map((link) => (
+          <a key={link.href} href={link.href}>
+            {link.label}
+          </a>
+        ))}
+      </nav>
       <div className="igv-family">
         <span>Part of the Isak Global Ventures</span>
         <a

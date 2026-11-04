@@ -101,3 +101,210 @@ identical. Behaviour suite and estimator re-run: unchanged.
 
 `npm run check` (typecheck, lint, Prettier, unit tests) and `npm run build`
 pass. `npm audit` reports 0 vulnerabilities, with and without dev dependencies.
+
+## 5. "What's taking shape" product section (vs ojisak.com, 2026-11-04)
+
+The Tend + BarPass section was compared with the live `#products` section on
+ojisak.com at 1440, 900 and 375 px (Chrome, reduced motion so nothing is
+mid-animation, each page loaded twice so `font-display: optional` uses Inter).
+
+- Part B CSS: all 351 declarations of the live `products.css` are present
+  unchanged.
+- **Computed styles:** every property of all 178 elements matches at all three
+  widths, except `background-position` on buttons (`0px 0px` vs the equivalent
+  `0% 0%`).
+- **Layout:** every visible element's box relative to the section matches to
+  0.01 px; every text node matches. Pixel crops differ only through sub-pixel
+  anti-aliasing (the section sits at a different fractional offset on each
+  page); side-by-side screenshots are visually identical.
+
+Fixes needed to get there:
+
+- Tend's `.section` and `.section-label` rules leaked in (1800 px max width,
+  gold uppercase label): those two classes are prefixed `ts-` in this section.
+- Tend's `body` line-height, `summary` weight and `details p` colour/padding
+  leaked in: neutralised in a marked isolation block in `products.css`.
+- The brief's Part A scoped `.product-list` as `.products .product-list`, which
+  beat Part B's 18 px tablet gap; it now uses `:where(.products)`, matching the
+  live specificity.
+- The brief's Part A omitted the live `@media (max-width: 760px) { h2 { font-size: 42px } }`; added.
+
+Behaviour (built site, and `next dev` for React's double-mounted effects):
+both phones autoplay through all six screens every 3.6 s and loop to the
+first; mouse hover pauses and leaving resumes; PAUSE/PLAY holds and resumes;
+step buttons jump to the chosen screen. With reduced motion nothing autoplays
+and PLAY starts it. All 12 screens load from ImageKit (HTTP 200), with no
+console errors and no 4xx. No horizontal scroll at 375 px. With JavaScript
+disabled both welcome screens show and all copy is readable. In development
+mode each phone has exactly 6 screens and one step guide (no duplicates).
+
+Rest of the page vs the previous build: hero, benefits, experience, features,
+directory, restaurants, research, estimator and manifesto are pixel-identical
+at six widths; FAQ, closing and footer have 0 style and 0 layout differences
+(the FAQ crop's last pixel row now blends into the grey section below it).
+
+## 6. Page grid and touch areas (2026-11-04)
+
+Goal: line every block up on the same content edges and make the site
+mobile-first friendly without changing any copy.
+
+- **Content unchanged:** only CSS files changed (no markup). Visible page text
+  is identical to the previous build at 1600, 1280, 1024, 768, 390 and 320 px.
+- **Only spacing changed:** a computed-style comparison at 375, 1440 and 2560
+  px shows changes only to padding, margins, max-width, hit-area positioning
+  and the menu button's minimum size (plus the widths those produce). No
+  colour, font or text property changed.
+- **Alignment:** header, hero copy, every section, the product section, the
+  closing card (from 701px) and the footer now share one left/right content
+  edge at every width (for example 23px at 375, 38px at 768, 101px at 1440).
+  Before, the header and footer sat at 5%, sections at 7% and the product
+  section at 6%.
+- **Full width:** section backgrounds previously stopped at 1800px (visible
+  side gutters at 1920 and 2560px); every band now runs full width and content
+  stays centred at 1548px.
+- **Responsive audit at 320, 360, 375, 390, 414, 600, 768, 820, 1024, 1280,
+  1440, 1920 and 2560px:** no horizontal scroll, no element past the viewport
+  edge, no text overflowing its box.
+- **Touch areas:** text links, header and mobile-menu links, "Back to top", the
+  PLAY/PAUSE pill, the menu button and the estimator sliders accept a tap 20px
+  above and below their centre (22px for sliders) at 375 and 768px: 0 misses.
+- **Regression:** site behaviour suite, estimator scenarios and product
+  walkthrough checks give the same results as before.
+
+## 7. BarPass removed from the product section (2026-11-04)
+
+At the owner's request the BarPass spotlight was removed from "What's taking
+shape": its markup, its six walkthrough screens, its CSS (3 rules, 8
+declarations) and its mention in the development note, which now reads "Tend
+is in development. Availability and launch details will be shared when
+confirmed." The Tend spotlight is unchanged. Sections 5 and 6 describe the
+section as it was before this change.
+
+## 8. Product section on Tend's sand background (2026-11-04)
+
+The section's background changed from ojisak.com's grey-blue (`#edf0f2`) to
+Tend's sand (`#eae3d3`, as in the features and research sections), and its
+label divider from `#d9dfe3` to Tend's divider-on-sand colour (`#c9bda4`).
+A computed-style comparison with the previous build at 1440 and 375px shows
+only those two properties changed. Contrast on sand: heading 13.5:1, body copy
+4.8:1, gold heading 3.9:1 (large text; AA needs 3:1).
+
+## 9. Design upgrade (2026-11-04)
+
+Every section was refined in Tend's own palette and type (no new colours or
+fonts): sticky frosted header with an "Estimator" pill, gold hero button,
+icon cards (Why Tend, Everything around your meal), large serif step numbers,
+segmented feature tabs, glass cards on the restaurant band, sand cards for the
+research figures, level estimator cards, card-style FAQ with a sticky heading
+on desktop, a glowing closing card with a button, footer navigation, and a
+scroll reveal for cards (off for reduced motion). The product section now uses
+Tend's DM Sans / Cormorant and colours; the Inter font files were removed.
+
+- **Copy unchanged:** all 343 text nodes of the previous build are present in
+  the same order. The 7 additions all reuse existing phrases: the closing
+  button ("Bring Tend to your restaurant ↗") and the footer navigation (the
+  header's five link labels). Image alt text, page title and description are
+  identical.
+- **Behaviour:** menu, tabs (all 14 keyboard/click paths), FAQ, skip link,
+  footer year and 404 behave as before; every anchor link still lands 100px
+  below the top of the viewport (below the 76px compact header). Estimator
+  scenarios and the product walkthrough give the same results. 0 page errors,
+  0 unexpected 4xx.
+- **Responsive:** no horizontal scroll, overflowing element or text overflow
+  at 13 widths from 320 to 2560px; touch-area hit tests: 0 misses.
+
+## 10. Production clean-up (2026-11-04)
+
+- **CSS:** removed 82 declarations that a later rule with the same selector
+  always overrides (left by the original layered stylesheet and the design
+  layer), 1 rule matching nothing, and the product section's unused `--pad`
+  token; merged its three root rules into one. Computed styles of every
+  element are identical to the previous build at 1600, 1280, 1024, 768, 390
+  and 320px (0 differences). A second dead-code pass finds nothing; an unused
+  selector scan (with the walkthrough built and runtime state classes
+  allowlisted) finds 0 of 647.
+- **Hero image:** served as AVIF/WebP at 640/960/1280/1536px (`npm run
+images`) with the JPEG as fallback. Measured downloads: 81KB (1440px @1x,
+  1920px) to 108KB (390px @3x, 1440px @2x), against 373KB before. `sizes`
+  accounts for the cover crop, so the chosen file is always at least as wide
+  as it is drawn. Visual difference: mean 2–4/255 per channel.
+- **Content-Security-Policy** added to `vercel.json`. Tested by serving the
+  build with the policy enforced (without `upgrade-insecure-requests`, which
+  cannot apply to a plain-http test server): 0 violations across the site,
+  estimator and walkthrough suites; client-side navigation still keeps state.
+- **Accessibility:** axe-core (WCAG 2.0–2.2 A/AA + best practices) reports 0
+  violations on the home page at 1440 and 390px and on the 404 page. Fixed 21
+  contrast failures on sand surfaces (minimal darkening, computed to ≥4.6:1)
+  and the walkthrough step buttons' accessible names.
+- **Tooling:** ESLint back to 9 (the version range `eslint-config-next`'s
+  plugins support; 10 was flagged invalid by `npm ls`); lint fails on
+  warnings; `engines.node` ≥22.18; CI audits production dependencies.
+  `npm audit --omit=dev`: 0 vulnerabilities. The remaining dev-only advisory
+  (GHSA-g3hv-75wg-m249, `minimatch` inside ESLint plugins) has no compatible
+  fix and only affects untrusted glob input.
+
+## 11. Cross-browser compatibility (2026-11-04)
+
+Targets: Chrome/Edge 111+, Firefox 111+, Safari 16.4+ (`browserslist` in
+`package.json`, equal to the Next.js defaults).
+
+Engines tested against the static build: Chrome 156, Edge 156 (Chromium),
+Firefox 159 (Gecko, official Mozilla build driven over WebDriver BiDi;
+Playwright's own Firefox is blocked by Windows Smart App Control) and WebKit
+27.2 (Playwright). Results:
+
+- **19/19 checks in every engine:** web fonts load; sticky header with a
+  solid background; the benefits container query and sticky heading; round
+  icon badges; estimator frame; feature tabs by click and arrow keys; FAQ
+  disclosure; estimator default ($287,316) and slider-driven updates; smooth
+  anchor scroll; product walkthrough builds 6 steps and responds to clicks;
+  mobile menu opens and closes with Escape; 404 page.
+- **No errors** (page errors, console errors, failed requests) in any engine.
+- **No horizontal overflow** at 320, 390, 768, 1024, 1440 and 1920px.
+- **Layout matches Chrome:** every section's height in Edge, Firefox and
+  WebKit is within tolerance (4% / 24px) at all six widths.
+
+Fixed:
+
+- **Header background:** `color-mix()` (Firefox 113+) now has an `rgb()`
+  fallback, so Firefox 111–112 keep a solid header instead of a transparent
+  one.
+- **Estimator sliders** rendered differently per engine (gold handle in
+  Chrome, grey in Firefox, white in WebKit). They are now styled explicitly
+  per engine and match.
+- **Fonts:** declared once per variable file with its weight range. A
+  measured probe shows text metrics identical in all three engines before and
+  after; a Chrome pixel diff shows no change outside the sliders.
+
+Known test-environment limit: Playwright's Windows WebKit lays text out
+correctly (measured: same widths as Chrome for weights and lining numerals)
+but paints the default glyphs, e.g. regular weight, old-style "1". Real
+Safari (Core Text) paints what it lays out. Confirm on a Mac or iPhone, or
+a device cloud, before launch.
+
+## 12. Header shake, hero fold and closing spacing (2026-11-04)
+
+- **Header shake (reported):** the sticky header shrank from 112px to 76px
+  (88px to 68px on phones) inside the page flow. Each change moved the
+  content, which changed `scrollY` and could flip the compact state back.
+  The header now grows an equal margin beneath it as it shrinks (same
+  duration and easing), so its footprint is constant (`--header-h`,
+  `styles/design/header.css`). Measured by stepping the scroll across the
+  threshold and back at 1518×718, 1440×900 and 390×844. Before: 140–158
+  state flips, content at up to 23 different offsets, up to 12px scroll
+  drift. After: 2 flips, 1 offset, 0 drift.
+- **Hero call to action below the fold (reported, 1518×718, i.e. 1920×1080
+  at 125% scaling):** the headline now scales with viewport height
+  (`min(5.5vw, 11.5svh)`), the copy column is slightly wider so the headline
+  is always 3 lines, and short screens (≤860px tall) get a 92px header and
+  tighter spacing. The button is fully visible at 1280×720, 1366×768,
+  1440×900, 1518×718, 1536×864, 1600×900, 1920×1080, 2560×1440 and 1024×768.
+- **Closing card:** it touched the sand product band (margin-top 0), so its
+  rounded corners sat on the colour change. It now has 48/72/96px of space
+  above it (phone/tablet/desktop).
+- **Footer:** the tagline sits under the logo with "Back to top" opposite,
+  and the navigation, IGV and legal rows are each under a hairline.
+
+Re-verified: copy unchanged; axe 0 violations; 19/19 cross-browser checks
+in Chrome, Edge, Firefox and WebKit with no errors or overflow; behaviour
+matches the original in 23 of 34 checks (back-to-top now matches too).

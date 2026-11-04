@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 
 export type Story = {
@@ -11,8 +12,9 @@ export type Story = {
 
 /**
  * WAI-ARIA tabs with automatic activation: click, ←/→ to move, Home/End to
- * jump. All panels stay in the DOM (hidden), so their copy is in the static
- * HTML.
+ * jump. Each panel also has previous/next buttons, which move focus to the
+ * newly selected tab. All panels stay in the DOM (hidden), so their copy is
+ * in the static HTML.
  */
 export function StoryTabs({
   stories,
@@ -65,19 +67,42 @@ export function StoryTabs({
           </button>
         ))}
       </div>
-      {stories.map((story, index) => (
-        <div
-          key={story.id}
-          className="story-panel"
-          id={`story-${story.id}`}
-          role="tabpanel"
-          aria-labelledby={`tab-${story.id}`}
-          tabIndex={0}
-          hidden={index !== active}
-        >
-          {story.panel}
-        </div>
-      ))}
+      {stories.map((story, index) => {
+        const prev = index === 0 ? stories.length - 1 : index - 1;
+        const next = index === stories.length - 1 ? 0 : index + 1;
+        return (
+          <div
+            key={story.id}
+            className="story-panel tile tile--tabbed"
+            id={`story-${story.id}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${story.id}`}
+            tabIndex={0}
+            hidden={index !== active}
+          >
+            {story.panel}
+            {/* Previous / next, in the panel's folder-tab corner. */}
+            <div className="tile-tab story-nav">
+              <button
+                type="button"
+                className="tile-arrow"
+                aria-label={`Previous: ${stories[prev].label}`}
+                onClick={() => select(prev)}
+              >
+                <ChevronLeft size={16} strokeWidth={1.75} aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                className="tile-arrow tile-arrow--solid"
+                aria-label={`Next: ${stories[next].label}`}
+                onClick={() => select(next)}
+              >
+                <ChevronRight size={16} strokeWidth={1.75} aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        );
+      })}
     </>
   );
 }

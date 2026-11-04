@@ -1,0 +1,313 @@
+/*
+ * Header: sticky and frosted; compacts once the page scrolls (site-header.tsx
+ * sets data-scrolled). The "Estimator" link is the call-to-action pill.
+ *
+ * It compacts without moving the page: as its height shrinks, an equal margin
+ * grows beneath it (same duration and easing), so the space it occupies in
+ * the flow is always --header-h. Changing the in-flow height would shift
+ * everything below by the difference, change scrollY and could toggle the
+ * compact state back and forth (the header "shaking").
+ */
+:root {
+  --header-h: 88px;
+  --header-compact: 68px;
+}
+@media (min-width: 701px) {
+  :root {
+    --header-h: 112px;
+    --header-compact: 76px;
+  }
+}
+/* Short desktop screens (laptops, 125% display scaling): a slimmer header
+   leaves room for the hero's call to action above the fold. */
+@media (min-width: 1001px) and (max-height: 860px) {
+  :root {
+    --header-h: 92px;
+  }
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--header-h);
+  margin-bottom: 0;
+  border-bottom: 1px solid transparent;
+  /* rgba first: browsers without color-mix() (Firefox < 113) keep a solid
+     header instead of dropping the background. Same colour as --paper. */
+  background: rgb(247 244 235 / 0.95);
+  background: color-mix(in srgb, var(--paper) 95%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  backdrop-filter: saturate(1.4) blur(14px);
+  transition:
+    height 0.35s var(--ease-out),
+    margin-bottom 0.35s var(--ease-out),
+    border-color 0.35s,
+    background-color 0.35s;
+}
+header[data-scrolled] {
+  height: var(--header-compact);
+  margin-bottom: calc(var(--header-h) - var(--header-compact));
+  border-bottom-color: var(--border);
+}
+header .logo {
+  transform-origin: left center;
+  transition: transform 0.35s var(--ease-out);
+}
+header[data-scrolled] .logo {
+  transform: scale(0.84);
+}
+
+/*
+ * Mobile menu: a dark, full-screen sheet in the hero's black, under a header
+ * that turns dark with it. Large serif links on hairline rows unfold in 3D
+ * one after another; the tagline and the gold call to action follow, and a
+ * large gold "Tend" wordmark closes the sheet. The page behind is locked and
+ * inert while it is open (site-header.tsx).
+ */
+header[data-menu-open] {
+  border-bottom-color: #ffffff1a;
+  background: var(--black);
+}
+header[data-menu-open] .brand-name {
+  color: #f7f1df;
+}
+#mobile-nav:not([hidden]) {
+  position: fixed;
+  top: var(--header-h);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 39;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-height: none;
+  padding-top: 8px;
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-bottom: 0;
+  background: var(--black);
+  color: #f7f1df;
+  animation: menu-in 0.35s var(--ease-out);
+}
+header[data-scrolled] + #mobile-nav:not([hidden]) {
+  top: var(--header-compact);
+}
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  perspective: 700px;
+}
+.mobile-nav-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 17px 0;
+  border-bottom: 1px solid #ffffff1f;
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  transform-origin: 50% 0;
+  animation: menu-item-unfold 0.65s var(--ease-out) both;
+}
+/* A decorative arrow; the "/ ''" alt text keeps it out of the link's name
+   (the plain value first for browsers without alt text, e.g. Firefox < 128). */
+.mobile-nav-links a::after {
+  content: "→";
+  content: "→" / "";
+  font-family: var(--font-sans);
+  font-size: 18px;
+  color: #d5bc79;
+  transition: transform 0.25s var(--ease-out);
+}
+.mobile-nav-links a:active {
+  color: #d5bc79;
+}
+.mobile-nav-links a:active::after {
+  transform: translateX(4px);
+}
+.mobile-nav-links a:nth-child(2) {
+  animation-delay: 50ms;
+}
+.mobile-nav-links a:nth-child(3) {
+  animation-delay: 100ms;
+}
+.mobile-nav-links a:nth-child(4) {
+  animation-delay: 150ms;
+}
+.mobile-nav-links a:nth-child(5) {
+  animation-delay: 200ms;
+}
+.mobile-nav-foot {
+  display: grid;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 32px;
+  animation: menu-item-in 0.5s var(--ease-out) 260ms both;
+}
+.mobile-nav-foot p {
+  font-size: 14px;
+  color: #b8ad96;
+}
+.mobile-nav-foot .btn {
+  width: 100%;
+}
+.mobile-nav-mark {
+  margin-top: 18px;
+  font-family: var(--font-serif);
+  font-size: clamp(80px, 26vw, 128px);
+  font-weight: 400;
+  line-height: 0.8;
+  /* The tight line box would let the glyphs overhang it and make the sheet
+     scroll by a pixel or two; this contains them. */
+  padding-bottom: 0.08em;
+  letter-spacing: -0.045em;
+  color: #d5bc79;
+  opacity: 0.9;
+  animation: menu-item-in 0.7s var(--ease-out) 320ms both;
+}
+/* Shorter phones: tighter rows; the decorative wordmark makes way first. */
+@media (max-height: 760px) {
+  .mobile-nav-mark {
+    display: none;
+  }
+}
+@media (max-height: 640px) {
+  .mobile-nav-links a {
+    padding: 13px 0;
+    font-size: 28px;
+  }
+  .mobile-nav-foot {
+    padding-top: 24px;
+  }
+}
+@keyframes menu-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+/* Each row tips forward from above, like a card falling into place. */
+@keyframes menu-item-unfold {
+  from {
+    opacity: 0;
+    transform: rotateX(-80deg) translateY(-6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #mobile-nav:not([hidden]),
+  .mobile-nav-links a,
+  .mobile-nav-foot,
+  .mobile-nav-mark {
+    animation: none;
+  }
+}
+
+/*
+ * Menu button: a small 3D ink disc (top-left highlight, inner shading and a
+ * soft drop shadow) with two cream hairlines; it presses in when tapped and,
+ * with the menu open, becomes a gold-ringed ×.
+ */
+#menu-toggle {
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 32% 26%,
+    #4a4334 0%,
+    #24221a 48%,
+    #121109 100%
+  );
+  box-shadow:
+    inset 0 1px 0 #ffffff2e,
+    inset 0 -3px 6px #0000008c,
+    0 8px 16px -8px #14150fb3,
+    0 2px 4px -1px #14150f59;
+  transition:
+    transform 0.2s var(--ease-out),
+    box-shadow 0.3s var(--ease-out);
+}
+#menu-toggle:active {
+  transform: scale(0.94);
+  box-shadow:
+    inset 0 2px 5px #000000a6,
+    0 2px 6px -2px #14150f80;
+}
+#menu-toggle[aria-expanded="true"] {
+  box-shadow:
+    inset 0 1px 0 #ffffff24,
+    inset 0 -3px 6px #00000099,
+    0 0 0 1px #d5bc7999;
+}
+.menu-icon {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 8px;
+}
+.menu-icon::before,
+.menu-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  border-radius: 1px;
+  background: #f7f1df;
+  transition:
+    top 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out),
+    background-color 0.3s;
+}
+.menu-icon::before {
+  top: 0;
+}
+.menu-icon::after {
+  top: calc(100% - 1.5px);
+}
+#menu-toggle[aria-expanded="true"] .menu-icon::before,
+#menu-toggle[aria-expanded="true"] .menu-icon::after {
+  top: calc(50% - 0.75px);
+  background: #d5bc79;
+}
+#menu-toggle[aria-expanded="true"] .menu-icon::before {
+  transform: rotate(45deg);
+}
+#menu-toggle[aria-expanded="true"] .menu-icon::after {
+  transform: rotate(-45deg);
+}
+@media (max-width: 700px) {
+  #menu-toggle {
+    display: grid;
+  }
+}
+
+@media (min-width: 701px) {
+  header nav {
+    align-items: center;
+  }
+  header nav .nav-cta {
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    transition: background-color 0.25s;
+  }
+  header nav .nav-cta:hover {
+    opacity: 1;
+    background: #3a3427;
+  }
+}

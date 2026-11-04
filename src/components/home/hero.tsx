@@ -1,5 +1,4 @@
-import Image from "next/image";
-import heroImage from "@/assets/images/hero-table.jpg";
+import { HeroPicture } from "@/components/home/hero-picture";
 import { site } from "@/config/site";
 
 export function Hero() {
@@ -22,7 +21,7 @@ export function Hero() {
           possibilities to every meal.
         </p>
         <div className="actions">
-          <a className="text-link" href="#restaurants">
+          <a className="btn btn-gold" href="#restaurants">
             Bring Tend to your restaurant <span>↗</span>
           </a>
         </div>
@@ -31,12 +30,7 @@ export function Hero() {
         </div>
       </div>
       <div className="hero-photo">
-        <Image
-          src={heroImage}
-          alt="Fresh pasta, burrata and a cocktail shared across a restaurant table"
-          loading="eager"
-          fetchPriority="high"
-        />
+        <HeroPicture alt="Fresh pasta, burrata and a cocktail shared across a restaurant table" />
         <div className="photo-caption">
           <span>DINE · ORDER · ENJOY</span>
           <span className="caption-mark">Tend</span>

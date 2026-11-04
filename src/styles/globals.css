@@ -22,3 +22,13 @@
 /* Added after the migration; self-contained, so order-independent. */
 @import "./sections/research.css";
 @import "./sections/estimator.css";
+/* Product section: after the Tend sections so their element styles can't
+   leak into it. */
+@import "./sections/products.css";
+/* Design layer: buttons, cards, depth, motion and the sticky header. */
+@import "./design/system.css";
+@import "./design/header.css";
+@import "./design/sections.css";
+@import "./design/bento.css";
+/* Page grid and touch areas: must stay last. */
+@import "./layout/page-grid.css";

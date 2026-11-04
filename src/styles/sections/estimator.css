@@ -28,9 +28,7 @@
 .estimator-inputs {
   margin: 0;
   padding: 34px 36px;
-  background: #f9f6ed;
   border: 1px solid #c7b794;
-  border-radius: 10px;
   box-shadow: 0 22px 48px #3b2c1414;
 }
 .estimator-inputs fieldset {
@@ -82,12 +80,65 @@
   line-height: 1;
   color: #8b6722;
 }
+/*
+ * Sliders are drawn explicitly so they match in every engine (accent-color
+ * alone gives a gold handle in Chrome, grey in Firefox, white in Safari).
+ * Blink/WebKit fill the track with a gradient up to --p (set by the component,
+ * 0–1, measured to the handle's centre); Gecko uses its native progress part.
+ * Each engine's pseudo-elements stay in separate rules: an unknown selector
+ * in a list would invalidate the whole rule.
+ */
 .estimator-field input[type="range"] {
+  --fill: #94712b;
+  --track: #ded3bd;
+  --thumb: 20px;
   display: block;
   width: 100%;
-  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
   accent-color: #94712b;
   cursor: pointer;
+}
+.estimator-field input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--fill) calc(var(--thumb) / 2 + (100% - var(--thumb)) * var(--p, 0)),
+    var(--track) 0
+  );
+}
+.estimator-field input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--thumb);
+  height: var(--thumb);
+  margin-top: calc((4px - var(--thumb)) / 2);
+  border: 3px solid var(--card);
+  border-radius: 50%;
+  background: var(--fill);
+  box-shadow: 0 0 0 1px var(--fill);
+}
+.estimator-field input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--track);
+}
+.estimator-field input[type="range"]::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--fill);
+}
+.estimator-field input[type="range"]::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--thumb);
+  height: var(--thumb);
+  border: 3px solid var(--card);
+  border-radius: 50%;
+  background: var(--fill);
+  box-shadow: 0 0 0 1px var(--fill);
 }
 .estimator-field input[type="range"]:focus-visible {
   outline: 3px solid #bc702a;
@@ -127,7 +178,6 @@
   overflow: hidden;
   padding: 38px 38px 34px;
   border: 1px solid #51442a;
-  border-radius: 10px;
   color: #f7f1df;
   background:
     radial-gradient(circle at 100% 0, #b6903f3a, transparent 42%), var(--black);
@@ -173,7 +223,6 @@
   line-height: 1.1;
 }
 .estimator-breakdown {
-  margin-top: 26px;
   padding: 18px 20px 12px;
   border: 1px solid #ffffff14;
   border-radius: 6px;

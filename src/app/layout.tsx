@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { BackToTop } from "@/components/layout/back-to-top";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { ScrollReveal } from "@/components/layout/scroll-reveal";
 import { SiteHeader } from "@/components/layout/site-header";
 import { isIndexable, siteUrl } from "@/config/deployment";
 import { site } from "@/config/site";
@@ -33,6 +35,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <SiteHeader />
         {children}
         <SiteFooter />
+        <BackToTop />
+        <ScrollReveal />
       </body>
     </html>
   );

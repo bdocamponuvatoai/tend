@@ -1,102 +1,188 @@
-/* "What the research shows": sourced industry figures behind the estimator. */
+/*
+ * "What the research shows": sourced industry figures behind the estimator,
+ * as a bento of stat tiles on the sand band. Cream tiles, with the first
+ * figure featured on a wide champagne tile and one ink tile for contrast;
+ * each source is a footnote at the foot of its tile. Mobile-first: one
+ * column, two on tablets, four on desktops (2+1+1 / 1+1+2).
+ */
 .research {
   background: #eae3d3;
 }
 .research-heading {
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  gap: 70px;
-  align-items: end;
-  margin-bottom: 48px;
+  gap: 25px;
+  margin-bottom: 35px;
 }
 .research-heading h2 {
   margin-top: 22px;
+  font-size: 43px;
 }
 .research-heading h2 em {
   color: #896822;
 }
 .research-heading > p {
-  color: var(--muted);
   max-width: 450px;
   font-size: 17px;
+  color: var(--muted);
 }
+
 .research-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 44px 45px;
+  gap: 12px;
 }
 .research-grid article {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid #baa36c;
-  padding-top: 24px;
+  padding: 30px 26px 26px;
+  border-radius: 28px;
+  background: var(--card);
 }
 .research-grid .research-value {
   font-family: var(--font-serif);
-  font-size: 58px;
+  font-size: 60px;
   line-height: 1;
-  letter-spacing: -0.03em;
-  color: #8b6722;
-  font-variant-numeric: lining-nums;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  font-variant-numeric: lining-nums tabular-nums;
+  white-space: nowrap;
+}
+.research-grid .research-value::after {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 2px;
+  margin-top: 20px;
+  background: var(--gold);
+  transition: width 0.5s var(--ease-out);
 }
 .research-grid h3 {
+  margin: 20px 0 12px;
   font-size: 27px;
   line-height: 1.15;
-  margin: 16px 0 12px;
+  text-wrap: balance;
 }
 .research-grid p {
-  color: var(--muted);
   font-size: 16px;
   line-height: 1.75;
+  color: var(--muted);
 }
 .research-grid .research-source {
   margin-top: auto;
-  padding-top: 16px;
+  padding-top: 22px;
   font-size: 12px;
-  letter-spacing: 1px;
   line-height: 1.5;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: #74591d;
+}
+.research-grid .research-source::before {
+  content: "";
+  display: block;
+  margin-bottom: 14px;
+  border-top: 1px dashed #d4c6a6;
 }
 .research-source cite {
   font-style: normal;
   font-weight: 600;
 }
+
+/* Featured figure: a wide champagne tile with an oversized numeral. */
+.research-grid article:nth-child(1) {
+  --muted: #574f42;
+  background: #ecdcb0;
+}
+.research-grid article:nth-child(1) .research-value {
+  font-size: 76px;
+}
+.research-grid article:nth-child(1) .research-source::before {
+  border-top-color: #c7b07a;
+}
+/* One ink tile for contrast. */
+.research-grid article:nth-child(5) {
+  --muted: #c9bfa9;
+  background: var(--black);
+  color: #f7f1df;
+}
+.research-grid article:nth-child(5) .research-value {
+  color: #f7f1df;
+}
+.research-grid article:nth-child(5) .research-source {
+  color: #cfb678;
+}
+.research-grid article:nth-child(5) .research-source::before {
+  border-top-color: #ffffff26;
+}
+
 .research-note {
-  margin-top: 44px;
-  padding-top: 25px;
-  border-top: 1px solid #c9bda4;
   max-width: 800px;
+  margin-top: 28px;
   font-size: 13px;
   color: #645d4e;
 }
-@media (max-width: 1000px) {
+
+@media (hover: hover) {
+  .research-grid article:hover .research-value::after {
+    width: 72px;
+  }
+}
+
+@media (min-width: 701px) {
   .research-heading {
+    grid-template-columns: 1.25fr 1fr;
     gap: 35px;
+    align-items: end;
+    margin-bottom: 48px;
+  }
+  .research-heading h2 {
+    font-size: clamp(39px, 4vw, 64px);
   }
   .research-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 36px 32px;
+    gap: 16px;
+  }
+  .research-grid article {
+    padding: 36px 32px 30px;
+  }
+  .research-grid article:nth-child(1),
+  .research-grid article:nth-child(6) {
+    grid-column: span 2;
+  }
+  .research-grid .research-value {
+    font-size: 64px;
+  }
+  .research-grid article:nth-child(1) .research-value,
+  .research-grid article:nth-child(6) .research-value {
+    font-size: 104px;
   }
 }
+
+@media (min-width: 1001px) {
+  .research-heading {
+    gap: 70px;
+    margin-bottom: 64px;
+  }
+  .research-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .research-grid .research-value {
+    font-size: clamp(56px, 4.4vw, 68px);
+  }
+  /* The two wide tiles (first and last) carry oversized numerals, balancing
+     the grid on the diagonal. */
+  .research-grid article:nth-child(1) .research-value,
+  .research-grid article:nth-child(6) .research-value {
+    font-size: clamp(96px, 8.4vw, 132px);
+  }
+  /* The two wide tiles set their copy beside a shorter column. */
+  .research-grid article:nth-child(1) p:not(.research-value),
+  .research-grid article:nth-child(6) p:not(.research-value) {
+    max-width: 520px;
+  }
+}
+
 @media (max-width: 700px) {
   .research {
     padding-top: 65px;
     padding-bottom: 65px;
-  }
-  .research-heading {
-    grid-template-columns: 1fr;
-    gap: 25px;
-    margin-bottom: 35px;
-  }
-  .research-heading h2 {
-    font-size: 43px;
-  }
-  .research-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  .research-grid .research-value {
-    font-size: 50px;
   }
 }

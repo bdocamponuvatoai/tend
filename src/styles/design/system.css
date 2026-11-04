@@ -1,0 +1,186 @@
+/*
+ * Design system: flat buttons, icon badges and scroll reveal.
+ * Mobile-first; uses the tokens in base/tokens.css.
+ */
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 50px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.2;
+  text-align: center;
+  transition:
+    background-color 0.25s,
+    color 0.25s;
+}
+.btn span {
+  color: inherit;
+  font-size: 16px;
+  line-height: 1;
+  transition: transform 0.25s var(--ease-out);
+}
+/* Flat fills: champagne on the dark bands, ink on the light ones. */
+.btn-gold {
+  background: #d5bc79;
+  color: #1d170b;
+}
+.btn-ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn:focus-visible {
+  outline: 3px solid #bc702a;
+  outline-offset: 4px;
+}
+@media (min-width: 701px) {
+  .btn {
+    white-space: nowrap;
+  }
+}
+@media (hover: hover) {
+  .btn-gold:hover {
+    background: #e4d09a;
+  }
+  .btn-ink:hover {
+    background: #3a3427;
+  }
+  .btn:hover span {
+    transform: translate(2px, -2px);
+  }
+}
+
+/* Icon badge (components/ui/icon.tsx): a line icon in a hairline circle. */
+.icon-badge {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #dccca5;
+  border-radius: 50%;
+  color: var(--gold-text);
+}
+.icon-badge svg {
+  display: block;
+}
+
+/*
+ * Floating "Back to top" (components/layout/back-to-top.tsx): an ink disc
+ * with a gold reading-progress ring. Hidden with visibility (so it also
+ * leaves the tab order) until the page has scrolled, and while the mobile
+ * menu is open. A soft shadow lifts it off both light and dark bands.
+ */
+.to-top {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 10px 28px -10px #14150f8c;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition:
+    opacity 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out),
+    visibility 0s linear 0.3s,
+    background-color 0.25s;
+}
+.to-top[data-visible] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out),
+    visibility 0s,
+    background-color 0.25s;
+}
+header[data-menu-open] ~ .to-top {
+  opacity: 0;
+  visibility: hidden;
+}
+.to-top:focus-visible {
+  outline: 3px solid #bc702a;
+  outline-offset: 4px;
+}
+.to-top svg {
+  display: block;
+}
+.to-top-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+.to-top-ring circle {
+  fill: none;
+  stroke-width: 1.5;
+}
+.to-top-track {
+  stroke: #ffffff26;
+}
+.to-top-progress {
+  stroke: #d5bc79;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.to-top > svg:last-child {
+  transition: transform 0.25s var(--ease-out);
+}
+/* The skip link and this button focus <main>; it is not itself interactive. */
+#main:focus {
+  outline: none;
+}
+@media (hover: hover) {
+  .to-top:hover {
+    background: #3a3427;
+  }
+  .to-top:hover > svg:last-child {
+    transform: translateY(-2px);
+  }
+}
+@media (min-width: 701px) {
+  .to-top {
+    right: max(28px, env(safe-area-inset-right));
+    bottom: max(28px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Scroll reveal (lib/reveal.ts adds .scroll-reveal, then .is-revealed) */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s var(--ease-out) var(--reveal-delay, 0ms),
+    transform 0.8s var(--ease-out) var(--reveal-delay, 0ms);
+}
+.scroll-reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

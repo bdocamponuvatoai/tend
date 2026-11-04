@@ -13,7 +13,7 @@ export function Manifesto() {
         That’s the idea behind Tend. Less friction between wanting and enjoying.
         More time for food, conversation, and the moments worth staying for.
       </p>
-      <a href="#experience" className="text-link">
+      <a href="#experience" className="btn btn-ink">
         Discover the Tend experience ↗
       </a>
     </section>

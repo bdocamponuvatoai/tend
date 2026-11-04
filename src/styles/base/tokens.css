@@ -15,3 +15,34 @@
   --font-sans: var(--font-dm-sans), sans-serif;
   --font-serif: var(--font-cormorant), Georgia, serif;
 }
+/*
+ * Page grid, mobile-first: one side gutter for every top-level block
+ * (phone 6%, tablet 5%, desktop 7%, as the sections always used), and content
+ * that stops at --content-max on very wide screens while backgrounds run full
+ * width. `100%` resolves where --page-pad is used (the block's width).
+ */
+:root {
+  --gutter: 6%;
+  --content-max: 1548px;
+  --page-pad: max(var(--gutter), calc((100% - var(--content-max)) / 2));
+}
+@media (min-width: 701px) {
+  :root {
+    --gutter: 5%;
+  }
+}
+@media (min-width: 1001px) {
+  :root {
+    --gutter: 7%;
+  }
+}
+/* Design system (styles/design/): the few surfaces, accents, radii and the
+   easing shared by the refined sections. Flat by intent: no shadow tokens. */
+:root {
+  --card: #fffcf5;
+  --gold-text: #8b6722;
+  --gold-soft: #f1e7d0;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}

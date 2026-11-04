@@ -1,4 +1,13 @@
+import Image from "next/image";
+
+import moreTimeAtTheTable from "@/assets/images/benefits/more-time-at-the-table.webp";
+import { BenefitVisual } from "@/components/ui/app-screen";
+import { Icon } from "@/components/ui/icon";
 import { benefits } from "@/content/home";
+
+/** Tile fill for each benefit, in order (styles/design/bento.css): light and
+    dark alternate on the diagonal. */
+const FILLS = ["champagne", "ink", "sand", "gold"] as const;
 
 export function Benefits() {
   return (
@@ -7,16 +16,18 @@ export function Benefits() {
       id="benefits"
       aria-labelledby="benefits-title"
     >
-      <div className="section-label">WHY DINE WITH TEND</div>
       <div className="benefits-heading">
-        <h2 id="benefits-title">
-          Your meal.
-          <br />
-          Your pace.
-          <br />
-          <em>More time for you.</em>
-        </h2>
         <div>
+          <div className="section-label">WHY DINE WITH TEND</div>
+          <h2 id="benefits-title">
+            Your meal.
+            <br />
+            Your pace.
+            <br />
+            <em>More time for you.</em>
+          </h2>
+        </div>
+        <div className="benefits-intro">
           <p className="large-copy">
             A great night out should revolve around you and your company.
           </p>
@@ -27,20 +38,56 @@ export function Benefits() {
           </p>
         </div>
       </div>
+      <ol className="benefits-journey" aria-label="The Tend dining flow">
+        {[
+          ["01", "Browse"],
+          ["02", "Choose"],
+          ["03", "Review"],
+          ["04", "Settle"],
+        ].map(([number, label]) => (
+          <li key={number}>
+            <span>{number}</span>
+            <strong>{label}</strong>
+          </li>
+        ))}
+      </ol>
       <div className="benefit-grid">
-        {benefits.map((item) => (
-          <article key={item.label}>
-            <span className="benefit-label">{item.label}</span>
-            <h3>{item.title}</h3>
-            <p>{item.body}</p>
+        {benefits.map((item, index) => (
+          <article
+            key={item.label}
+            className={`tile tile--tabbed tile--${FILLS[index]}`}
+          >
+            <span className="tile-tab benefit-label">{item.label}</span>
+            <div className="benefit-card-meta">
+              {item.icon && <Icon name={item.icon} />}
+              <span className="benefit-number" aria-hidden="true">
+                0{index + 1} / 04
+              </span>
+            </div>
+            <div className="benefit-text">
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </div>
+            {item.screen && <BenefitVisual file={item.screen} />}
           </article>
         ))}
-      </div>
-      <div className="benefits-bottom">
-        <p>
-          <strong>The real benefit?</strong> More attention for the people
-          across the table.
-        </p>
+        <figure className="benefits-moment tile">
+          <Image
+            src={moreTimeAtTheTable}
+            alt=""
+            fill
+            sizes="(max-width: 700px) 88vw, (max-width: 1000px) 90vw, 86vw"
+            placeholder="blur"
+            loading="eager"
+          />
+          <figcaption>
+            <span className="benefits-moment-label">THE REAL BENEFIT</span>
+            <blockquote>
+              More attention for the people <em>across the table.</em>
+            </blockquote>
+            <p>Fewer interruptions. More room for the evening to unfold.</p>
+          </figcaption>
+        </figure>
       </div>
       <p className="benefits-availability">
         Planned experience at participating restaurants when Tend launches.

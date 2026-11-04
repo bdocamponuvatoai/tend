@@ -1,0 +1,429 @@
+/*
+ * Section refinements on top of the original section styles.
+ *
+ * One editorial system, borrowed from a printed fine-dining menu: content sits
+ * directly on the page under hairline rules, hierarchy comes from type (serif
+ * numerals and titles, small tracked labels) and one gold accent. Flat
+ * surfaces only: no glows, drop shadows, glass or hover lifts. The one framed
+ * object is the estimator, because it is an instrument, and the app previews,
+ * because they depict a screen.
+ *
+ * Mobile-first: base rules are for phones; min-width queries adjust tablets
+ * (701px+) and desktops (1001px+).
+ */
+
+/* Hero: flat black, the copy centred against the photo. */
+.hero {
+  background: var(--black);
+}
+.hero .actions {
+  margin-top: 34px;
+}
+@media (min-width: 1001px) {
+  /* A little more room for the copy keeps "A thoughtful gesture." on one
+     line (with or without a scrollbar), so the headline is always 3 lines. */
+  .hero {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  }
+  .hero-copy {
+    align-self: center;
+  }
+  /* The headline also scales with the viewport height, so on short laptop
+     screens the call to action stays above the fold. */
+  .hero h1 {
+    font-size: clamp(56px, min(5.5vw, 11.5svh), 94px);
+  }
+  /* The hero (photo + bottom bar) fills the first screen under the header. */
+  .hero-photo {
+    min-height: clamp(520px, calc(100svh - var(--header-h) - 70px), 820px);
+  }
+}
+@media (min-width: 1001px) and (max-height: 860px) {
+  .hero-copy {
+    padding-top: 44px;
+    padding-bottom: 44px;
+  }
+  .hero h1 {
+    margin: 22px 0;
+  }
+  .hero .actions {
+    margin-top: 26px;
+  }
+}
+
+/* (Why Tend and the feature directory are styled in sections/benefits.css
+   and sections/directory.css.) */
+
+/* The Tend experience: large serif step numbers. */
+.steps article {
+  display: block;
+  padding-top: 26px;
+}
+.step-number {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #a3833f;
+}
+.steps h3 {
+  margin: 18px 0 10px;
+}
+
+/* App features: segmented tabs and a deeper preview card (kept by request;
+   the one section that keeps its raised look). */
+.story-tabs {
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid #d9cdb2;
+  border-radius: 20px;
+  background: #e2d8c3;
+}
+.story-tabs button {
+  justify-content: flex-start;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 14px;
+  transition:
+    background-color 0.25s,
+    color 0.25s,
+    box-shadow 0.25s;
+}
+.story-tabs button[aria-selected="true"] {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow:
+    0 1px 2px #201e1714,
+    0 8px 18px -10px #3b2c1459;
+}
+.feature-preview {
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 2px 6px #201e1712,
+    0 26px 50px -22px #3b2c1447;
+}
+/* Bento: each panel is a large cream tile on the sand band, with previous /
+   next arrows in its folder-tab corner; the preview stands on a champagne
+   tile inside it. */
+.feature-showcase {
+  --tab-bg: #eae3d3;
+}
+.story-panel {
+  padding: 72px 18px 18px;
+  background: var(--card);
+}
+.story-copy {
+  padding: 0 6px;
+}
+.story-nav {
+  gap: 8px;
+  min-height: 56px;
+  padding: 0 14px 6px 18px;
+}
+.preview-stage {
+  min-width: 0;
+  padding: 18px;
+  border-radius: 22px;
+  background: #efe3c4;
+}
+@media (min-width: 701px) {
+  .story-panel {
+    padding: 72px 28px 28px 40px;
+  }
+  .story-copy {
+    padding: 0;
+  }
+  .preview-stage {
+    padding: 28px;
+  }
+}
+@media (min-width: 1001px) {
+  .story-panel {
+    padding: 40px 40px 40px 64px;
+    border-radius: 32px;
+    border-top-right-radius: 0;
+  }
+  /* The stage clears the folder tab above it. */
+  .preview-stage {
+    margin-top: 44px;
+    padding: 36px;
+  }
+}
+
+/* For restaurants: open columns on the dark band, each under a hairline,
+   numbered in serif like the experience steps. */
+.restaurant-grid {
+  gap: 0;
+}
+.restaurant-grid article {
+  position: relative;
+  padding: 30px 0 34px;
+  border-top: 1px solid #ffffff24;
+}
+.restaurant-grid article::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #d6bd7b;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+.restaurant-grid .outline-icon {
+  display: block;
+  width: auto;
+  height: auto;
+  margin-bottom: 22px;
+  border: 0;
+  border-radius: 0;
+  font-family: var(--font-serif);
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.partner-note {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid #ffffff24;
+}
+/* Full-width CTA on phones; natural width from tablet up. */
+.partner-note .btn {
+  width: 100%;
+}
+
+/* Estimator: one framed instrument, inputs on cream beside the dark readout.
+   Inside it, groups are divided by rules instead of nested boxes. */
+.estimator-grid {
+  gap: 0;
+  border: 1px solid #c7b794;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.estimator-inputs,
+.estimator-results {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.estimator-inputs {
+  background: var(--card);
+}
+.estimator-results {
+  display: flex;
+  flex-direction: column;
+  background: var(--black);
+}
+.estimator-revenue {
+  padding: 20px 0 0;
+  border: 0;
+  border-top: 1px solid #ded3bd;
+  border-radius: 0;
+  background: none;
+}
+.estimator-split {
+  margin-top: 32px;
+  margin-bottom: 32px;
+  padding-top: 28px;
+}
+@media (min-width: 1001px) {
+  /* A larger readout fills the panel beside the four sliders. */
+  .estimator-total {
+    font-size: clamp(72px, 6.6vw, 104px);
+  }
+  .estimator-split dd {
+    font-size: 40px;
+  }
+}
+/* The breakdown sits at the foot of the readout, level with the inputs. */
+.estimator-breakdown {
+  margin-top: auto;
+  padding: 20px 0 0;
+  border: 0;
+  border-top: 1px solid #3e3b2f;
+  border-radius: 0;
+  background: none;
+}
+
+/* Manifesto: a flat sand band. */
+.manifesto {
+  background: #e9e1cf;
+}
+.manifesto .btn {
+  margin-top: 6px;
+}
+
+/* Good to know: a ruled list; questions set in the serif. */
+.faq-list {
+  border-top: 1px solid var(--border);
+}
+.faq-list details,
+.faq-list details:first-child {
+  border: 0;
+  border-bottom: 1px solid var(--border);
+}
+.faq-list summary {
+  padding: 24px 0;
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.faq-list summary span {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #d9c9a3;
+  border-radius: 50%;
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1;
+  color: var(--gold-text);
+  transition:
+    transform 0.35s var(--ease-out),
+    background-color 0.25s;
+}
+.faq-list details p {
+  max-width: 620px;
+  margin-bottom: 28px;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+/* Closing: a flat dark card standing on the cream page, clear of the sand
+   product band above it (its corners never sit on the colour change). */
+.closing {
+  margin-top: 48px;
+  margin-bottom: 48px;
+  border-radius: var(--radius-lg);
+  background: var(--black);
+}
+
+/* Footer: the logo with the tagline beneath it, then the navigation, the IGV
+   line and the legal line, each under a hairline. (Back to top is the
+   floating button, components/layout/back-to-top.tsx.) */
+.footer-top {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  padding: 8px 0 28px;
+}
+.footer-top > span {
+  color: var(--muted);
+}
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 26px;
+  padding: 6px 0 18px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  font-weight: 600;
+}
+.footer-nav a {
+  padding: 11px 0;
+}
+
+@media (hover: hover) {
+  .restaurant-grid article:hover::before {
+    transform: scaleX(1);
+  }
+  .faq-list summary:hover span {
+    background: var(--gold-soft);
+  }
+  .footer-nav a:hover {
+    opacity: 0.65;
+  }
+}
+
+@media (min-width: 701px) {
+  .closing {
+    margin-top: 72px;
+    margin-bottom: 64px;
+  }
+  .footer-top {
+    padding-bottom: 32px;
+  }
+  .partner-note .btn {
+    width: auto;
+  }
+  .story-tabs {
+    border-radius: 999px;
+  }
+  .story-tabs button {
+    justify-content: center;
+    border-radius: 999px;
+  }
+  .restaurant-grid {
+    column-gap: 48px;
+  }
+  .faq-list summary {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 1001px) {
+  .closing {
+    margin-top: 96px;
+    margin-bottom: 80px;
+  }
+  .restaurant-grid {
+    column-gap: 40px;
+  }
+  .restaurant-grid article {
+    padding: 36px 0 40px;
+  }
+  .partner-note {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 56px;
+  }
+  .partner-note > b,
+  .partner-note > span {
+    flex: 1 1 0;
+  }
+  /* The heading stays in view while the questions scroll. */
+  .faq > div:first-child {
+    position: sticky;
+    top: 120px;
+    align-self: start;
+  }
+}
+
+/*
+ * Contrast on sand: Tend's gold and greys are tuned for cream, so on the sand
+ * bands (and a few tinted surfaces) small text is darkened just enough to meet
+ * WCAG AA (4.5:1). Values were computed against each background.
+ */
+.feature-showcase,
+.research {
+  --muted: #6a6456;
+}
+.feature-showcase .section-label,
+.research .section-label,
+.manifesto .section-label,
+.story-kicker,
+.story-tabs button span {
+  color: #76581c;
+}
+.story-tabs button,
+.feature-availability {
+  color: #665c4b;
+}
+.offer-menu del {
+  color: #756f65;
+}
+.gift-message > span {
+  color: #785e28;
+}

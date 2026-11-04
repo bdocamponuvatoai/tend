@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import {
   ESTIMATOR_DEFAULTS,
   estimate,
@@ -45,6 +45,8 @@ function Slider({
         value={value}
         aria-valuetext={format(value)}
         onChange={(event) => onChange(Number(event.target.value))}
+        // Position 0–1 for the filled track; WebKit has no native progress part.
+        style={{ "--p": (value - min) / (max - min) } as CSSProperties}
       />
       <div className="estimator-range" aria-hidden="true">
         <span>{format(min)}</span>

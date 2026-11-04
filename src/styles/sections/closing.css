@@ -2,7 +2,6 @@
   color: white;
   margin: 0 3% 50px;
   padding: 65px 6%;
-  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,7 +15,6 @@
   margin-bottom: 24px;
 }
 .closing {
-  background: var(--black);
   border: 1px solid #51442a;
 }
 .closing h2 {

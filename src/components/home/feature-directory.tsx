@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icon";
 import { featureDirectory } from "@/content/home";
 
 export function FeatureDirectory() {
@@ -23,6 +24,7 @@ export function FeatureDirectory() {
       <div className="feature-directory-grid">
         {featureDirectory.map((item) => (
           <article key={item.label}>
+            {item.icon && <Icon name={item.icon} />}
             <span>{item.label}</span>
             <h3>{item.title}</h3>
             <p>{item.body}</p>

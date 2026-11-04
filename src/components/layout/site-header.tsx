@@ -4,14 +4,25 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Brand } from "@/components/ui/brand";
 import { SmartLink } from "@/components/ui/smart-link";
-import { site } from "@/config/site";
+import { site, type NavLink } from "@/config/site";
 
 // Matches the stylesheet: the mobile menu only exists at max-width 700px.
 const DESKTOP_QUERY = "(min-width: 701px)";
 
-function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
-  return site.nav.map((link) => (
-    <SmartLink key={link.href} href={link.href} onClick={onNavigate}>
+function NavLinks({
+  onNavigate,
+  withCta = false,
+}: {
+  onNavigate?: () => void;
+  withCta?: boolean;
+}) {
+  return site.nav.map((link: NavLink) => (
+    <SmartLink
+      key={link.href}
+      href={link.href}
+      onClick={onNavigate}
+      className={withCta && link.cta ? "nav-cta" : undefined}
+    >
       {link.label}
     </SmartLink>
   ));
@@ -23,7 +34,16 @@ export function SiteHeader() {
   // without an effect.
   const [openOnPath, setOpenOnPath] = useState<string | null>(null);
   const open = openOnPath === pathname;
+  const close = () => setOpenOnPath(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  // Compact, frosted header once the page has scrolled.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -36,9 +56,17 @@ export function SiteHeader() {
     const onViewportChange = () => {
       if (desktop.matches) setOpenOnPath(null);
     };
+    // The open menu covers the page: stop the page scrolling underneath and
+    // take it out of the tab order and accessibility tree until it closes.
+    const behind = [...document.querySelectorAll<HTMLElement>("main, footer")];
+    const root = document.documentElement;
+    behind.forEach((el) => (el.inert = true));
+    root.style.overflow = "hidden";
     document.addEventListener("keydown", onKeyDown);
     desktop.addEventListener("change", onViewportChange);
     return () => {
+      behind.forEach((el) => (el.inert = false));
+      root.style.overflow = "";
       document.removeEventListener("keydown", onKeyDown);
       desktop.removeEventListener("change", onViewportChange);
     };
@@ -46,10 +74,13 @@ export function SiteHeader() {
 
   return (
     <>
-      <header>
+      <header
+        data-scrolled={scrolled ? "" : undefined}
+        data-menu-open={open ? "" : undefined}
+      >
         <Brand />
         <nav aria-label="Main navigation">
-          <NavLinks />
+          <NavLinks withCta />
         </nav>
         <button
           ref={toggleRef}
@@ -60,11 +91,24 @@ export function SiteHeader() {
           aria-label={open ? "Close navigation" : "Open navigation"}
           onClick={() => setOpenOnPath(open ? null : pathname)}
         >
-          {open ? "×" : "☰"}
+          {/* Two lines that turn into a cross (styles/design/header.css). */}
+          <span className="menu-icon" aria-hidden="true" />
         </button>
       </header>
       <nav id="mobile-nav" aria-label="Mobile navigation" hidden={!open}>
-        <NavLinks onNavigate={() => setOpenOnPath(null)} />
+        <div className="mobile-nav-links">
+          <NavLinks onNavigate={close} />
+        </div>
+        <div className="mobile-nav-foot">
+          <p>{site.tagline}</p>
+          <a className="btn btn-gold" href="#restaurants" onClick={close}>
+            Bring Tend to your restaurant <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        {/* Large decorative wordmark closing the menu. */}
+        <p className="mobile-nav-mark" aria-hidden="true">
+          {site.name}
+        </p>
       </nav>
     </>
   );
