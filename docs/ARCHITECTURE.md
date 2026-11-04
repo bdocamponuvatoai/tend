@@ -192,14 +192,14 @@ See `SECURITY.md` for how to report a vulnerability.
 
 ## 10. Key decisions
 
-| Decision                                      | Why                                                                                                               |
-| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Static export, no server                      | A marketing site with no user data: fastest, cheapest and smallest attack surface                                 |
-| `images.unoptimized` with pre-optimised files | The image optimiser needs a server; the hero has AVIF/WebP sizes from `npm run images`                            |
-| App screens served from ImageKit              | Shared with the IGV product pages; versioned with `DEMO_ASSETS_V`                                                 |
-| Indexing gated by `SITE_INDEXABLE`            | Prevents a preview or unapproved copy being indexed; the build fails if indexable with a localhost URL            |
-| SVG glyphs instead of characters              | Phones rendered ↗ as a colour emoji                                                                               |
-| Mobile-first CSS                              | One direction of overrides; proven equal to the previous rendering at 31 widths (docs/verification.md section 19) |
+| Decision                                      | Why                                                                                                                                                                                                               |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Static export, no server                      | A marketing site with no user data: fastest, cheapest and smallest attack surface                                                                                                                                 |
+| `images.unoptimized` with pre-optimised files | The image optimiser needs a server; the hero has AVIF/WebP sizes from `npm run images`. AVIF lives in `public/images/hero` with hashed names (Turbopack cannot import AVIF), cached as immutable by `vercel.json` |
+| App screens served from ImageKit              | Shared with the IGV product pages; versioned with `DEMO_ASSETS_V`                                                                                                                                                 |
+| Indexing gated by `SITE_INDEXABLE`            | Prevents a preview or unapproved copy being indexed; the build fails if indexable with a localhost URL                                                                                                            |
+| SVG glyphs instead of characters              | Phones rendered ↗ as a colour emoji                                                                                                                                                                               |
+| Mobile-first CSS                              | One direction of overrides; proven equal to the previous rendering at 31 widths (docs/verification.md section 19)                                                                                                 |
 
 ## 11. Common changes
 

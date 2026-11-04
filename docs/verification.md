@@ -658,3 +658,21 @@ and 1440px. axe 0 violations; 19/19 cross-browser checks; responsive sweep
 (4 engines, 14 viewports) clean. Parity: the equation is identical in
 Firefox; the pricing paragraph wraps to 8 lines in Firefox instead of 9 at
 360px and 1180px (font-measurement variance, as in section 19).
+
+## 24. Vercel build warnings (2026-11-04)
+
+A Vercel build log showed 14 warning lines:
+
+| Warning (lines)                                                         | Cause                                                                                                                             | Fix                                                                                                                                                                                                                                               |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `engines` overrides the Project Settings Node version; auto-upgrade (4) | `"node": ">=22.18"` let Vercel pick Node 26 instead of the 24.x setting, and float to every new major                             | `"engines": { "node": "24.x" }`, matching `.nvmrc` and CI; lockfile synced                                                                                                                                                                        |
+| `install-scripts` not covered by `allowScripts` (4)                     | npm's install-script policy (advisory for now) flags `unrs-resolver`'s postinstall (dev-only, used by the ESLint import resolver) | `"allowScripts": { "unrs-resolver": true }` in `package.json`; name-only, so Dependabot version bumps don't bring the warning back                                                                                                                |
+| `AVIF image not supported` (4)                                          | Turbopack cannot import AVIF; the four hero AVIF imports were emitted unprocessed with a warning                                  | The AVIF sizes moved byte for byte to `public/images/hero` with content-hashed names, listed in the generated `src/assets/images/hero/avif-sources.ts`; `npm run images` now writes both; `vercel.json` caches `/images/*` for a year (immutable) |
+| `Unknown env config "cache-dir"` (2)                                    | Set by Vercel's build environment (a Yarn-style cache setting npm doesn't recognise); not in this repo                            | None needed: harmless, and only Vercel's build image can remove it                                                                                                                                                                                |
+
+Verified: `npm run build` locally prints no warnings (0 lines matching
+"warn"); the hero AVIF loads from the new path as the LCP image (local:
+0.48s phone, 0.26s desktop; CLS 0); all 8 security headers sent, with no
+CSP violations, policy warnings, console errors or failed requests;
+`npm run check` passes. The Node and allowScripts changes take effect on
+Vercel's next build.

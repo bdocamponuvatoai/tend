@@ -5,7 +5,10 @@
   "type": "module",
   "description": "Tend marketing site: a static Next.js export.",
   "engines": {
-    "node": ">=22.18"
+    "node": "24.x"
+  },
+  "allowScripts": {
+    "unrs-resolver": true
   },
   "browserslist": [
     "chrome 111",

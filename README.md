@@ -21,8 +21,10 @@ can serve.
 
 ## Getting started
 
-Requires Node.js 22.18 or newer (the unit tests use Node's built-in TypeScript
-support); `.nvmrc` pins 24, the current LTS.
+Requires Node.js 24 (the current LTS). It is pinned in `.nvmrc` (local and
+CI) and in `engines` (`24.x`) in `package.json`, which Vercel follows, so
+every environment builds with the same major version. The unit tests use
+Node's built-in TypeScript support.
 
 ```bash
 npm install
@@ -85,11 +87,15 @@ src/
     base/ layout/ components/ sections/ design/
   assets/
     images/             hero-table.jpg (source photo), og-image.jpg (1200×630
-                        share card) and hero/ (AVIF/WebP sizes), both from
+                        share card) and hero/ (WebP sizes, plus
+                        avif-sources.ts listing the AVIF sizes), all from
                         `npm run images`; benefits/ (Why Tend photos;
                         ui/ holds the dish thumbnails, sized for display);
                         igv-logo.png
     fonts/              self-hosted woff2 files
+public/
+  images/hero/          hero AVIF sizes with content-hashed names (from
+                        `npm run images`; Turbopack cannot import AVIF)
 scripts/
   fix-export-segments.mjs
   optimize-images.mjs   hero AVIF/WebP + share image (`npm run images`)
