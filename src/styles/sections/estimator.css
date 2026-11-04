@@ -450,7 +450,10 @@
   line-height: 1.1;
 }
 
-/* The four inputs read as one physical equation rail. */
+/* The four inputs read as one equation rail: a column on phones (label left,
+   detail right), a row from 701px. A round × badge sits centred in every
+   gap. The rail is role="img" with a spoken aria-label, so the badges are
+   not read out. */
 .estimator-equation-title {
   display: block;
   margin-top: 26px;
@@ -460,11 +463,12 @@
   letter-spacing: 0.17em;
 }
 .estimator-equation {
+  --eq-gap: 16px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 4px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--eq-gap);
   margin-top: 8px;
-  padding: 4px;
+  padding: 6px;
   border: 1px solid #ddd0b2;
   border-radius: 20px;
   background: #e9dfca;
@@ -474,56 +478,62 @@
 }
 .estimator-equation > span {
   position: relative;
-  display: grid;
-  align-content: center;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
   min-width: 0;
-  min-height: 68px;
-  padding: 10px 4px;
+  min-height: 52px;
+  padding: 13px 16px;
   border-radius: 14px;
   background: #fffcf5;
-  text-align: center;
+  text-align: left;
   box-shadow:
     0 1px 0 #ffffff inset,
     0 5px 12px -10px #3b2c1499;
 }
 .estimator-equation > span + span::before {
   position: absolute;
-  top: 50%;
-  left: -7px;
+  top: calc(var(--eq-gap) / -2);
+  left: 50%;
   z-index: 1;
   display: grid;
   place-items: center;
-  width: 8px;
-  height: 16px;
-  border-radius: 999px;
-  background: #e9dfca;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #d8c9a6;
+  border-radius: 50%;
+  background: #f4ecd9;
   color: #876520;
-  font-family: var(--font-serif);
-  font-size: 15px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
   content: "×";
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
 }
 .estimator-equation strong {
   overflow: hidden;
   color: var(--ink);
   font-family: var(--font-serif);
-  font-size: clamp(12px, 3.8vw, 15px);
+  font-size: 18px;
   font-weight: 600;
   line-height: 1.1;
   text-overflow: ellipsis;
+  font-variant-numeric: lining-nums;
 }
 .estimator-equation small {
-  margin-top: 5px;
-  color: #716a5c;
-  font-size: 9px;
-  line-height: 1.15;
+  flex: none;
+  color: #6b6356;
+  font-size: 12px;
+  line-height: 1.2;
 }
 .estimator-equation .estimator-equation-accent {
   background: var(--black);
 }
 .estimator-equation .estimator-equation-accent strong {
   color: #e3cb8d;
-  font-size: 24px;
+  font-size: 22px;
 }
 .estimator-equation .estimator-equation-accent small {
   color: #bdb29b;
@@ -671,19 +681,11 @@
   }
 }
 
-/* Small phones keep the equation rail tight; 431px+ relaxes it. */
+/* Small phones keep the method panel's side padding tight; 431px+ relaxes it. */
 @media (min-width: 431px) {
   .estimator-method-main {
     padding-right: 22px;
     padding-left: 22px;
-  }
-  .estimator-equation {
-    gap: 6px;
-    padding: 6px;
-  }
-  .estimator-equation > span {
-    padding-right: 7px;
-    padding-left: 7px;
   }
 }
 
@@ -710,17 +712,27 @@
     padding: 32px;
   }
   .estimator-equation {
-    gap: 8px;
+    --eq-gap: 14px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .estimator-equation > span {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    gap: 5px;
     min-height: 76px;
     padding: 12px 10px;
+    text-align: center;
   }
-  .estimator-equation strong {
-    font-size: 18px;
+  .estimator-equation > span + span::before {
+    top: 50%;
+    left: calc(var(--eq-gap) / -2);
+  }
+  .estimator-equation .estimator-equation-accent strong {
+    font-size: 24px;
   }
   .estimator-equation small {
-    font-size: 10px;
+    font-size: 11px;
   }
   .estimator-method-copy {
     grid-template-columns: repeat(2, minmax(0, 1fr));

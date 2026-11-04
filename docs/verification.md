@@ -636,3 +636,25 @@ Verified in Chrome: Tend cost per month is $499 (1), $1,996 (4), $2,245
 (5), $6,286 (14), $5,985 (15) and $7,980 (20). The default estimate is
 unchanged ($287,316). axe 0 violations; 19/19 cross-browser checks;
 `npm run check` (5 tests) passes.
+
+## 23. Estimator equation rail, mobile-first (2026-11-04)
+
+Reported: the "Monthly revenue" equation (Locations × Covers × Ticket × 28
+service nights) looked broken. On phones four boxes were squeezed into one
+row about 300px wide, with 9px labels. At every width the × signs sat in
+8px-wide boxes on the card edges, so the glyph overflowed and looked
+misaligned.
+
+Now (`sections/estimator.css`): phones get a column with the label on the
+left and the detail on the right (18px / 12px); from 701px the boxes form a
+row of four with their text centred. A 22px round × badge sits centred in
+every gap (`--eq-gap`). The rail stays `role="img"` with its spoken label,
+so the badges are not read out.
+
+Verified in Chrome and WebKit at 320, 390, 700, 701, 820, 1100 and 1440px:
+every badge is centred in its gap (0.0px offset), no text is clipped, and
+the rail stays inside the viewport. Box labels are centred (0.0px) at 820
+and 1440px. axe 0 violations; 19/19 cross-browser checks; responsive sweep
+(4 engines, 14 viewports) clean. Parity: the equation is identical in
+Firefox; the pricing paragraph wraps to 8 lines in Firefox instead of 9 at
+360px and 1180px (font-measurement variance, as in section 19).
