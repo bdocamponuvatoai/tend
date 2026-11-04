@@ -369,25 +369,225 @@
   --tone: #a59c88;
 }
 
-/* Method notes: the calculation, then the caveat set apart. */
+/*
+ * Methodology: one dimensional card with a softly lit surface, a tactile
+ * equation rail and a champagne outcome note. Depth comes from material and
+ * light rather than glass or decorative effects.
+ */
 .estimator-method {
+  position: relative;
+  isolation: isolate;
   display: grid;
-  gap: 18px;
-  margin-top: 40px;
-  padding-top: 28px;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 14.5px;
-  line-height: 1.75;
+  gap: 1px;
+  margin-top: 48px;
+  padding: 1px;
+  overflow: hidden;
+  border-radius: 30px;
+  background: linear-gradient(145deg, #ffffff, #d2c29f 48%, #fffaf0);
+  box-shadow:
+    0 1px 1px #ffffff inset,
+    0 2px 5px #33260f12,
+    0 18px 45px -28px #3b2c1473,
+    0 36px 80px -52px #3b2c147a;
 }
-.estimator-method strong {
-  color: var(--ink);
+.estimator-method::before {
+  position: absolute;
+  top: 1px;
+  right: 7%;
+  left: 7%;
+  z-index: 2;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ffffff, transparent);
+  content: "";
+  pointer-events: none;
 }
-.estimator-method p + p {
-  padding: 20px 22px;
+
+.estimator-method-main,
+.estimator-caveat {
+  position: relative;
+  min-width: 0;
+}
+.estimator-method-main {
+  padding: 26px 22px 28px;
+  border-radius: 28px 28px 12px 12px;
+  background:
+    radial-gradient(circle at 12% 0%, #ffffff 0, transparent 36%),
+    linear-gradient(145deg, #fffdf8, #f4edde);
+  box-shadow:
+    0 1px 0 #ffffff inset,
+    0 -1px 0 #d8cbaa inset;
+}
+.estimator-method-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.estimator-method-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #ddcfaf;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #ffffff, #eee3cb);
+  color: var(--gold-text);
+  box-shadow:
+    0 1px 0 #ffffff inset,
+    0 8px 18px -14px #3b2c148f;
+}
+.estimator-method-kicker,
+.estimator-caveat-label {
+  color: #795c20;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+}
+.estimator-method-heading h3 {
+  margin-top: 3px;
+  font-size: 27px;
+  line-height: 1.1;
+}
+
+/* The four inputs read as one physical equation rail. */
+.estimator-equation-title {
+  display: block;
+  margin-top: 26px;
+  color: #795c20;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+}
+.estimator-equation {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px;
+  border: 1px solid #ddd0b2;
   border-radius: 20px;
-  background: #efe3c4;
-  color: #4d4535;
+  background: #e9dfca;
+  box-shadow:
+    0 1px 2px #5a421724 inset,
+    0 1px 0 #ffffffb8;
+}
+.estimator-equation > span {
+  position: relative;
+  display: grid;
+  align-content: center;
+  min-width: 0;
+  min-height: 68px;
+  padding: 10px 7px;
+  border-radius: 14px;
+  background: #fffcf5;
+  text-align: center;
+  box-shadow:
+    0 1px 0 #ffffff inset,
+    0 5px 12px -10px #3b2c1499;
+}
+.estimator-equation > span + span::before {
+  position: absolute;
+  top: 50%;
+  left: -7px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 8px;
+  height: 16px;
+  border-radius: 999px;
+  background: #e9dfca;
+  color: #876520;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  content: "×";
+  transform: translateY(-50%);
+}
+.estimator-equation strong {
+  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: clamp(12px, 3.8vw, 15px);
+  font-weight: 600;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+}
+.estimator-equation small {
+  margin-top: 5px;
+  color: #716a5c;
+  font-size: 9px;
+  line-height: 1.15;
+}
+.estimator-equation .estimator-equation-accent {
+  background: var(--black);
+}
+.estimator-equation .estimator-equation-accent strong {
+  color: #e3cb8d;
+  font-size: 24px;
+}
+.estimator-equation .estimator-equation-accent small {
+  color: #bdb29b;
+}
+
+.estimator-method-copy {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+  color: #625c50;
+  font-size: 13.5px;
+  line-height: 1.72;
+}
+.estimator-method-copy p + p {
+  padding-top: 16px;
+  border-top: 1px solid #ded4bf;
+}
+
+.estimator-caveat {
+  padding: 28px 24px 26px;
+  border-radius: 12px 12px 28px 28px;
+  background:
+    radial-gradient(circle at 12% 0%, #fff9e8 0, transparent 42%),
+    linear-gradient(145deg, #f1e2b9, #ddc585);
+  color: #342c1e;
+  box-shadow:
+    0 1px 0 #fff8df inset,
+    0 -1px 0 #b99c5d29 inset;
+}
+.estimator-caveat-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.estimator-caveat h3 {
+  margin: 34px 0 16px;
+  font-size: 34px;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.estimator-caveat h3 em {
+  color: #78591c;
+  font-weight: 400;
+}
+.estimator-caveat p {
+  color: #514735;
+  font-size: 14px;
+  line-height: 1.72;
+}
+.estimator-caveat-rule {
+  position: relative;
+  height: 1px;
+  margin-top: 30px;
+  background: #81642342;
+}
+.estimator-caveat-rule span {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #7f601d;
+  box-shadow: 0 0 0 5px #ffffff42;
+  transform: translateY(-50%);
 }
 
 /*
@@ -480,6 +680,21 @@
   }
 }
 
+@media (max-width: 430px) {
+  .estimator-method-main {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+  .estimator-equation {
+    gap: 4px;
+    padding: 4px;
+  }
+  .estimator-equation > span {
+    padding-right: 4px;
+    padding-left: 4px;
+  }
+}
+
 @media (min-width: 701px) {
   /* Wider screens show the readout beside the sliders. */
   .estimator-dock {
@@ -495,6 +710,35 @@
   .estimator-inputs,
   .estimator-results {
     padding: 32px 28px;
+  }
+  .estimator-method-main {
+    padding: 32px;
+  }
+  .estimator-equation {
+    gap: 8px;
+  }
+  .estimator-equation > span {
+    min-height: 76px;
+    padding: 12px 10px;
+  }
+  .estimator-equation strong {
+    font-size: 18px;
+  }
+  .estimator-equation small {
+    font-size: 10px;
+  }
+  .estimator-method-copy {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+  .estimator-method-copy p + p {
+    padding-top: 0;
+    padding-left: 28px;
+    border-top: 0;
+    border-left: 1px solid #ded4bf;
+  }
+  .estimator-caveat {
+    padding: 32px;
   }
 }
 
@@ -531,8 +775,28 @@
     font-size: 40px;
   }
   .estimator-method {
-    grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
-    gap: 48px;
-    align-items: start;
+    grid-template-columns: minmax(0, 1.7fr) minmax(300px, 0.72fr);
+    margin-top: 56px;
+  }
+  .estimator-method-main {
+    padding: 38px 40px 40px;
+    border-radius: 28px 12px 12px 28px;
+  }
+  .estimator-method-heading h3 {
+    font-size: 30px;
+  }
+  .estimator-caveat {
+    display: flex;
+    flex-direction: column;
+    padding: 38px 34px 34px;
+    border-radius: 12px 28px 28px 12px;
+  }
+  .estimator-caveat h3 {
+    margin-top: auto;
+    padding-top: 64px;
+    font-size: clamp(32px, 2.5vw, 40px);
+  }
+  .estimator-caveat-rule {
+    margin-top: auto;
   }
 }

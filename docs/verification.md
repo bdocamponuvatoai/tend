@@ -497,3 +497,26 @@ in Chrome, Edge, Firefox and WebKit, no errors or overflow, layout within
 tolerance; estimator easing, research band, phone bar and headline fit pass
 in Chrome and WebKit; 404 links reach their sections; rendered text identical
 to the previous build.
+
+## 18. Feature, research and methodology redesigns (2026-11-04)
+
+The owner redesigned the feature-showcase heading, the Research heading and
+cards, and the estimator's method notes (a methodology panel with an
+equation rail and an outcome-note card), adding small labels (BEYOND THE
+ORDER, PUBLISHED EVIDENCE, INDUSTRY SIGNAL, METHODOLOGY, OUTCOME NOTE).
+
+Fixed before release:
+
+- **Contrast:** the selected feature tab's number (#876520 on #f2e6ca,
+  4.33:1) and the source line on the featured research card (#74591d on
+  #e5ce94, 4.26:1) were below 4.5:1; both use a darker gold now.
+- **Equation:** its `aria-label` sat on a plain `div`, where screen readers
+  ignore it; `role="img"` makes it read as one sentence.
+- **Research card numbers** use lining figures, so "01" no longer reads
+  as "oI".
+
+Verified: `npm run check` and `npm run build` pass; axe 0 violations
+(1440px, 390px, 404, menu open); 19/19 cross-browser checks in Chrome, Edge,
+Firefox and WebKit with no errors or overflow; the method prices render
+intact ("$250/mo", "$499/mo"); the outcome-note card is complete at 390,
+820 and 1518px.

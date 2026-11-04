@@ -1,123 +1,266 @@
 /*
- * "What the research shows": sourced industry figures behind the estimator,
- * as a bento of stat tiles on the sand band. Cream tiles, with the first
- * figure featured on a wide champagne tile and one ink tile for contrast;
- * each source is a footnote at the foot of its tile. Mobile-first: one
- * column, two on tablets, four on desktops (2+1+1 / 1+1+2).
+ * Published evidence as a dimensional data bento. Warm material, fine
+ * highlights and inset source plates give the cards depth without fighting
+ * the editorial typography.
  */
 .research {
-  background: #eae3d3;
+  background:
+    radial-gradient(circle at 86% 0%, #f6ecd2 0, transparent 30%), #e9e1cf;
 }
+
+/* Editorial heading with a compact evidence note. */
 .research-heading {
   display: grid;
-  gap: 25px;
-  margin-bottom: 35px;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+.research-heading-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.research-heading-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #d9c9a5;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #fffdf7, #e8dcc2);
+  color: var(--gold-text);
+  box-shadow:
+    0 1px 0 #ffffff inset,
+    0 10px 22px -17px #3b2c1480;
+}
+.research-heading-title .section-label {
+  padding-top: 3px;
 }
 .research-heading h2 {
-  margin-top: 22px;
+  margin-top: 17px;
   font-size: 43px;
+  line-height: 1.02;
 }
 .research-heading h2 em {
   color: #896822;
 }
-.research-heading > p {
-  max-width: 450px;
-  font-size: 17px;
-  color: var(--muted);
+.research-intro {
+  padding: 22px;
+  border: 1px solid #fff9ec;
+  border-radius: 22px;
+  background: #fffaf0a6;
+  box-shadow:
+    0 1px 0 #ffffff inset,
+    0 14px 30px -26px #3b2c1466;
+}
+.research-intro > span {
+  color: #795c20;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+}
+.research-intro p {
+  max-width: 520px;
+  margin-top: 10px;
+  color: #5f594c;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
+/* Each finding is a softly raised data card. */
 .research-grid {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 .research-grid article {
+  position: relative;
   display: flex;
   flex-direction: column;
-  padding: 30px 26px 26px;
+  min-width: 0;
+  overflow: hidden;
+  padding: 26px 24px 24px;
+  border: 1px solid #fffaf0;
   border-radius: 28px;
-  background: var(--card);
+  background:
+    radial-gradient(circle at 12% 0%, #ffffff 0, transparent 38%),
+    linear-gradient(145deg, #fffdf8, #f4edde);
+  box-shadow:
+    0 1px 0 #ffffff inset,
+    0 2px 5px #33260f10,
+    0 18px 42px -32px #3b2c146e;
+}
+.research-grid article::before {
+  position: absolute;
+  top: 0;
+  right: 12%;
+  left: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ffffff, transparent);
+  content: "";
+}
+.research-card-meta {
+  display: flex;
+  grid-area: meta;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.research-card-meta span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #ddcfaf;
+  border-radius: 50%;
+  color: #7b5b1c;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  /* Cormorant defaults to old-style figures, where "01" reads as "oI". */
+  font-variant-numeric: lining-nums;
+  line-height: 1;
+  box-shadow: 0 1px 0 #ffffff inset;
+}
+.research-card-meta b {
+  color: #887f6d;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
 }
 .research-grid .research-value {
-  font-family: var(--font-serif);
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -0.035em;
+  grid-area: value;
+  margin-top: 32px;
   color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: clamp(50px, 15vw, 68px);
   font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
   white-space: nowrap;
 }
 .research-grid .research-value::after {
-  content: "";
   display: block;
-  width: 32px;
+  width: 34px;
   height: 2px;
   margin-top: 20px;
   background: var(--gold);
+  content: "";
   transition: width 0.5s var(--ease-out);
 }
 .research-grid h3 {
-  margin: 20px 0 12px;
+  grid-area: title;
+  margin: 22px 0 12px;
   font-size: 27px;
-  line-height: 1.15;
+  line-height: 1.13;
   text-wrap: balance;
 }
+.research-grid article > p:not(.research-value):not(.research-source) {
+  grid-area: detail;
+}
 .research-grid p {
-  font-size: 16px;
-  line-height: 1.75;
   color: var(--muted);
+  font-size: 15px;
+  line-height: 1.68;
 }
 .research-grid .research-source {
+  grid-area: source;
   margin-top: auto;
-  padding-top: 22px;
-  font-size: 12px;
-  line-height: 1.5;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  padding: 14px 15px;
+  border: 1px solid #e6dac0;
+  border-radius: 13px;
+  background: #eee5d3;
   color: #74591d;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  line-height: 1.45;
+  text-transform: uppercase;
+  box-shadow:
+    0 1px 2px #5a421715 inset,
+    0 1px 0 #ffffffa8;
 }
-.research-grid .research-source::before {
-  content: "";
-  display: block;
-  margin-bottom: 14px;
-  border-top: 1px dashed #d4c6a6;
+.research-grid h3 + p {
+  margin-bottom: 24px;
 }
 .research-source cite {
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-/* Featured figure: a wide champagne tile with an oversized numeral. */
+/* Featured opportunity: a warmer, slightly deeper champagne surface. */
 .research-grid article:nth-child(1) {
-  --muted: #574f42;
-  background: #ecdcb0;
+  --muted: #554e41;
+  border-color: #f5e6bc;
+  background:
+    radial-gradient(circle at 8% 0%, #fff4cf 0, transparent 42%),
+    linear-gradient(145deg, #efdeb0, #ddc584);
+  box-shadow:
+    0 1px 0 #fff8dc inset,
+    0 3px 6px #5a421716,
+    0 22px 48px -34px #3b2c148c;
 }
-.research-grid article:nth-child(1) .research-value {
-  font-size: 76px;
+.research-grid article:nth-child(1) .research-card-meta span {
+  border-color: #bfa664;
 }
-.research-grid article:nth-child(1) .research-source::before {
-  border-top-color: #c7b07a;
+.research-grid article:nth-child(1) .research-source {
+  border-color: #cdb473;
+  background: #e5ce94;
+  /* Deeper gold: 10px text on this champagne needs 4.5:1 (WCAG AA). */
+  color: #634a16;
+  box-shadow:
+    0 1px 2px #5a421724 inset,
+    0 1px 0 #fff3c9;
 }
-/* One ink tile for contrast. */
+
+/* A black instrument-like card gives the bento one point of contrast. */
 .research-grid article:nth-child(5) {
   --muted: #c9bfa9;
-  background: var(--black);
+  border-color: #313127;
+  background:
+    radial-gradient(circle at 12% 0%, #2b2c23 0, transparent 40%), var(--black);
   color: #f7f1df;
+  box-shadow:
+    0 1px 0 #ffffff1a inset,
+    0 3px 7px #14150f24,
+    0 24px 50px -34px #14150fa3;
+}
+.research-grid article:nth-child(5) .research-card-meta span {
+  border-color: #d5bc795e;
+  color: #d5bc79;
+  box-shadow: 0 1px 0 #ffffff14 inset;
+}
+.research-grid article:nth-child(5) .research-card-meta b,
+.research-grid article:nth-child(5) .research-source {
+  color: #cfb678;
 }
 .research-grid article:nth-child(5) .research-value {
   color: #f7f1df;
 }
 .research-grid article:nth-child(5) .research-source {
-  color: #cfb678;
-}
-.research-grid article:nth-child(5) .research-source::before {
-  border-top-color: #ffffff26;
+  border-color: #ffffff1f;
+  background: #ffffff0b;
+  box-shadow:
+    0 1px 2px #00000040 inset,
+    0 1px 0 #ffffff0f;
 }
 
 .research-note {
-  max-width: 800px;
+  position: relative;
+  max-width: 860px;
   margin-top: 28px;
-  font-size: 13px;
+  padding-left: 19px;
   color: #645d4e;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.research-note::before {
+  position: absolute;
+  top: 0.55em;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px #ffffff4d;
+  content: "";
 }
 
 @media (hover: hover) {
@@ -128,55 +271,70 @@
 
 @media (min-width: 701px) {
   .research-heading {
-    grid-template-columns: 1.25fr 1fr;
-    gap: 35px;
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+    gap: 48px;
     align-items: end;
-    margin-bottom: 48px;
+    margin-bottom: 52px;
   }
   .research-heading h2 {
-    font-size: clamp(39px, 4vw, 64px);
+    font-size: clamp(52px, 6.5vw, 68px);
+  }
+  .research-intro {
+    padding: 24px 26px;
   }
   .research-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
   }
   .research-grid article {
-    padding: 36px 32px 30px;
+    padding: 30px;
   }
   .research-grid article:nth-child(1),
   .research-grid article:nth-child(6) {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
+    grid-template-areas:
+      "meta meta"
+      "value title"
+      "value detail"
+      "value source";
     grid-column: span 2;
-  }
-  .research-grid .research-value {
-    font-size: 64px;
+    column-gap: 34px;
   }
   .research-grid article:nth-child(1) .research-value,
   .research-grid article:nth-child(6) .research-value {
-    font-size: 104px;
+    align-self: center;
+    margin-top: 18px;
+    font-size: clamp(78px, 12vw, 112px);
+  }
+  .research-grid article:nth-child(1) h3,
+  .research-grid article:nth-child(6) h3 {
+    align-self: end;
+    margin-top: 32px;
+  }
+  .research-grid article:nth-child(1) .research-source,
+  .research-grid article:nth-child(6) .research-source {
+    align-self: end;
   }
 }
 
 @media (min-width: 1001px) {
   .research-heading {
-    gap: 70px;
+    gap: 80px;
     margin-bottom: 64px;
+  }
+  .research-heading h2 {
+    font-size: clamp(58px, 4.8vw, 76px);
   }
   .research-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
   }
   .research-grid .research-value {
-    font-size: clamp(56px, 4.4vw, 68px);
+    font-size: clamp(48px, 4.2vw, 66px);
   }
-  /* The two wide tiles (first and last) carry oversized numerals, balancing
-     the grid on the diagonal. */
   .research-grid article:nth-child(1) .research-value,
   .research-grid article:nth-child(6) .research-value {
-    font-size: clamp(96px, 8.4vw, 132px);
-  }
-  /* The two wide tiles set their copy beside a shorter column. */
-  .research-grid article:nth-child(1) p:not(.research-value),
-  .research-grid article:nth-child(6) p:not(.research-value) {
-    max-width: 520px;
+    font-size: clamp(84px, 7.6vw, 120px);
   }
 }
 

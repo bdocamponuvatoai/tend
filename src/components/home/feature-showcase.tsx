@@ -234,19 +234,24 @@ export function FeatureShowcase() {
       aria-labelledby="feature-heading"
     >
       <div className="showcase-heading">
-        <div>
-          <div className="section-label">MORE THAN A WAY TO ORDER</div>
-          <h2 id="feature-heading">
-            Little taps.
-            <br />
-            <em>Bigger possibilities.</em>
-          </h2>
+        <div className="showcase-heading-title">
+          <div>
+            <div className="section-label">MORE THAN A WAY TO ORDER</div>
+            <h2 id="feature-heading">
+              Little taps.
+              <br />
+              <em>Bigger possibilities.</em>
+            </h2>
+          </div>
         </div>
-        <p>
-          Make the most of an evening out. Turn a drink into a thoughtful
-          gesture. Be there for someone’s meal, even when you can’t be there in
-          person.
-        </p>
+        <div className="showcase-intro">
+          <span>BEYOND THE ORDER</span>
+          <p>
+            Make the most of an evening out. Turn a drink into a thoughtful
+            gesture. Be there for someone’s meal, even when you can’t be there
+            in person.
+          </p>
+        </div>
       </div>
       <StoryTabs stories={stories} label="Tend feature highlights" />
       <p className="feature-availability">
