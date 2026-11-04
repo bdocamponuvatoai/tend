@@ -16,7 +16,7 @@ export function Closing() {
           Make more of every meal with Tend.
         </p>
         <a className="btn btn-gold" href="#restaurants">
-          Bring Tend to your restaurant <span>↗</span>
+          Bring Tend to your restaurant <span aria-hidden="true">↗</span>
         </a>
       </div>
     </section>

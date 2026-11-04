@@ -33,7 +33,7 @@ export function Restaurants() {
           Restaurant participation and launch details will be announced here.
         </span>
         <a className="btn btn-gold" href="#estimator">
-          Estimate the impact for your venue <span>↓</span>
+          Estimate the impact for your venue <span aria-hidden="true">↓</span>
         </a>
       </div>
     </section>

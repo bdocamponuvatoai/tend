@@ -34,7 +34,11 @@ function Slider({
     <div className="estimator-field">
       <div className="estimator-field-top">
         <label htmlFor={id}>{label}</label>
-        <output htmlFor={id}>{format(value)}</output>
+        {/* Visual readout only: the slider announces its own value
+            (aria-valuetext), and <output> would announce it a second time. */}
+        <output htmlFor={id} aria-hidden="true">
+          {format(value)}
+        </output>
       </div>
       <input
         id={id}
@@ -132,7 +136,11 @@ export function EstimatorForm() {
         </fieldset>
         <div className="estimator-revenue">
           <span>CURRENT MONTHLY REVENUE</span>
-          <output>{formatCurrency(result.monthlyRevenue)}</output>
+          {/* Readable, but not announced on every slider step: the annual
+              gain below is the one live result. */}
+          <output aria-live="off">
+            {formatCurrency(result.monthlyRevenue)}
+          </output>
         </div>
       </form>
 

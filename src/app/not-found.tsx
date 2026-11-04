@@ -18,7 +18,7 @@ export default function NotFound() {
         </h1>
         <p>The page you’re looking for doesn’t exist or has moved.</p>
         <SmartLink href="/" className="text-link">
-          Back to Tend ↗
+          Back to Tend <span aria-hidden="true">↗</span>
         </SmartLink>
       </section>
     </main>

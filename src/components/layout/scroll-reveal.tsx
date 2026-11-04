@@ -7,7 +7,7 @@ import { initReveal } from "@/lib/reveal";
 const REVEAL = [
   ".benefits-heading",
   ".benefit-grid > article",
-  ".benefits-bottom",
+  ".benefit-grid > .benefits-moment",
   ".intro-grid",
   ".steps > article",
   ".showcase-heading",

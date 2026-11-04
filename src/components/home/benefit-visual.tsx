@@ -5,15 +5,9 @@ import caesarSalad from "@/assets/images/benefits/ui/caesar-salad.webp";
 import citrusSpritz from "@/assets/images/benefits/ui/citrus-spritz.webp";
 import truffleGnocchi from "@/assets/images/benefits/ui/truffle-gnocchi.webp";
 
-function FoodImage({
-  src,
-  className = "",
-}: {
-  src: StaticImageData;
-  className?: string;
-}) {
+function FoodImage({ src }: { src: StaticImageData }) {
   return (
-    <span className={`benefit-food ${className}`}>
+    <span className="benefit-food">
       <Image src={src} alt="" fill sizes="240px" />
     </span>
   );
@@ -182,26 +176,22 @@ function PayVisual() {
   );
 }
 
-/** An integrated bento illustration with no phone or device chrome. */
-export function BenefitVisual({ file }: { file: string }) {
-  const visual = (() => {
-    switch (file) {
-      case "02-menu":
-        return <MenuVisual />;
-      case "03-item-detail":
-        return <DetailVisual />;
-      case "04-cart":
-        return <OrderVisual />;
-      case "06-pay-bill":
-        return <PayVisual />;
-      default:
-        throw new Error(`Unknown Tend visual: ${file}`);
-    }
-  })();
+/** Illustrations by the Tend app screen each one depicts. */
+const VISUALS = {
+  "02-menu": MenuVisual,
+  "03-item-detail": DetailVisual,
+  "04-cart": OrderVisual,
+  "06-pay-bill": PayVisual,
+} as const;
 
+export type BenefitScreen = keyof typeof VISUALS;
+
+/** An integrated bento illustration with no phone or device chrome. */
+export function BenefitVisual({ screen }: { screen: BenefitScreen }) {
+  const Visual = VISUALS[screen];
   return (
     <div className="benefit-visual-wrap" aria-hidden="true">
-      {visual}
+      <Visual />
     </div>
   );
 }

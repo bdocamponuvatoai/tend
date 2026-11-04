@@ -93,7 +93,8 @@ details p {
   left: 10px;
   background: white;
   padding: 10px;
-  z-index: 10;
+  /* Above the sticky header (40) and the mobile menu (39). */
+  z-index: 50;
 }
 .skip:focus {
   top: 10px;

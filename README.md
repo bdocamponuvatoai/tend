@@ -20,18 +20,18 @@ npm run dev        # http://localhost:3000
 
 ## Scripts
 
-| Script                 | What it does                                                                |
-| ---------------------- | --------------------------------------------------------------------------- |
-| `npm run dev`          | Development server with hot reload.                                         |
-| `npm run build`        | Static export to `out/` (then `postbuild` fixes prefetch files on Windows). |
-| `npm run preview`      | Serves `out/` locally (`npx serve@14 out`).                                 |
-| `npm run lint`         | ESLint (Next.js core-web-vitals + TypeScript rules); fails on any warning.  |
-| `npm run images`       | Regenerates the hero's AVIF/WebP sizes from `hero-table.jpg`.               |
-| `npm run typecheck`    | Generates route types and runs `tsc --noEmit`.                              |
-| `npm test`             | Unit tests (`node --test`) for the estimator maths.                         |
-| `npm run format`       | Formats everything with Prettier.                                           |
-| `npm run format:check` | Fails if anything is not formatted.                                         |
-| `npm run check`        | typecheck + lint + format:check + test. Run before every push.              |
+| Script                 | What it does                                                                 |
+| ---------------------- | ---------------------------------------------------------------------------- |
+| `npm run dev`          | Development server with hot reload.                                          |
+| `npm run build`        | Static export to `out/` (then `postbuild` fixes prefetch files on Windows).  |
+| `npm run preview`      | Serves `out/` locally (`npx serve@14 out`).                                  |
+| `npm run lint`         | ESLint (Next.js core-web-vitals + TypeScript rules); fails on any warning.   |
+| `npm run images`       | Regenerates the hero's AVIF/WebP sizes and the share image (`og-image.jpg`). |
+| `npm run typecheck`    | Generates route types and runs `tsc --noEmit`.                               |
+| `npm test`             | Unit tests (`node --test`) for the estimator maths.                          |
+| `npm run format`       | Formats everything with Prettier.                                            |
+| `npm run format:check` | Fails if anything is not formatted.                                          |
+| `npm run check`        | typecheck + lint + format:check + test. Run before every push.               |
 
 ## Project structure
 
@@ -42,15 +42,18 @@ src/
     page.tsx            the home page (section order lives here)
     not-found.tsx       styled 404
     icon.svg            favicon
+    apple-icon.png      iOS home-screen icon (180px, rendered from icon.svg)
     robots.ts           robots.txt (blocks everything until indexing is enabled)
     sitemap.ts          sitemap.xml, built from content/routes.ts
     llms.txt/route.ts   llms.txt summary for answer engines, built from content/
   components/
-    layout/             site-header (client: mobile menu), site-footer
-    home/               one component per page section; story-tabs,
+    layout/             site-header (client: mobile menu), site-footer,
+                        back-to-top and scroll-reveal (client)
+    home/               one component per page section, plus benefit-visual
+                        (the Why Tend tile illustrations); story-tabs,
                         estimator-form and products-root are the only other
                         client components
-    ui/                 Brand (wordmark), SmartLink
+    ui/                 Brand (wordmark), Icon, SmartLink, SectionLink
     seo/                JsonLd
   config/
     site.ts             name, tagline, title, description, navigation (client-safe)
@@ -66,14 +69,17 @@ src/
   styles/
     globals.css         imports the partials below, in cascade order
     fonts.ts            next/font/local: DM Sans + Cormorant Garamond
-    base/ layout/ components/ sections/
+    base/ layout/ components/ sections/ design/
   assets/
-    images/             hero-table.jpg (source + OG image), hero/ (AVIF/WebP
-                        sizes from `npm run images`), igv-logo.png
+    images/             hero-table.jpg (source photo), og-image.jpg (1200×630
+                        share card) and hero/ (AVIF/WebP sizes), both from
+                        `npm run images`; benefits/ (Why Tend photos;
+                        ui/ holds the dish thumbnails, sized for display);
+                        igv-logo.png
     fonts/              self-hosted woff2 files
 scripts/
   fix-export-segments.mjs
-  optimize-images.mjs   hero AVIF/WebP generator (`npm run images`)
+  optimize-images.mjs   hero AVIF/WebP + share image (`npm run images`)
 docs/
   verification.md       how the migration and later changes were verified
 ```
@@ -83,8 +89,9 @@ docs/
 - **Copy lives in `src/content/`** (and `config/site.ts`). The FAQ, research
   figures and features feed the page, the JSON-LD and `llms.txt`, so editing
   one place updates all three.
-- **Server Components by default.** Only the mobile menu, the feature tabs, the
-  estimator and the product walkthroughs ship JavaScript.
+- **Server Components by default.** Only the header (mobile menu), section
+  links, back-to-top, scroll reveal, the feature tabs, the estimator and the
+  product walkthroughs ship JavaScript.
 - **CSS order matters.** `globals.css` imports partials in the order the
   original stylesheet defined them; some rules rely on overriding earlier
   partials at equal specificity. Add new sections as new partials at the end.
@@ -110,19 +117,29 @@ docs/
   last import. New sections get it automatically by using the `section` class.
   Write new CSS mobile-first (base styles for phones, `min-width` queries up).
 - **Design layer.** `styles/design/` holds the shared look: `system.css`
-  (flat buttons `.btn-gold` / `.btn-ink`, icon badges, scroll reveal),
-  `header.css` (sticky frosted header, CTA pill) and `sections.css`
-  (per-section refinements). The system is editorial, like a printed
-  fine-dining menu: content sits on the page under hairline rules, hierarchy
-  comes from type and one gold accent, and surfaces are flat (no glows, drop
-  shadows or hover lifts). Only the estimator (an instrument) and the app
-  previews (screens) are framed. "Why Tend" and "Everything around your meal"
-  live in `sections/benefits.css` and `sections/directory.css`. Tokens are in
+  (flat buttons `.btn-gold` / `.btn-ink`, icon badges, back-to-top, scroll
+  reveal), `header.css` (sticky header, CTA pill, dark mobile menu),
+  `sections.css` (per-section refinements) and `bento.css` (rounded tiles in
+  champagne, sand, ink and gold, the folder-tab corner, round arrow buttons
+  and the Why Tend illustrations). Why Tend, the feature tabs, Research and
+  the product walkthrough use bento tiles; the rest is editorial, like a
+  printed fine-dining menu: hairline rules, hierarchy from type and one gold
+  accent, no glows or drop shadows. "Why Tend" and "Everything around your
+  meal" live in `sections/benefits.css` and `sections/directory.css`. The Why
+  Tend tile art is HTML in `components/home/benefit-visual.tsx`, decorative
+  (`aria-hidden`), keyed by the app screen it depicts. Tokens are in
   `base/tokens.css`. Icons are lucide line icons in a hairline circle via
-  `components/ui/icon.tsx`; each item's icon is set in `content/home.ts`. Scroll reveal (`lib/reveal.ts`) only touches
-  elements below the fold and is off for reduced motion.
-- **Links:** use `SmartLink`. It uses `next/link` for `/…` routes and a plain
-  `<a>` for hash, `tel:`, `mailto:` and external links.
+  `components/ui/icon.tsx`; each item's icon is set in `content/home.ts`.
+  Scroll reveal (`lib/reveal.ts`) only touches elements below the fold and
+  is off for reduced motion.
+- **Layout across engines.** WebKit kept stale row heights in the Why Tend
+  grid after a resize or rotation, so phones stack those tiles in a flex
+  column and tablets wrap them in flex rows; only desktops (≥1281px) use the
+  grid. Check any new grid of variable-height cards by resizing in Safari.
+- **Links:** use `SmartLink` for routes and external links (`next/link` for
+  `/…`, a plain `<a>` otherwise) and `SectionLink` for `#section` links in
+  shared chrome (header, menu, footer). `SectionLink` keeps `#id` on the home
+  page and writes `/#id` elsewhere, so the 404 page's navigation works.
 - **Never invent facts.** No prices, results, reviews, launch dates or partner
   names unless the business has supplied them. The pre-launch and
   "illustrative" notes on the page are deliberate.
@@ -181,6 +198,12 @@ Set these at **build time** (see `.env.example`):
 - [ ] Owner confirms the estimator's prices and assumptions in
       `src/lib/estimator.ts`. The Growth rate ($399) is applied from 2
       locations, while the original pricing labels Growth as 5–14 locations.
+- [ ] Owner confirms the Why Tend tile illustrations
+      (`components/home/benefit-visual.tsx`). They show "Maple & Ash", the
+      name of a real Chicago steakhouse, as live page text, and their dishes,
+      prices, card number and totals differ from the Tend app screens they
+      depict. The order totals $63.72, but the payment panel shows $71.37 with
+      an 18% tip, which only matches the app screen's $60.48 order.
 - [ ] Connect the real domain and set `SITE_URL` for production.
 - [ ] Only then set `SITE_INDEXABLE=true` and redeploy.
 - [ ] Run Lighthouse on the live URL and submit `sitemap.xml` in Google Search

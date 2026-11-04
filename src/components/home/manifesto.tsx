@@ -14,7 +14,7 @@ export function Manifesto() {
         More time for food, conversation, and the moments worth staying for.
       </p>
       <a href="#experience" className="btn btn-ink">
-        Discover the Tend experience ↗
+        Discover the Tend experience <span aria-hidden="true">↗</span>
       </a>
     </section>
   );

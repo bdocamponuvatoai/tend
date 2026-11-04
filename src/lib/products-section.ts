@@ -25,6 +25,16 @@ const STEP = 3600;
 const TAP_LEAD = 950;
 const MOVE = 800;
 
+/** Escapes text interpolated into the markup built below. */
+const esc = (text: string) =>
+  text.replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ]!,
+  );
+
 type Mode = "push" | "back" | "up" | "fade";
 const FROM: Record<Mode, string> = {
   push: "translateX(100%)",
@@ -139,7 +149,7 @@ function initDemo(
     const p = document.createElement("picture");
     p.className = "screen";
     p.setAttribute("aria-hidden", "true");
-    p.innerHTML = `<source type="image/avif" srcset="${demoSrc(id, s.file, 360, "avif")} 360w, ${demoSrc(id, s.file, 720, "avif")} 720w" sizes="${DEMO_SIZES}"><img src="${demoSrc(id, s.file, 360, "webp")}" srcset="${demoSrc(id, s.file, 360, "webp")} 360w, ${demoSrc(id, s.file, 720, "webp")} 720w" sizes="${DEMO_SIZES}" width="720" height="1620" alt="${s.alt}" decoding="async">`;
+    p.innerHTML = `<source type="image/avif" srcset="${demoSrc(id, s.file, 360, "avif")} 360w, ${demoSrc(id, s.file, 720, "avif")} 720w" sizes="${DEMO_SIZES}"><img src="${demoSrc(id, s.file, 360, "webp")}" srcset="${demoSrc(id, s.file, 360, "webp")} 360w, ${demoSrc(id, s.file, 720, "webp")} 720w" sizes="${DEMO_SIZES}" width="720" height="1620" alt="${esc(s.alt)}" decoding="async">`;
     return p;
   };
   const place = (el: HTMLElement, [x, y]: [number, number]) => {
@@ -249,7 +259,7 @@ function initDemo(
       SCREENS!
         .map(
           (s, n) =>
-            `<li><button type="button" aria-label="${String(n + 1).padStart(2, "0")} ${s.label}"><span class="n">${String(n + 1).padStart(2, "0")}</span> <span class="t">${s.label}</span><span class="bar"><i></i></span></button></li>`,
+            `<li><button type="button" aria-label="${String(n + 1).padStart(2, "0")} ${esc(s.label)}"><span class="n">${String(n + 1).padStart(2, "0")}</span> <span class="t">${esc(s.label)}</span><span class="bar"><i></i></span></button></li>`,
         )
         .join("") +
       '</ol><p class="demo-caption"></p><button class="demo-toggle" type="button">PAUSE</button>';
@@ -359,8 +369,9 @@ function initDemo(
   );
   loader.observe(demo);
   const watcher = new IntersectionObserver(
-    ([e]) => {
-      visible = e.isIntersecting;
+    (entries) => {
+      // Several entries can queue up during a fast scroll; the last is current.
+      visible = entries[entries.length - 1].isIntersecting;
       if (visible) demo.classList.add("is-in");
       if (built) schedule();
     },

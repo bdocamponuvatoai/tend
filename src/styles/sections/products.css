@@ -851,9 +851,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .app-demo.is-live .screen {
-    transition: opacity 0.2s ease;
-  }
   .app-demo.is-live .phone {
     opacity: 1;
     transform: none;

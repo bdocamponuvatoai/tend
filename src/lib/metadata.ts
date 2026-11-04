@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import heroImage from "@/assets/images/hero-table.jpg";
+// 1200×630 crop of the hero photo (scripts/optimize-images.mjs), the shape
+// Open Graph and Twitter cards display without cropping.
+import shareImage from "@/assets/images/og-image.jpg";
 import { site } from "@/config/site";
 
 type PageMetadataInput = {
@@ -21,9 +23,9 @@ export function pageMetadata({
   description = site.description,
 }: PageMetadataInput): Metadata {
   const image = {
-    url: heroImage.src,
-    width: heroImage.width,
-    height: heroImage.height,
+    url: shareImage.src,
+    width: shareImage.width,
+    height: shareImage.height,
     alt: "Fresh pasta, burrata and a cocktail shared across a restaurant table",
   };
   return {

@@ -1,7 +1,7 @@
 /*
  * Bento tiles: rounded tiles of different sizes and fills, some with a
  * folder-tab corner, used by Why Tend, App features and Research.
- * Fills come from Tend's palette: champagne, sand, cream and ink.
+ * Fills come from Tend's palette: champagne, sand, ink and gold.
  */
 .tile {
   position: relative;
@@ -16,10 +16,6 @@
 .tile--sand {
   --muted: #5f584b;
   background: #e9e0cc;
-}
-.tile--cream {
-  background: var(--card);
-  box-shadow: inset 0 0 0 1px #e6dcc6;
 }
 .tile--ink {
   --muted: #c9bfa9;
@@ -81,12 +77,14 @@
 /* Integrated benefit artwork. Unlike the old phone previews, these surfaces
    belong to the bento tile: a menu canvas, dish editorial, order ledger and
    payment panel, each using the same underlying meal. */
-.benefit-visual-wrap,
+/* The wrap's size and bleed are set per breakpoint in
+   sections/benefits.css; the artwork fills it. Sizing the wrap here too
+   overrode those heights, leaving percentage heights with nothing definite
+   to resolve against (short panels, and WebKit collapsed the dish photo to
+   0px after a resize). */
 .benefit-visual {
   width: 100%;
   height: 100%;
-}
-.benefit-visual {
   position: relative;
   overflow: hidden;
   color: #211f18;
@@ -125,7 +123,7 @@
   object-fit: cover;
 }
 
-/* 01 â€” an open menu canvas. */
+/* 01 — an open menu canvas. */
 .benefit-visual--menu {
   padding: 18px 16px 0;
   border-radius: 24px 0 0;
@@ -246,7 +244,7 @@
   font-size: 9px;
 }
 
-/* 02 â€” photography and information share one uninterrupted surface. */
+/* 02 — photography and information share one uninterrupted surface. */
 .benefit-visual--detail {
   background: #1b1c16;
 }
@@ -291,9 +289,9 @@
 .benefit-detail-card > p {
   margin-top: 4px;
 }
-.benefit-detail-tags {
-  justify-content: flex-start !important;
-  margin-top: 9px !important;
+.benefit-detail-card > .benefit-detail-tags {
+  justify-content: flex-start;
+  margin-top: 9px;
 }
 .benefit-detail-tags span {
   padding: 4px 7px;
@@ -303,7 +301,7 @@
   font-size: 7px;
 }
 
-/* 03 â€” a paper-like order ledger. */
+/* 03 — a paper-like order ledger. */
 .benefit-visual--order {
   padding: 19px 17px 0;
   border-radius: 24px 0 0;
@@ -352,7 +350,7 @@
   font-size: 12px;
 }
 
-/* 04 â€” payment controls presented as a composed panel, not an app screen. */
+/* 04 — payment controls presented as a composed panel, not an app screen. */
 .benefit-visual--pay {
   padding: 16px;
   border-radius: 24px 0 0;

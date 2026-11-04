@@ -16,7 +16,7 @@ export function FaqSection() {
           <details key={item.question} open={index === 0}>
             <summary>
               {item.question}
-              <span>+</span>
+              <span aria-hidden="true">+</span>
             </summary>
             <p>{item.answer}</p>
           </details>

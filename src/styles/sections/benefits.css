@@ -1,8 +1,9 @@
 /*
  * Why dine with Tend: heading and intro side by side, then a bento grid of
- * four product tiles and one full-width editorial image. Product proof stays
- * tangible through real app screens; the image tile closes the story on the
- * human payoff. Mobile-first.
+ * four product tiles and one full-width editorial image. Each tile carries
+ * an illustration of the matching app screen (components/home/
+ * benefit-visual.tsx); the image tile closes the story on the human payoff.
+ * Mobile-first.
  */
 .benefits {
   --tab-bg: var(--paper);
@@ -77,9 +78,13 @@
   letter-spacing: -0.02em;
 }
 
-/* Tiles */
+/* Tiles. Phones stack them in a flex column and tablets wrap them two to a
+   row; only desktops use a grid. As a grid, WebKit kept row heights from the
+   previous viewport after a resize or rotation, leaving tiles too tall or
+   too short. */
 .benefit-grid {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 .benefit-grid article {
@@ -104,19 +109,17 @@
   border-color: #0000002e;
   color: var(--ink);
 }
+/* Each fill sets its own --muted, dark enough for small text (WCAG AA). */
 .benefit-number {
   font-size: 10px;
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0.15em;
-  color: #776e5e;
+  color: var(--muted);
 }
 .benefit-grid .tile--ink .icon-badge {
   border-color: #ffffff33;
   color: #d5bc79;
-}
-.benefit-grid .tile--ink .benefit-number {
-  color: #a89f8c;
 }
 .benefit-grid h3 {
   max-width: 430px;
@@ -131,11 +134,16 @@
   font-size: 15.5px;
   line-height: 1.7;
 }
-/* Each product idea becomes part of the tile itself—no device frame. */
+.benefit-text {
+  margin-bottom: 36px;
+}
+/* Each product idea becomes part of the tile itself—no device frame. The
+   auto top margin keeps it flush with the tile's bottom edge even when a
+   row-mate with a longer title makes the tile taller. */
 .benefit-visual-wrap {
   align-self: stretch;
   height: 300px;
-  margin: 36px -24px 0;
+  margin: auto -24px 0;
   overflow: hidden;
 }
 .benefit-visual {
@@ -267,22 +275,27 @@
   .benefits-journey li {
     padding-top: 15px;
   }
+  /* Two tiles to a row; tiles in a row share its height. */
   .benefit-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex-flow: row wrap;
     gap: 16px;
   }
   .benefit-grid article {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 0;
     min-height: 480px;
     padding: 26px 28px 0;
   }
+  .benefit-text {
+    margin-bottom: 40px;
+  }
   .benefit-visual-wrap {
     height: 330px;
-    margin-top: 40px;
     margin-right: -28px;
     margin-left: -28px;
   }
   .benefits-moment {
-    grid-column: 1 / -1;
+    flex-basis: 100%;
     min-height: 460px;
   }
   .benefits-moment figcaption {
@@ -299,8 +312,9 @@
     margin-bottom: 52px;
   }
   /* Bento: wide and narrow tiles alternate, 7/5 then 5/7. Icon top left,
-     copy low on the left, the phone on the right. */
+     copy low on the left, the artwork on the right. */
   .benefit-grid {
+    display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 18px;
   }
@@ -330,6 +344,7 @@
     grid-row: 2;
     align-self: end;
     max-width: 420px;
+    margin-bottom: 0;
     padding: 34px 0 40px;
   }
   .benefit-grid h3 {
@@ -354,6 +369,7 @@
     width: clamp(190px, 15.5vw, 222px);
   }
   .benefits-moment {
+    grid-column: 1 / -1;
     min-height: 470px;
     border-radius: 32px;
   }

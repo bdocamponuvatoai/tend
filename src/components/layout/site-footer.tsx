@@ -1,6 +1,7 @@
 import Image from "next/image";
 import igvLogo from "@/assets/images/igv-logo.png";
 import { Brand } from "@/components/ui/brand";
+import { SectionLink } from "@/components/ui/section-link";
 import { site } from "@/config/site";
 
 export function SiteFooter() {
@@ -13,9 +14,9 @@ export function SiteFooter() {
       </div>
       <nav className="footer-nav" aria-label="Footer navigation">
         {site.nav.map((link) => (
-          <a key={link.href} href={link.href}>
+          <SectionLink key={link.href} href={link.href}>
             {link.label}
-          </a>
+          </SectionLink>
         ))}
       </nav>
       <div className="igv-family">

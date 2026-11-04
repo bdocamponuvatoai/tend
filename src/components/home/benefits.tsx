@@ -1,13 +1,15 @@
 import Image from "next/image";
 
 import moreTimeAtTheTable from "@/assets/images/benefits/more-time-at-the-table.webp";
-import { BenefitVisual } from "@/components/ui/app-screen";
+import { BenefitVisual } from "@/components/home/benefit-visual";
 import { Icon } from "@/components/ui/icon";
 import { benefits } from "@/content/home";
 
 /** Tile fill for each benefit, in order (styles/design/bento.css): light and
     dark alternate on the diagonal. */
 const FILLS = ["champagne", "ink", "sand", "gold"] as const;
+
+const pad = (n: number) => String(n).padStart(2, "0");
 
 export function Benefits() {
   return (
@@ -55,20 +57,20 @@ export function Benefits() {
         {benefits.map((item, index) => (
           <article
             key={item.label}
-            className={`tile tile--tabbed tile--${FILLS[index]}`}
+            className={`tile tile--tabbed tile--${FILLS[index % FILLS.length]}`}
           >
             <span className="tile-tab benefit-label">{item.label}</span>
             <div className="benefit-card-meta">
               {item.icon && <Icon name={item.icon} />}
               <span className="benefit-number" aria-hidden="true">
-                0{index + 1} / 04
+                {pad(index + 1)} / {pad(benefits.length)}
               </span>
             </div>
             <div className="benefit-text">
               <h3>{item.title}</h3>
               <p>{item.body}</p>
             </div>
-            {item.screen && <BenefitVisual file={item.screen} />}
+            {item.screen && <BenefitVisual screen={item.screen} />}
           </article>
         ))}
         <figure className="benefits-moment tile">
@@ -78,7 +80,6 @@ export function Benefits() {
             fill
             sizes="(max-width: 700px) 88vw, (max-width: 1000px) 90vw, 86vw"
             placeholder="blur"
-            loading="eager"
           />
           <figcaption>
             <span className="benefits-moment-label">THE REAL BENEFIT</span>

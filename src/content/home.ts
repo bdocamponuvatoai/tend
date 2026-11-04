@@ -3,6 +3,7 @@
  * edit here rather than in components.
  */
 
+import type { BenefitScreen } from "@/components/home/benefit-visual";
 import type { IconName } from "@/components/ui/icon";
 
 export type Card = {
@@ -11,8 +12,9 @@ export type Card = {
   body: string;
   /** Decorative icon shown with the card. */
   icon?: IconName;
-  /** Tend app screen shown in the card (file name in content/product-demos). */
-  screen?: string;
+  /** Illustration shown in the card, named after the Tend app screen it
+      depicts (components/home/benefit-visual.tsx). */
+  screen?: BenefitScreen;
 };
 
 export const benefits: Card[] = [

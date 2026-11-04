@@ -22,7 +22,7 @@ export function Hero() {
         </p>
         <div className="actions">
           <a className="btn btn-gold" href="#restaurants">
-            Bring Tend to your restaurant <span>↗</span>
+            Bring Tend to your restaurant <span aria-hidden="true">↗</span>
           </a>
         </div>
         <div className="launch-note">

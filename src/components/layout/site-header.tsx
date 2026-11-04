@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Brand } from "@/components/ui/brand";
-import { SmartLink } from "@/components/ui/smart-link";
+import { SectionLink } from "@/components/ui/section-link";
 import { site, type NavLink } from "@/config/site";
 
 // Matches the stylesheet: the mobile menu only exists at max-width 700px.
@@ -17,14 +17,14 @@ function NavLinks({
   withCta?: boolean;
 }) {
   return site.nav.map((link: NavLink) => (
-    <SmartLink
+    <SectionLink
       key={link.href}
       href={link.href}
       onClick={onNavigate}
       className={withCta && link.cta ? "nav-cta" : undefined}
     >
       {link.label}
-    </SmartLink>
+    </SectionLink>
   ));
 }
 
@@ -101,9 +101,13 @@ export function SiteHeader() {
         </div>
         <div className="mobile-nav-foot">
           <p>{site.tagline}</p>
-          <a className="btn btn-gold" href="#restaurants" onClick={close}>
+          <SectionLink
+            className="btn btn-gold"
+            href="#restaurants"
+            onClick={close}
+          >
             Bring Tend to your restaurant <span aria-hidden="true">↗</span>
-          </a>
+          </SectionLink>
         </div>
         {/* Large decorative wordmark closing the menu. */}
         <p className="mobile-nav-mark" aria-hidden="true">
