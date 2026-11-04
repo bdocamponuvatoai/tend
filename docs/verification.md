@@ -471,3 +471,29 @@ figure is on screen and scrolls the readout into view; no console errors.
 axe 0 violations (1440px, 390px, 404, menu open); `npm run check` passes.
 Rendered text adds only the reused "15–30%" label and the hidden copy of the
 total.
+
+## 17. Pre-push clean-up (2026-11-04)
+
+- **Manifesto (redesigned outside these sessions, kept as is):** older rules
+  still applied to it. The desktop 10% side padding from its centred days
+  (`layout/page-grid.css`) put its content 45px inside the page grid at
+  1518px; removed, so it now lines up with the header and every other
+  section. Its background, label colour and button margin were also set in
+  `design/sections.css`; those duplicates are gone and
+  `sections/manifesto.css` owns the section.
+- **404 page:** it borrowed the `manifesto` class, so the redesign removed its
+  gold accent and its spacing ("Back to Tend" touched the paragraph). It now
+  has its own `sections/not-found.css` (sand band, gold accent, spacing).
+- **Unused tokens removed:** `--yellow`, `--champagne`, `--radius-md`.
+- **`useTweened`:** with reduced motion on, the start point now stays
+  current, so turning motion back on eases from the figure on screen.
+- Scans: no unused CSS classes, assets or exports; no encoding damage,
+  `console.log`, `TODO` or `debugger` in source; `npm audit --omit=dev` 0
+  vulnerabilities.
+
+Re-verified on the final build: `npm run check` and `npm run build` pass;
+axe 0 violations (1440px, 390px, 404, menu open); 19/19 cross-browser checks
+in Chrome, Edge, Firefox and WebKit, no errors or overflow, layout within
+tolerance; estimator easing, research band, phone bar and headline fit pass
+in Chrome and WebKit; 404 links reach their sections; rendered text identical
+to the previous build.

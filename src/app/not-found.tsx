@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main id="main">
-      <section className="manifesto section">
+      <section className="not-found section">
         <span className="section-label">404 / PAGE NOT FOUND</span>
         <h1>
           This table

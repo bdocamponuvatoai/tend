@@ -1,32 +1,100 @@
-.manifesto {
-  text-align: center;
-  padding: 110px 10%;
+/*
+ * A restrained editorial pause between the estimator and FAQ. A single rule,
+ * the site's serif display face and one gold accent carry the hierarchy.
+ */
+.manifesto.section {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  background: #e9e1cf;
+  color: var(--ink);
+  text-align: left;
 }
+
+.manifesto.section .section-label {
+  color: #76581c;
+}
+
+.manifesto-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  margin-top: 22px;
+  padding-top: 34px;
+  border-top: 1px solid #cfc4aa;
+}
+
 .manifesto h2 {
-  margin: 32px 0 25px;
+  min-width: 0;
+  max-width: 900px;
+  margin: 0;
+  font-size: clamp(43px, 11.5vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
-.manifesto p {
-  max-width: 520px;
-  margin: 0 auto 25px;
+.manifesto h2 em {
+  color: var(--gold-text);
+  font-weight: 400;
 }
-.manifesto h2 {
-  font-size: clamp(42px, 4.9vw, 76px);
+
+.manifesto-note {
+  min-width: 0;
+  max-width: 460px;
 }
-.manifesto em {
-  color: #8b6722;
+.manifesto-note p {
+  margin: 0;
+  color: #5f594c;
+  font-size: 16px;
+  line-height: 1.7;
 }
-@media (max-width: 1000px) {
-  .manifesto {
-    padding: 75px 5%;
+.manifesto.section .manifesto-link {
+  margin-top: 24px;
+}
+
+@media (min-width: 701px) {
+  .manifesto.section {
+    padding-top: 72px;
+    padding-bottom: 72px;
   }
-}
-@media (max-width: 700px) {
-  .manifesto {
-    padding: 70px 6%;
+  .manifesto-layout {
+    gap: 40px;
+    margin-top: 26px;
+    padding-top: 42px;
   }
-}
-@media (max-width: 700px) {
   .manifesto h2 {
-    font-size: 45px;
+    font-size: clamp(56px, 7vw, 76px);
+  }
+  .manifesto-note {
+    justify-self: end;
+    width: min(62%, 460px);
+  }
+}
+
+@media (min-width: 1001px) {
+  .manifesto.section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+  .manifesto-layout {
+    grid-template-columns: minmax(0, 1.8fr) minmax(280px, 0.72fr);
+    gap: clamp(64px, 8vw, 132px);
+    align-items: end;
+  }
+  .manifesto h2 {
+    font-size: clamp(58px, 4.9vw, 78px);
+  }
+  .manifesto-note {
+    justify-self: stretch;
+    width: auto;
+    padding-bottom: 4px;
+  }
+}
+
+@media (max-width: 430px) {
+  .manifesto h2 {
+    font-size: clamp(41px, 11.5vw, 49px);
+  }
+  .manifesto.section .manifesto-link {
+    width: 100%;
   }
 }

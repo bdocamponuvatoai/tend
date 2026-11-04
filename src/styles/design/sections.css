@@ -198,14 +198,6 @@
   width: 100%;
 }
 
-/* Manifesto: a flat sand band. */
-.manifesto {
-  background: #e9e1cf;
-}
-.manifesto .btn {
-  margin-top: 6px;
-}
-
 /* Good to know: a ruled list; questions set in the serif. */
 .faq-list {
   border-top: 1px solid var(--border);
@@ -359,7 +351,6 @@
 }
 .feature-showcase .section-label,
 .research .section-label,
-.manifesto .section-label,
 .story-kicker,
 .story-tabs button span {
   color: #76581c;

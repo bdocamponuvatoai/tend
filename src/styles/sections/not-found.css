@@ -1,0 +1,31 @@
+/* 404 page (app/not-found.tsx): the manifesto's sand band and editorial
+   type, aligned to the page grid. */
+.not-found.section {
+  padding-top: 72px;
+  padding-bottom: 88px;
+  background: #e9e1cf;
+}
+.not-found .section-label {
+  color: #76581c;
+}
+.not-found h1 {
+  max-width: 760px;
+  margin: 24px 0 20px;
+}
+.not-found h1 em {
+  color: var(--gold-text);
+}
+.not-found p {
+  max-width: 520px;
+  margin-bottom: 26px;
+  color: #5f594c;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+@media (min-width: 701px) {
+  .not-found.section {
+    padding-top: 96px;
+    padding-bottom: 120px;
+  }
+}

@@ -60,14 +60,6 @@ footer,
   }
 }
 
-@media (min-width: 1001px) {
-  /* The manifesto keeps its narrower, centred measure. */
-  .manifesto {
-    padding-left: max(10%, var(--page-pad));
-    padding-right: max(10%, var(--page-pad));
-  }
-}
-
 /* Touch areas: at least 44px without moving anything visually. */
 .text-link,
 header nav a,

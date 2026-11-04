@@ -1,13 +1,11 @@
 :root {
   --ink: #201e17;
   --paper: #f7f4eb;
-  --yellow: #c6a45d;
   --muted: #716a5c;
   --border: #ded6c4;
 }
 :root {
   --gold: #b6903f;
-  --champagne: #dfcd96;
   --black: #14150f;
 }
 /* Family names come from next/font (src/styles/fonts.ts). */
@@ -42,7 +40,6 @@
   --card: #fffcf5;
   --gold-text: #8b6722;
   --gold-soft: #f1e7d0;
-  --radius-md: 16px;
   --radius-lg: 22px;
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
