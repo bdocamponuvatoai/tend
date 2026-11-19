@@ -676,3 +676,21 @@ Verified: `npm run build` locally prints no warnings (0 lines matching
 CSP violations, policy warnings, console errors or failed requests;
 `npm run check` passes. The Node and allowScripts changes take effect on
 Vercel's next build.
+
+## 25. CI repaired after three Dependabot merges (2026-11-20)
+
+Merging Dependabot pull requests #1 (`@types/node`), #2 (TypeScript 5.9.3 →
+7.0.2) and #3 (ESLint 10.14.0) left `main` failing:
+
+| Problem                                                                                                    | Fix                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `npm ci` stopped with `EUSAGE`: the lockfile no longer matched `package.json` (missing `minimatch@10.2.6`) | Lockfile regenerated                                                                                 |
+| TypeScript 7: typescript-eslint (inside `eslint-config-next`) refuses to run on it, so lint could not run  | Back to `typescript@^5.9.3`; Dependabot ignores TypeScript majors until typescript-eslint supports 7 |
+| `@types/node` 26 describes a newer Node.js than the 24.x the site builds and runs on                       | `@types/node@^24.19.2`; Dependabot ignores its majors (upgrade together with `.nvmrc` and `engines`) |
+| `next build` on 16.4.3 stopped with a security error citing GHSA-mfr8-8qww-v76h and GHSA-vc7v-qv4w-wrv8    | `next` and `eslint-config-next` 16.4.6                                                               |
+
+Verified: `npm ci`, `npm run check` and `npm run build` pass;
+`npm audit --omit=dev` finds 0 vulnerabilities. `npm audit` including dev
+tools reports 9 moderate advisories, all in ESLint's toolchain through
+`minimatch` (the same versions as before this change); none ship with the
+site.

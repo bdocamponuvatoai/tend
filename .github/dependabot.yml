@@ -4,6 +4,15 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      # TypeScript 7 breaks linting: typescript-eslint (inside
+      # eslint-config-next) refuses to run on it. Re-enable when it does.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      # Matches the Node.js major in .nvmrc and engines (24); upgrade them
+      # together, deliberately.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       next-react:
         patterns:
