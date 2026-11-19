@@ -42,6 +42,7 @@ npm run dev        # http://localhost:3000
 | `npm run images`       | Regenerates the hero's AVIF/WebP sizes and the share image (`og-image.jpg`). |
 | `npm run typecheck`    | Generates route types and runs `tsc --noEmit`.                               |
 | `npm test`             | Unit tests (`node --test`) for the estimator maths.                          |
+| `npm run test:e2e`     | Consent end-to-end test (Playwright) on a production build of `out/`.        |
 | `npm run format`       | Formats everything with Prettier.                                            |
 | `npm run format:check` | Fails if anything is not formatted.                                          |
 | `npm run check`        | typecheck + lint + format:check + test. Run before every push.               |
@@ -63,6 +64,8 @@ src/
   components/
     layout/             site-header (client: mobile menu), site-footer,
                         back-to-top and scroll-reveal (client)
+    consent/            consent-banner and cookie-settings-button (client)
+    analytics/          google-tag-manager (client): loads GTM after Accept
     home/               one component per page section, plus benefit-visual
                         (the Why Tend tile illustrations); story-tabs,
                         estimator-form and products-root are the only other
@@ -74,8 +77,11 @@ src/
     site.ts             name, tagline, title, description, navigation (client-safe)
     deployment.ts       SITE_URL / SITE_INDEXABLE handling (server-only)
   content/              all page copy: home.ts, faq.ts, research.ts, routes.ts,
-                        product-demos.ts (phone walkthrough screens)
+                        product-demos.ts (phone walkthrough screens),
+                        consent.ts (cookie card copy)
   lib/
+    analytics.ts        GTM container ID, production builds only (server-only)
+    consent.ts          the visitor's analytics choice (localStorage store)
     estimator.ts        estimator maths and number formatting (+ tests)
     products-section.ts reveal + phone walkthroughs for #products
     metadata.ts         pageMetadata(): title, description, canonical, OG/Twitter
@@ -99,6 +105,9 @@ public/
 scripts/
   fix-export-segments.mjs
   optimize-images.mjs   hero AVIF/WebP + share image (`npm run images`)
+  serve-out.mjs         serves out/ with the vercel.json headers (e2e tests)
+e2e/
+  consent.spec.ts       consent end-to-end test (`npm run test:e2e`)
 docs/
   ARCHITECTURE.md       how the code fits together (start here)
   SEO-AUDIT.md          SEO / AEO / GEO audit and recommendations
@@ -217,6 +226,57 @@ Set these at **build time** (see `.env.example`):
 | `SITE_URL`       | `https://$VERCEL_PROJECT_PRODUCTION_URL`, else `http://localhost:3000` | Origin for canonical URLs, Open Graph, sitemap, robots and `llms.txt`. No trailing slash.        |
 | `SITE_INDEXABLE` | `false`                                                                | `true` lets search engines index the site. The build fails if `true` while the URL is localhost. |
 
+Vercel also sets `VERCEL_ENV` itself; it switches Google Tag Manager on (next
+section). Don't set it by hand except for the end-to-end test.
+
+## Analytics and cookie consent
+
+Google Analytics runs through Google Tag Manager (container `GTM-N553TXKS`),
+behind a consent card. The rules:
+
+- **Nothing loads before Accept.** There is no GTM snippet in the HTML and
+  no `<noscript>` iframe. On Accept, `components/analytics/google-tag-manager.tsx`
+  sets Google's consent default (analytics granted; `ad_storage`,
+  `ad_user_data` and `ad_personalization` denied) and then injects `gtm.js`,
+  exactly once.
+- **Production only.** `lib/analytics.ts` returns the container ID only when
+  `VERCEL_ENV` is `production` at build time, which Vercel sets for
+  production deployments and nothing else. Local builds, `npm run dev`,
+  preview deployments and the CI build never load GTM (only the end-to-end
+  test switches it on, below). The card itself shows everywhere, so it can
+  be reviewed on previews.
+- **The choice** is stored in `localStorage` (`tend:consent`, with a version
+  and a date) and asked again after 12 months, or for everyone when
+  `VERSION` in `lib/consent.ts` is bumped. Bump it when what visitors agree
+  to changes. Open tabs follow the same choice.
+- **Decline** loads nothing and deletes `_ga`, `_ga_*`, `_gid` and `_gat*`
+  cookies. Declining later from **Cookie settings** (footer) also reloads
+  the page, because a loaded container can't be unloaded.
+- **Without JavaScript** there is no card and no Cookie settings control:
+  nothing can load, so there is nothing to ask.
+- **Copy** lives in `content/consent.ts`. The privacy policy link appears
+  when `privacyPolicy.href` is set there; it is `null` until the owner
+  provides a policy URL.
+
+Anyone who can **publish** the GTM container can run any script on every
+page of the live site, and the CSP allows GTM's origins. Keep publish
+rights to people who'd otherwise have access to this repository. If a tag
+other than Google Analytics is added, its origins must be added to the CSP
+(`vercel.json`), and the card's copy (which names Google Analytics only)
+must change with it.
+
+To run the end-to-end test locally (it needs a build with GTM switched on):
+
+```bash
+VERCEL_ENV=production npm run build   # PowerShell: $env:VERCEL_ENV="production"; npm run build
+npx playwright install chromium      # once
+npm run test:e2e
+npm run build                         # rebuild without GTM afterwards
+```
+
+GA's collect requests are answered inside the test, so test runs never
+count as visits.
+
 ## Before launch
 
 - [ ] Owner confirms all copy, including the six research figures and their
@@ -247,14 +307,41 @@ Set these at **build time** (see `.env.example`):
       PageSpeed Insights on the live URL.
 - [ ] Enable GitHub private vulnerability reporting (SECURITY.md); publish
       `/.well-known/security.txt` once there is a security contact.
-- [ ] Decide on analytics (for example cookieless Vercel Web Analytics) and
-      add its origin to the CSP. See docs/SEO-AUDIT.md for the full list.
+- [x] Analytics decided (2026-11-20): Google Analytics through Google Tag
+      Manager behind a consent card; see Analytics and cookie consent.
+- [ ] **Privacy policy URL** (owner): set `privacyPolicy.href` in
+      `src/content/consent.ts` so the consent card links to it. Until then
+      the card shows no link. Whether the site needs a policy, more consent
+      categories or region-specific behaviour is the owner's decision.
+- [ ] **GTM / GA4 settings** (whoever runs the Google accounts; the code
+      can't see them). On 2026-11-20 the published container (read from
+      its public `gtm.js`) had one destination, GA4 `G-2HSX5RZNY3`, with no
+      Ads, Floodlight, custom HTML or other tags; history-change page views
+      on; Google signals off in all regions; and **user-provided data
+      collection with automatic detection on** (emails, phone numbers,
+      addresses). The site has no forms today; review that setting before
+      adding one. Confirm in Google's UI:
+  - [ ] The Google tag (GA4) fires on _Initialization – All Pages_.
+  - [ ] GA4 → Admin → Data streams → Enhanced measurement → "Page changes
+        based on browser history events" is **on**. The site sends no
+        manual `page_view` events, so this setting is what counts them.
+  - [ ] The container fires **only Google Analytics**. Anything else needs
+        the CSP and the card's copy changed first.
+  - [ ] The container is **published** (Submit → Publish).
+  - [ ] After the production deploy: accept on the live site and check
+        GA4 → Reports → Realtime; then decline and confirm DevTools →
+        Network shows no `googletagmanager.com` requests.
+  - [ ] Optional: GA4 → Admin → Data filters → exclude internal traffic.
+- [ ] Note: GTM loads on every **production** deployment, including the
+      `*.vercel.app` address before the real domain is connected.
+- [ ] See docs/SEO-AUDIT.md for the full SEO list.
 
 ## Continuous integration
 
 `.github/workflows/ci.yml` runs on every push to `main` and on pull requests:
 `npm ci` → `npm run check` → `npm run build`, then uploads `out/` as an
-artifact. Actions are pinned to commit SHAs, the token is read-only and not
+artifact. A second job (`consent-e2e`) builds with `VERCEL_ENV=production`
+and runs `npm run test:e2e`; that build is only tested, never uploaded. Actions are pinned to commit SHAs, the token is read-only and not
 persisted. Dependabot (`.github/dependabot.yml`) proposes npm updates weekly
 (Next/React grouped) and GitHub Actions updates (including the pins) monthly.
 
@@ -267,10 +354,11 @@ static export automatically. `vercel.json` adds security headers
 `X-Permitted-Cross-Domain-Policies`, `Strict-Transport-Security`); see
 docs/ARCHITECTURE.md section 8.
 
-The CSP allows only this site plus ImageKit images. `script-src` needs
-`'unsafe-inline'` because a static export bootstraps Next.js with inline
-scripts and cannot use per-request nonces. If you add a third-party service
-(analytics, forms, fonts), add its origin to the CSP. Vercel's preview toolbar
+The CSP allows this site, ImageKit images, and the Google Tag Manager and
+Google Analytics origins (which load only after Accept, in production).
+`script-src` needs `'unsafe-inline'` because a static export bootstraps
+Next.js with inline scripts and cannot use per-request nonces. If you add a
+third-party service (forms, fonts, another tag), add its origin to the CSP. Vercel's preview toolbar
 is blocked by this policy; turn it off for the project or allow
 `https://vercel.live` if you need preview comments.
 

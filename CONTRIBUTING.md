@@ -55,6 +55,8 @@ serves the production build from `out/`.
 - [ ] Copy changes are approved and contain no invented facts.
 - [ ] New third-party origins (scripts, images, fonts) are added to the CSP
       in `vercel.json` and to `docs/ARCHITECTURE.md` section 8.
+- [ ] Changes to consent, analytics, the layout or the footer pass
+      `npm run test:e2e` (README, Analytics and cookie consent).
 - [ ] Significant changes are recorded in `docs/verification.md`.
 
 ## Commit messages

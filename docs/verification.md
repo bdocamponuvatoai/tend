@@ -694,3 +694,74 @@ Verified: `npm ci`, `npm run check` and `npm run build` pass;
 tools reports 9 moderate advisories, all in ESLint's toolchain through
 `minimatch` (the same versions as before this change); none ship with the
 site.
+
+## 26. Consent-gated Google Tag Manager (2026-11-20)
+
+Google Analytics now runs through Google Tag Manager (`GTM-N553TXKS`)
+behind a consent card, built to a consent spec supplied by the owner. The
+rules are in README, Analytics and cookie consent. In short: nothing loads
+before Accept; on Accept the consent default (analytics granted, ad signals
+denied) is set, then one `gtm.js` is injected; production deployments only
+(`VERCEL_ENV`); the choice is kept for 12 months; Decline deletes GA cookies
+and, if GTM had loaded, reloads the page; no card without JavaScript.
+
+Files: `content/consent.ts` (copy, verbatim from the spec), `lib/consent.ts`
+(choice store), `lib/analytics.ts` (production switch),
+`components/consent/consent-banner.tsx`,
+`components/consent/cookie-settings-button.tsx` (footer),
+`components/analytics/google-tag-manager.tsx`,
+`styles/components/consent.css`, `app/layout.tsx`, `site-footer.tsx`, the
+CSP in `vercel.json`, and the end-to-end test (`e2e/`, `playwright.config.ts`,
+`scripts/serve-out.mjs`, a `consent-e2e` CI job).
+
+Design: the card is Tend's near-black (`--black`) with the champagne text
+and gold accents used on the dark sections, `--radius-lg`, Cormorant for the
+heading and DM Sans for the body, a gold rule like the section eyebrows,
+and the site's `.btn` base for both buttons (same outline style; the
+stored choice fills in). It sits bottom right: at 1440×900 and 1366×768 it
+covers no heading, call to action or navigation, and its right edge lines
+up with the navigation's (101px and 96px from the edge). On the left it
+would cover the hero's call to action at both sizes. Phones get a
+full-width card 12px from the edges. Motion: fade with a 16px rise over
+600–700ms; instant with reduced motion.
+
+CSP additions (`vercel.json`): `script-src` `https://www.googletagmanager.com
+https://tagmanager.google.com`; `style-src` the same plus
+`https://fonts.googleapis.com`; `img-src` `https://www.googletagmanager.com
+https://*.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com`;
+`font-src` `data: https://fonts.gstatic.com`; `connect-src`
+`https://www.googletagmanager.com https://*.google-analytics.com
+https://*.google.com`. Frames stay blocked and there is no `'unsafe-eval'`.
+
+Verified on a production-enabled build served with the `vercel.json`
+headers, with Google Analytics collect requests answered locally (no real
+visits recorded):
+
+- Definition-of-done checks (Chrome, plus WebKit for gating), 26/26: zero
+  Google requests before a choice; the card takes no focus and is the second
+  Tab stop; Accept → exactly one `gtm.js`, the consent default first on the
+  `dataLayer`, a GA4 collect request sent; reload → no card, GTM loads
+  straight away; Cookie settings → focus on the heading, the stored choice
+  `aria-pressed`, Escape closes and returns focus; Decline from settings →
+  page reloads, no `gtm.js`, `_ga` and `_ga_2HSX5RZNY3` removed; fresh visit
+  and Decline → no Google request across the home page, the 404 page and a
+  footer link; no CSP violations or console errors; 320px → no overflow,
+  both buttons 50px tall, labels fit; reduced motion → 0s transition;
+  JavaScript off → no card, no Cookie settings control, page renders; a
+  non-production build never loads GTM, even after Accept.
+- axe (WCAG 2.0/2.1/2.2 A and AA plus best practice) at 390px and 1440px:
+  0 violations with the card asking, after Decline, in settings mode and on
+  the 404 page.
+- Chrome, Edge, WebKit and Firefox 159 at 390px and 1440px, 44/44: the card
+  opens in view with equal 50px buttons and no overflow; it hides under the
+  open mobile menu; Decline stores the choice; a returning visitor sees no
+  card; no console errors.
+- `npm run test:e2e`: 2 tests pass, 8/8 over four repeats; it refuses to
+  run on a build without GTM.
+- `npm run check` and `npm run build` pass; the normal build contains no
+  container ID.
+
+The published container (read from its public `gtm.js` the same day) had
+one destination, GA4 `G-2HSX5RZNY3`, and no Ads, Floodlight, custom HTML or
+third-party tags. The settings a person must confirm in Google's UI are in
+README, Before launch.

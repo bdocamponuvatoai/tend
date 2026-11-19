@@ -31,5 +31,7 @@
 @import "./design/header.css";
 @import "./design/sections.css";
 @import "./design/bento.css";
+/* Analytics consent card: after the design layer so it can restyle .btn. */
+@import "./components/consent.css";
 /* Page grid and touch areas: must stay last. */
 @import "./layout/page-grid.css";

@@ -292,8 +292,10 @@ appears in Search Console once real visitors arrive.
 
 1. Privacy policy (required once a form collects details) and terms.
 2. Link each research source to its publication.
-3. Decide on analytics (for example cookieless Vercel Web Analytics), and
-   update the CSP if a third-party script is added.
+3. ~~Decide on analytics~~ Done (2026-11-20): Google Analytics through
+   Google Tag Manager behind a consent card, CSP updated (README,
+   Analytics and cookie consent). Remaining: the GTM / GA4 settings in
+   README, Before launch.
 4. Resolve the Why Tend illustration content (real restaurant name,
    mismatched totals; README, Before launch).
 

@@ -25,16 +25,19 @@ content/ + config/  ──▶  Server Components (build time)  ──▶  out/*.
   unless it starts with `"use client"`.
 - Client Components exist only where the page needs the browser:
 
-| Client Component                      | Why it runs in the browser                                                                     |
-| ------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `components/layout/site-header.tsx`   | Compact-on-scroll header; mobile menu (Escape, makes `main`/`footer` inert, locks page scroll) |
-| `components/layout/back-to-top.tsx`   | Floating button with a reading-progress ring                                                   |
-| `components/layout/scroll-reveal.tsx` | Fades sections in as they enter the viewport (`lib/reveal.ts`; off for reduced motion)         |
-| `components/ui/section-link.tsx`      | `#section` links that become `/#section` off the home page (404)                               |
-| `components/ui/brand.tsx`             | Wordmark: links to `#` (back to top) on the home page, to `/` elsewhere                        |
-| `components/home/story-tabs.tsx`      | Feature tabs: ARIA tabs with arrow-key support and previous/next buttons                       |
-| `components/home/estimator-form.tsx`  | Sliders, live maths (`lib/estimator.ts`), eased figures, the phone result bar                  |
-| `components/home/products-root.tsx`   | Mounts the product walkthrough (`lib/products-section.ts`) when it nears the viewport          |
+| Client Component                                | Why it runs in the browser                                                                     |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `components/layout/site-header.tsx`             | Compact-on-scroll header; mobile menu (Escape, makes `main`/`footer` inert, locks page scroll) |
+| `components/layout/back-to-top.tsx`             | Floating button with a reading-progress ring                                                   |
+| `components/layout/scroll-reveal.tsx`           | Fades sections in as they enter the viewport (`lib/reveal.ts`; off for reduced motion)         |
+| `components/ui/section-link.tsx`                | `#section` links that become `/#section` off the home page (404)                               |
+| `components/ui/brand.tsx`                       | Wordmark: links to `#` (back to top) on the home page, to `/` elsewhere                        |
+| `components/home/story-tabs.tsx`                | Feature tabs: ARIA tabs with arrow-key support and previous/next buttons                       |
+| `components/home/estimator-form.tsx`            | Sliders, live maths (`lib/estimator.ts`), eased figures, the phone result bar                  |
+| `components/home/products-root.tsx`             | Mounts the product walkthrough (`lib/products-section.ts`) when it nears the viewport          |
+| `components/consent/consent-banner.tsx`         | Analytics consent card: asks once, reopens from Cookie settings (`lib/consent.ts`)             |
+| `components/consent/cookie-settings-button.tsx` | Footer control that reopens the card; hidden until JavaScript runs                             |
+| `components/analytics/google-tag-manager.tsx`   | Injects Google Tag Manager after Accept, production builds only; clears cookies on Decline     |
 
 Everything else, including all copy, ships as HTML. Crawlers and AI bots
 see the full page without running JavaScript.
@@ -59,8 +62,10 @@ component, stylesheet and content source:
 | Products (`#products`)           | `home/products-section.tsx`, `products-root.tsx` | `sections/products.css`, `design/bento.css`       | `content/product-demos.ts`                 |
 | Closing                          | `home/closing.tsx`                               | `sections/closing.css`, `design/sections.css`     | inline                                     |
 
-The root layout (`src/app/layout.tsx`) adds the skip link, header, footer,
-back-to-top button and scroll reveal around every page.
+The root layout (`src/app/layout.tsx`) adds the skip link, the consent card
+(early in the DOM, fixed to the bottom of the viewport), header, footer,
+back-to-top button, scroll reveal and the Tag Manager loader around every
+page.
 
 ## 4. Content layer
 
@@ -136,6 +141,14 @@ Rules:
   (container units).
 - **Back to top** moves focus to `#main`; **skip link** sits above the
   header.
+- **Consent card:** a `<section>` labelled by its heading and described by
+  its body, right after the skip link in the DOM. On a first visit it
+  appears without taking focus (second Tab stop). From Cookie settings,
+  focus moves to its heading, Escape closes it and focus returns to the
+  control; the stored choice is `aria-pressed`. Decline and Accept share one
+  button style. It hides under the open mobile menu, and hides the
+  back-to-top button and the estimator's phone bar while it is open.
+  `data-nosnippet` keeps it out of search snippets.
 - Motion respects `prefers-reduced-motion` everywhere.
 
 ## 7. SEO, AEO and GEO
@@ -155,11 +168,14 @@ Rules:
 
 ## 8. Security model
 
-- **Attack surface:** static files only, with no server code, cookies,
-  forms that post, or user data. The estimator runs entirely in the
-  browser.
-- **Headers** (`vercel.json`, all paths): a CSP allowing only this origin
-  plus `https://ik.imagekit.io` images; no frames in or out; `nosniff`;
+- **Attack surface:** static files only, with no server code, forms that
+  post, or user data. The estimator runs entirely in the browser. The only
+  cookies are Google Analytics', set after a visitor accepts.
+- **Headers** (`vercel.json`, all paths): a CSP allowing this origin,
+  `https://ik.imagekit.io` images, and Google Tag Manager / Analytics
+  (scripts and styles from `www.googletagmanager.com` and
+  `tagmanager.google.com`; images, fonts and connections from the Google
+  origins GTM and GA4 use); no frames in or out; no `'unsafe-eval'`; `nosniff`;
   `strict-origin-when-cross-origin`; `X-Frame-Options: DENY`; a
   Permissions-Policy denying camera, microphone, location, payment, USB,
   serial, HID, Bluetooth, motion sensors, screen capture and Topics; COOP
@@ -167,9 +183,14 @@ Rules:
   with subdomains.
 - **`script-src 'unsafe-inline'`** is required: a static export bootstraps
   Next.js with inline scripts and has no per-request nonce. Mitigation: no
-  user input is ever rendered, there are no third-party scripts, and
-  `JsonLd` escapes `<`.
-- **Adding a third-party service** (analytics, forms, fonts) means adding
+  user input is ever rendered, `JsonLd` escapes `<`, and the only
+  third-party script is Google Tag Manager, injected after Accept on
+  production builds only.
+- **Google Tag Manager** is a trust boundary: anyone who can publish the
+  container (`GTM-N553TXKS`) can run script on every page of the live site.
+  Keep publish rights tight, and treat a new tag like a code change (CSP
+  origins, consent copy). See README, Analytics and cookie consent.
+- **Adding a third-party service** (forms, fonts, another tag) means adding
   its origin to the CSP and updating this section.
 - **Supply chain:** `npm audit --omit=dev` runs in CI; Dependabot updates
   npm weekly and Actions monthly; Actions are pinned to commit SHAs; the
@@ -184,6 +205,10 @@ See `SECURITY.md` for how to report a vulnerability.
 - `npm run check` runs typecheck, ESLint with zero warnings, a Prettier
   check and unit tests (`lib/estimator.test.ts`). CI runs it, then the
   build, on every push and pull request.
+- `npm run test:e2e` (Playwright, `e2e/consent.spec.ts`) proves the consent
+  contract on a build with GTM switched on: nothing before a choice, one
+  `gtm.js` with ads denied after Accept, remembered on reload, revoked
+  cleanly. CI runs it in a separate job.
 - Browser support: Chrome/Edge 111+, Firefox 111+, Safari 16.4+
   (`browserslist`).
 - `docs/verification.md` records every significant change and how it was
@@ -200,6 +225,7 @@ See `SECURITY.md` for how to report a vulnerability.
 | Indexing gated by `SITE_INDEXABLE`            | Prevents a preview or unapproved copy being indexed; the build fails if indexable with a localhost URL                                                                                                            |
 | SVG glyphs instead of characters              | Phones rendered ↗ as a colour emoji                                                                                                                                                                               |
 | Mobile-first CSS                              | One direction of overrides; proven equal to the previous rendering at 31 widths (docs/verification.md section 19)                                                                                                 |
+| GTM injected after Accept, production only    | The card promises "Nothing is collected unless you accept"; Consent Mode alone still sends cookieless pings, and previews must not report to the live property                                                    |
 
 ## 11. Common changes
 
@@ -222,3 +248,9 @@ See `SECURITY.md` for how to report a vulnerability.
   then run `npm run images` (AVIF/WebP sizes and the share image).
 - **Add an icon:** add a lucide icon to `components/ui/icon.tsx`'s map, or
   an arrow with `<LinkArrow />` / `<LinkArrow down />`.
+- **Change what visitors consent to** (copy, or a new kind of tag): edit
+  `content/consent.ts`, add any new origins to the CSP in `vercel.json`,
+  and bump `VERSION` in `lib/consent.ts` so everyone is asked again. Run
+  `npm run test:e2e` (README, Analytics and cookie consent).
+- **Add the privacy policy link:** set `privacyPolicy.href` in
+  `content/consent.ts`; the card shows the link once it is set.

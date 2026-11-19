@@ -18,19 +18,26 @@ add it here and publish `/.well-known/security.txt` (RFC 9116).
 ## Security model
 
 The site is a static export: HTML, CSS, JS and images served from a CDN,
-with no server code, database, cookies, accounts or user data. The
-estimator runs entirely in the browser.
+with no server code, database, accounts or user data. The estimator runs
+entirely in the browser. Google Analytics (through Google Tag Manager) loads
+only on the production site and only after a visitor accepts; its cookies
+are the only ones set.
 
 Protections (details in `docs/ARCHITECTURE.md` section 8):
 
-- Response headers in `vercel.json`: Content-Security-Policy (own origin
-  plus ImageKit images, no frames), `X-Content-Type-Options`,
+- Response headers in `vercel.json`: Content-Security-Policy (own origin,
+  ImageKit images and the Google Tag Manager / Analytics origins; no
+  frames, no `'unsafe-eval'`), `X-Content-Type-Options`,
   `Referrer-Policy`, `X-Frame-Options: DENY`, a restrictive
   Permissions-Policy, Cross-Origin-Opener-Policy, `X-Permitted-Cross-Domain-Policies`
   and HSTS.
 - `script-src 'unsafe-inline'` is a documented trade-off of static export
   (inline bootstrap scripts, no per-request nonce). It is mitigated by
-  having no user input, no third-party scripts, and escaped JSON-LD.
+  having no user input and escaped JSON-LD; the only third-party script is
+  Google Tag Manager, injected after consent.
+- Google Tag Manager is a trust boundary: anyone with publish rights on the
+  container can run script on the live site. Keep publish access to people
+  you would trust with this repository.
 - Dependencies: `npm audit --omit=dev` in CI; Dependabot updates for npm
   (weekly) and GitHub Actions (monthly).
 - CI: actions pinned to commit SHAs, read-only token, credentials not

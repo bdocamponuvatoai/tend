@@ -1,5 +1,6 @@
 import Image from "next/image";
 import igvLogo from "@/assets/images/igv-logo.png";
+import { CookieSettingsButton } from "@/components/consent/cookie-settings-button";
 import { Brand } from "@/components/ui/brand";
 import { SectionLink } from "@/components/ui/section-link";
 import { site } from "@/config/site";
@@ -37,6 +38,7 @@ export function SiteFooter() {
         <span>
           © <span>{year}</span> Tend. All rights reserved.
         </span>
+        <CookieSettingsButton className="cookie-settings" />
         <span>Thoughtfully made for a better dining experience.</span>
       </div>
     </footer>

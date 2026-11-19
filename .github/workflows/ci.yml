@@ -45,3 +45,32 @@ jobs:
           name: site
           path: out/
           retention-days: 7
+
+  # The consent contract, end to end, on a build with Tag Manager enabled.
+  # This build is only tested, never uploaded or deployed. Google Analytics
+  # collect requests are answered locally, so runs never count as visits.
+  consent-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Static export with Tag Manager enabled
+        run: npm run build
+        env:
+          VERCEL_ENV: production
+
+      - name: Consent end-to-end test
+        run: npm run test:e2e

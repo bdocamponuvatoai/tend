@@ -23,3 +23,7 @@ npm-debug.log*
 
 # original single-file sites, kept locally for reference only
 /_legacy-source/
+
+# end-to-end test output (Playwright)
+/test-results/
+/playwright-report/
